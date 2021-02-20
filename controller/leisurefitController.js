@@ -1,6 +1,6 @@
 
 const leisurefitController = {
-  getLeisure: (req, res) => {
+  getLeisures: (req, res) => {
     return res.render('index')
   },
 }
