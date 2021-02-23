@@ -7,28 +7,32 @@ const userController = {
     const { name, email, password, passwordConfirm } = req.body
     if (!password || !name || !email || !passwordConfirm) {
       req.flash('warning_msg', '所有欄位都是必填。')
-      return res.render('/register', { name, email, password, passwordConfirm })
+      return res.render('register', { name, email, password, passwordConfirm })
     }
-    User.findOne({ email })
+    User.findOne({ where: { email: email } })
       .then(user => {
         if (user) {
-          req.flash('warning_msg', '此email已註冊過。')
-          return res.render('/register', { name, email, password, passwordConfirm })
-        } else if (password !== passwordConfirm) {
-          req.flash('warning_msg', '密碼與確認密碼不相符。')
-          return res.render('/register', { name, email })
+          return res.render('register', { message: req.flash('warning_msg', '此email已註冊過。'), name, email })
+        }
+        if (password !== passwordConfirm) {
+          return res.render('register', { message: req.flash('warning_msg', '密碼與確認密碼不相符。'), name, email })
         }
         User.create({
           name: name,
           email: email,
           password: bcrypt.hashSync(password, bcrypt.genSaltSync(10))
-        })
-      }).then(() => res.redirect('/login'))
-  },
+        }).then(() => {
+          req.flash('success_msg', '帳號註冊成功。')
+          return res.redirect('/login')
+        }).catch(err => console.log(err))
+
+      })
+  }
+  ,
   logInPage: (req, res) => { res.render('login') },
   logIn: (req, res) => {
     const { email, password } = req.body
-    User.findOne({ email })
+    User.findOne({ where: email })
       .then(user => {
         console.log(user)
         if (!user || user.password !== password) { return res.redirect('back') }
