@@ -12,7 +12,7 @@ const authenticated = (req, res, next) => {
 }
 const authenticatedAdmin = (req, res, next) => {
   if (req.isAuthenticated()) {
-    if (req.user === isAdmin) { return next() }
+    if (req.user.isAdmin) { return next() }
     res.redirect('/')
   }
   res.redirect('/login')
@@ -26,7 +26,7 @@ router.post('/register', userController.register)
 router.get('/login', userController.logInPage)
 router.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), userController.logIn)
 
-router.get('/admin/leisurefit', authenticatedAdmin, adminController.getLeisures)
+router.get('/admin/leisurefits', authenticatedAdmin, adminController.getLeisures)
 
 
 module.exports = router
