@@ -12,10 +12,12 @@ const userController = {
     User.findOne({ where: { email: email } })
       .then(user => {
         if (user) {
-          return res.render('register', { message: req.flash('warning_msg', '此email已註冊過。'), name, email })
+          const error = [{ message: '此email已註冊過。' }]
+          return res.render('register', { error, name, email })
         }
         if (password !== passwordConfirm) {
-          return res.render('register', { message: req.flash('warning_msg', '密碼與確認密碼不相符。'), name, email })
+          const error = [{ message: '密碼與確認密碼不相符。' }]
+          return res.render('register', { error, name, email })
         }
         User.create({
           name: name,
@@ -25,19 +27,12 @@ const userController = {
           req.flash('success_msg', '帳號註冊成功。')
           return res.redirect('/login')
         }).catch(err => console.log(err))
-
       })
-  }
-  ,
+  },
   logInPage: (req, res) => { res.render('login') },
   logIn: (req, res) => {
-    const { email, password } = req.body
-    User.findOne({ where: email })
-      .then(user => {
-        console.log(user)
-        if (!user || user.password !== password) { return res.redirect('back') }
-        return res.redirect('/index')
-      })
+    req.flash('success_msg', '成功登入。')
+    res.redirect('/')
   }
 }
 module.exports = userController

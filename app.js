@@ -1,8 +1,9 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
-const session = require('express-session')
-const bodyParser = require('body-parser')
 const flash = require('connect-flash')
+const session = require('express-session')
+const passport = require('./config/passport')
+const bodyParser = require('body-parser')
 require('./models')
 const routes = require('./routes')
 const app = express()
@@ -17,15 +18,20 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }))
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(flash())
 app.use((req, res, next) => {
-  res.locals.warning_msg = req.flash('warning_msg')
-  res.locals.success_msg = req.flash('success_msg')
+  res.locals.user = req.user
+  const warning_msg = req.flash('warning_msg')
+  const success_msg = req.flash('success_msg')
+  res.locals.warning_msg = warning_msg[0]
+  res.locals.success_msg = success_msg[0]
   next()
 })
-
+passport.use(app)
 app.use(routes)
-
 app.listen(3000, () => console.log(`app now is running on ${PORT}.`))
+
 
 module.exports = app
