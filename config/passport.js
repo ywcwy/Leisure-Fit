@@ -10,7 +10,6 @@ passport.use(new LocalStrategy({ usernameField: 'email', passwordField: 'passwor
       return done(null, false, req.flash('warning_msg', '帳號輸入錯誤。'))
     }
     if (!bcrypt.compareSync(password, user.password)) {
-      console.log(password)
       return done(null, false, req.flash('warning_msg', '密碼輸入錯誤。'))
     }
     return done(null, user, req.flash('success_msg', '登入成功。'))
@@ -18,7 +17,7 @@ passport.use(new LocalStrategy({ usernameField: 'email', passwordField: 'passwor
 }))
 passport.serializeUser((user, done) => done(null, user.id))
 passport.deserializeUser((id, done) => {
-  User.findById(id)
+  User.findByPk(id)
     .then(user => {
       user = user.toJSON()
       done(err, user)
