@@ -33,6 +33,11 @@ const userController = {
   logIn: (req, res) => {
     req.flash('success_msg', '成功登入。')
     res.redirect('/')
+  },
+  logout: (req, res) => {
+    req.flash('success_msg', '成功登出。')
+    req.logout()
+    res.redirect('/login')
   }
 }
 module.exports = userController
