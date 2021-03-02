@@ -22,7 +22,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
 app.use((req, res, next) => {
-  console.log(req)
   res.locals.user = req.user
   res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.warning_msg = req.flash('warning_msg')
