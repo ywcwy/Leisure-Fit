@@ -1,31 +1,31 @@
 <main>
   <div class="col-md-6 mt-5 mx-auto">
     <div class="card card-body">
-      <form action="/register" method="POST" style="width:100%;">
+      <form action="/register" method="POST">
         <h2 class="text-center mb-4">Register</h2>
         {{>message}}
-        <div class="row mb-3">
+        <div class="form-group mb-3">
           <label for="name" class="form-label">Name</label>
           <input type="text" class="form-control" name="name" id="name" placeholder="your name" value="{{name}}"
             required>
         </div>
-        <div class="row mb-3">
+        <div class="form-group mb-3">
           <label for="email" class="form-label">Email</label>
           <input type="email" class="form-control" name="email" id="email" placeholder="your email" value="{{email}}"
             required>
         </div>
-        <div class="row mb-3">
+        <div class="form-group mb-3">
           <label for="password" class="form-label">Password</label>
           <input type="password" class="form-control" name="password" id="password" placeholder="your password"
             value="{{password}}" required>
         </div>
-        <div class="row mb-3">
+        <div class="form-group mb-3">
           <label for="passwordConfirm" class="form-label ">Password Confirm</label>
           <input type="password" class="form-control" name="passwordConfirm" id="passwordConfirm"
             placeholder="confirm your password" value="{{passwordConfirm}}" required>
         </div>
         <br>
-        <button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
+        <button class="btn btn-lg btn-primary btn-block">Register</button>
         <div class="mt-3">Have your account already? <p class="d-inline"><a href="/login"> Log In</a></p>
         </div>
       </form>

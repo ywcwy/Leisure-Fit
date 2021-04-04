@@ -29,6 +29,7 @@ router.get('/logout', userController.logout)
 router.get('/', (req, res) => res.redirect('/leisurefits'))
 router.get('/leisurefits', authenticated, leisurefitController.getLeisures)
 
+router.get('/location', leisurefitController.googleMap)
 
 //後台頁面
 router.get('/admin/leisurefits', authenticatedAdmin, adminController.getLeisures)
