@@ -8,3 +8,4 @@ const leisurefitController = {
 }
 
 module.exports = leisurefitController
+

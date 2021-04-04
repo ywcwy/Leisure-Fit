@@ -13,31 +13,46 @@
 
   <script>
     function initMap() {
-      const labels = 'ab'
+      const labels = 'ab'  // ?????
       const locations = [
         { lat: 25.018878, lng: 121.534602 }, //台大操場
-        { lat: 25.022428, lng: 121.534221 }  //雨備 辛亥橋下
+        { lat: 25.022428, lng: 121.534221 },  //雨備 辛亥橋下
+        { lat: 25.051801936560064, lng: 121.55047377575801 } // 小巨蛋
       ]
       const map = new google.maps.Map(document.getElementById("map"), {
-        center: locations[0],
-        zoom: 15,
+        center: { lat: 25.033207446034734, lng: 121.54357533989239 },
+        zoom: 13,
       })
-      const ground = `<div id="content">台大操場</div>`
-      const rainyDay = `<div id="content">雨備場地</div>`
-      const makers = locations.map((location, i) => {
-        return new google.maps.Marker({
+
+      const locationInfo = [`<div id="content">週二週四-台大操場</div>`, `<div id="content">雨備場地-辛亥橋下</div>`, `<div id="content">週一瑜珈-不限男女、週三限女-一起變辣</div>`]
+
+      const markers = locations.map((location, i) => {
+        let marker = new google.maps.Marker({
           position: location,
           map: map
         })
+
+        let infowindow = new google.maps.InfoWindow({
+          content: locationInfo[i]
+        })
+
+        marker.addListener('click', () => {
+          infowindow.open(map, marker)
+        })
+
       })
-      const infowindow = new google.maps.InfoWindow({
-        content: ground,
-      });
+
     }
   </script>
 </head>
 
 <main>
+  <h1 class="ml-5 mt-5">訓練場地</h1>
+  <div class="ml-5 mt-5">
+    <p>週二、週四，我們在台大操場訓練，雨天會在辛亥橋下。</p>
+    <p>週一、週三，我們在小巨蛋室內場地，一起瑜珈、一起變辣。</p>
+    <p>每月一次的我們野行，台北所有郊山逐一攻下。</p>
+  </div>
   <div id="map" height="100px;" width="100px" class="mx-auto mt-5"></div>
 
   <!-- Async script exe cutes immediately and must be after any DOM elements used in callback. -->
