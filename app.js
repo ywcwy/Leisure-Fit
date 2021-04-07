@@ -4,7 +4,11 @@ const flash = require('connect-flash')
 const session = require('express-session')
 const passport = require('./config/passport')
 const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
 require('./models')
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const routes = require('./routes')
 const app = express()
 const PORT = 3000
@@ -13,8 +17,9 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.use(methodOverride('_method'))
 app.use(session({
-  secret: 'mySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }))
