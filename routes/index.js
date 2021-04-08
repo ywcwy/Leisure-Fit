@@ -40,8 +40,9 @@ router.get('/leisurefits', authenticated, leisurefitController.getLeisures)
 
 // 後台頁面
 router.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/leisurefits'))
-router.get('/admin/leisurefits', authenticatedAdmin, adminController.getLeisures)
+router.get('/admin/leisurefits', authenticatedAdmin, adminController.getLeisurefits)
 router.get('/admin/leisurefits/create', authenticatedAdmin, adminController.createLeisurefit)
+router.get('/admin/leisurefits/:id', authenticatedAdmin, adminController.getLeisurefit)
 router.post('/admin/leisurefits', authenticatedAdmin, upload.single('image'), adminController.postLeisurefit)
 
 

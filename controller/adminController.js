@@ -5,7 +5,7 @@ const imgur = require('imgur')
 
 
 const adminController = {
-  getLeisures: (req, res) => {
+  getLeisurefits: (req, res) => {
     Leisurefit.findAll({ raw: true, nest: true, include: [Category] })
       .then(leisurefits => res.render('admin/leisurefits', { leisurefits }))
   },
@@ -21,6 +21,10 @@ const adminController = {
         req.flash('success_msg', '貼文新增成功')
         res.redirect('/admin/leisurefits')
       })
+  },
+  getLeisurefit: async (req, res) => {
+    const leisurefit = await Leisurefit.findByPk(req.params.id, { raw: true, nest: true, include: Category })
+    res.render('admin/leisurefit', { leisurefit })
   }
 }
 
