@@ -6,6 +6,9 @@ const leisurefitController = require('../controller/leisurefitController')
 const adminController = require('../controller/adminController')
 const userController = require('../controller/userController')
 
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
+
 const authenticated = (req, res, next) => {
   if (req.isAuthenticated()) { return next() }
   res.redirect('/login')
@@ -35,9 +38,11 @@ router.get('/leisurefits', authenticated, leisurefitController.getLeisures)
 
 
 
-//後台頁面
+// 後台頁面
+router.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/leisurefits'))
 router.get('/admin/leisurefits', authenticatedAdmin, adminController.getLeisures)
-
+router.get('/admin/leisurefits/create', authenticatedAdmin, adminController.createLeisurefit)
+router.post('/admin/leisurefits', authenticatedAdmin, upload.single('image'), adminController.postLeisurefit)
 
 
 
