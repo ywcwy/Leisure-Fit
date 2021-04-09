@@ -34,8 +34,8 @@ router.get('/logout', userController.logout)
 
 // 前台頁面
 router.get('/', (req, res) => res.redirect('/leisurefits'))
-router.get('/leisurefits', authenticated, leisurefitController.getLeisures)
-
+router.get('/leisurefits', authenticated, leisurefitController.getLeisurefits)
+router.get('/leisurefits/:id', authenticated, leisurefitController.getLeisurefit)
 
 
 // 後台頁面

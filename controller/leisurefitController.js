@@ -2,7 +2,7 @@ const db = require('../models')
 const { Leisurefit, Category } = db
 
 const leisurefitController = {
-  getLeisures: async (req, res) => {
+  getLeisurefits: async (req, res) => {
     let leisurefits = await Leisurefit.findAll({ raw: true, nest: true, include: [Category] })
     leisurefits = leisurefits.map(l => {
       return {
@@ -14,6 +14,10 @@ const leisurefitController = {
   },
   googleMap: (req, res) => {
     return res.render('googleMap')
+  },
+  getLeisurefit: async (req, res) => {
+    const leisurefit = await Leisurefit.findByPk(req.params.id, { raw: true, nest: true, include: [Category] })
+    return res.render('leisurefit', { leisurefit })
   }
 }
 
