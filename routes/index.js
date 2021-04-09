@@ -53,5 +53,6 @@ router.put('/admin/leisurefits/:id', authenticatedAdmin, upload.single('image'),
 router.delete('/admin/leisurefits/:id', authenticatedAdmin, adminController.deleteLeisurefit)
 
 router.get('/admin/categories', authenticatedAdmin, categoryController.getCategories)
+router.post('/admin/categories', authenticatedAdmin, categoryController.postCategory)
 
 module.exports = router
