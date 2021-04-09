@@ -3,14 +3,21 @@ const { Leisurefit, Category } = db
 
 const leisurefitController = {
   getLeisurefits: async (req, res) => {
-    let leisurefits = await Leisurefit.findAll({ raw: true, nest: true, include: [Category] })
-    leisurefits = leisurefits.map(l => {
-      return {
-        ...l,
-        description: l.description.substring(0, 50) + '...'
-      }
-    })
-    return res.render('index', { leisurefits })
+    const categoryId = req.query.categoryId
+    const categories = await Category.findAll({ raw: true })
+    let leisurefits = []
+    if (categoryId && categoryId !== 'all') {
+      leisurefits = await Leisurefit.findAll({ where: { CategoryId: Number(categoryId) }, raw: true, nest: true, include: [Category] })
+    } else {
+      leisurefits = await Leisurefit.findAll({ raw: true, nest: true, include: [Category] })
+      leisurefits = leisurefits.map(l => {
+        return {
+          ...l,
+          description: l.description.substring(0, 50) + '...'
+        }
+      })
+    }
+    return res.render('index', { leisurefits, categories, categoryId })
   },
   googleMap: (req, res) => {
     return res.render('googleMap')

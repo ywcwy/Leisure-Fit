@@ -47,13 +47,22 @@
 </head>
 
 <main>
-  <h1 class="ml-5 mt-5">訓練場地</h1>
-  <div class="ml-5 mt-5">
-    <p>週二、週四，我們在台大操場訓練，雨天會在辛亥橋下。</p>
-    <p>週一、週三，我們在小巨蛋室內場地，一起瑜珈、一起變辣。</p>
-    <p>每月一次的我們野行，台北所有郊山逐一攻下。</p>
+  <nav class="nav d-flex justify-content-center my-5">
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link " href="/leisurefits?categoryId=all">Training
+      Course</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mx-3" href="#">Calendar</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link" href="/location">Location</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mx-3" href="#">Contact Us</a>
+  </nav>
+  <div class="d-flex flex-column  align-items-center">
+    <h1>訓練場地</h1>
+    <div class="mt-5">
+      <p>週二、週四，我們在台大操場訓練，雨天會在辛亥橋下。</p>
+      <p>週一、週三，我們在小巨蛋室內場地，一起瑜珈、一起變辣。</p>
+      <p>每月一次的我們野行，台北所有郊山逐一攻下。</p>
+    </div>
   </div>
-  <div id="map" height="100px;" width="100px" class="mx-auto mt-5"></div>
+  <div id="map" height="100px;" width="100px" class="mx-auto my-5"></div>
 
   <!-- Async script exe cutes immediately and must be after any DOM elements used in callback. -->
   <script

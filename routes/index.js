@@ -22,8 +22,12 @@ const authenticatedAdmin = (req, res, next) => {
 
 router.use('/auth', auth)
 
-// 公開資訊
+// 公開頁面
+router.get('/', (req, res) => res.redirect('/leisurefits'))
+router.get('/leisurefits', leisurefitController.getLeisurefits)
 router.get('/location', leisurefitController.googleMap)
+router.get('/leisurefits/:id', leisurefitController.getLeisurefit)
+
 
 //註冊、登入、登出
 router.get('/register', userController.registerPage)
@@ -32,10 +36,9 @@ router.get('/login', userController.logInPage)
 router.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), userController.logIn)
 router.get('/logout', userController.logout)
 
-// 前台頁面
-router.get('/', (req, res) => res.redirect('/leisurefits'))
-router.get('/leisurefits', authenticated, leisurefitController.getLeisurefits)
-router.get('/leisurefits/:id', authenticated, leisurefitController.getLeisurefit)
+// 需登入頁面
+
+
 
 
 // 後台頁面
