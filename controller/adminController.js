@@ -37,6 +37,11 @@ const adminController = {
         req.flash('success_msg', '貼文編輯成功')
         res.render(`admin/leisurefit`, { leisurefit: leisurefit.toJSON() })
       })
+  },
+  deleteLeisurefit: async (req, res) => {
+    const leisurefit = await Leisurefit.findByPk(req.params.id)
+    leisurefit.destroy()
+      .then(() => res.redirect('/admin/leisurefits'))
   }
 }
 

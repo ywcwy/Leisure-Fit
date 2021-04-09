@@ -46,6 +46,6 @@ router.get('/admin/leisurefits/:id', authenticatedAdmin, adminController.getLeis
 router.post('/admin/leisurefits', authenticatedAdmin, upload.single('image'), adminController.postLeisurefit)
 router.get('/admin/leisurefits/:id/edit', authenticatedAdmin, adminController.createLeisurefit)
 router.put('/admin/leisurefits/:id', authenticatedAdmin, upload.single('image'), adminController.putLeisurefit)
-
+router.delete('/admin/leisurefits/:id', authenticatedAdmin, adminController.deleteLeisurefit)
 
 module.exports = router
