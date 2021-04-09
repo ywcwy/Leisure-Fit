@@ -12,13 +12,13 @@ const leisurefitController = {
       leisurefits = await Leisurefit.findAll({ where: { CategoryId: Number(categoryId) }, raw: true, nest: true, include: [Category] })
     } else {
       leisurefits = await Leisurefit.findAll({ raw: true, nest: true, include: [Category] })
-      leisurefits = leisurefits.map(l => {
-        return {
-          ...l,
-          description: l.description.substring(0, 50) + '...'
-        }
-      })
     }
+    leisurefits = leisurefits.map(l => {
+      return {
+        ...l,
+        description: l.description.substring(0, 50) + '...'
+      }
+    })
     return res.render('index', { leisurefits, categories, categoryName: category.name })
   },
   googleMap: (req, res) => {
