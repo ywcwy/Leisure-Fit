@@ -1,30 +1,42 @@
 const db = require('../models')
 const { Leisurefit, Category } = db
-
 const imgur = require('imgur')
-
+imgur.setClientId(process.env.IMGUR_CLIENT_ID)
 
 const adminController = {
   getLeisurefits: (req, res) => {
     Leisurefit.findAll({ raw: true, nest: true, include: [Category] })
       .then(leisurefits => res.render('admin/leisurefits', { leisurefits }))
   },
-  createLeisurefit: (req, res) => res.render('admin/create'),
+  createLeisurefit: async (req, res) => {
+    const categories = await Category.findAll({ raw: true })
+    const leisurefit = await Leisurefit.findByPk(req.params.id, { raw: true })
+    res.render('admin/create', { categories, leisurefit })
+  },
   postLeisurefit: async (req, res) => {
-    const { category, name, description, image } = req.body
+    const { category, name, description } = req.body
     const classCategory = await Category.findOne({ name: category })
-    const { file } = req
-    imgur.setClientId(process.env.IMGUR_CLIENT_ID)
-    const img = await imgur.uploadFile(file.path)
-    Leisurefit.create({ name, CategoryId: classCategory.id, description, image: img.link })
+    const img = await imgur.uploadFile(req.file.path)
+    Leisurefit.create({ name, CategoryId: classCategory.id, description: description.trim(), image: img.link })
       .then(() => {
         req.flash('success_msg', '貼文新增成功')
-        res.redirect('/admin/leisurefits')
+        res.redirect(`/admin/leisurefits/${req.params.id}`)
       })
   },
   getLeisurefit: async (req, res) => {
-    const leisurefit = await Leisurefit.findByPk(req.params.id, { raw: true, nest: true, include: Category })
+    const leisurefit = await Leisurefit.findByPk(req.params.id, { raw: true, nest: true, include: [Category] })
     res.render('admin/leisurefit', { leisurefit })
+  },
+  putLeisurefit: async (req, res) => {
+    const leisurefit = await Leisurefit.findByPk(req.params.id, { include: [Category] })
+    const { categoryId, name, description } = req.body
+    let img = leisurefit.image
+    if (req.file) { img = await imgur.uploadFile(req.file.path) }
+    leisurefit.update({ name, CategoryId: Number(categoryId), description, image: img.link })
+      .then(leisurefit => {
+        req.flash('success_msg', '貼文編輯成功')
+        res.render(`admin/leisurefit`, { leisurefit: leisurefit.toJSON() })
+      })
   }
 }
 

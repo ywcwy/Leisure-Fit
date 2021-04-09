@@ -10,6 +10,7 @@
     "CHANNELID",
     "CHANNELSECRET",
     "CALLBACKURL",
-    "imgur"
+    "imgur",
+    "unstyled"
   ]
 }
