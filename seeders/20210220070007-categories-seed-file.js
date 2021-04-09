@@ -3,7 +3,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('Categories',
-      ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'hiking'].map((item, index) => ({
+      ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Hiking Day'].map((item, index) => ({
         id: index * 10 + 1,
         name: item,
         createdAt: new Date(),
