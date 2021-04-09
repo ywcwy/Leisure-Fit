@@ -1,5 +1,6 @@
 <main class="m-5">
   <h1>後台</h1>
+  {{>message}}
   <nav class="nav my-5">
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link mx-3 active"
       href="/admin/leisurefits">Leisurefits</a>
@@ -27,7 +28,7 @@
         <td>{{this.Category.day}}</td>
         <td>
           <button type="button" class="btn btn-link">
-            <a href="/admin/leisurefits/{{this.id}}">Show</a>
+            <a href="/admin/leisurefits/{{this.id}}">More</a>
           </button>
           <button type="button" class="btn btn-link">
             <a href="/admin/leisurefits/{{this.id}}/edit">Edit</a>

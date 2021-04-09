@@ -16,11 +16,12 @@ const adminController = {
   postLeisurefit: async (req, res) => {
     const { category, name, description } = req.body
     const classCategory = await Category.findOne({ name: category })
-    const img = await imgur.uploadFile(req.file.path)
-    Leisurefit.create({ name, CategoryId: classCategory.id, description: description.trim(), image: img.link })
+    let img = ''
+    if (req.file) { img = await imgur.uploadFile(req.file.path) }
+    Leisurefit.create({ name, CategoryId: classCategory.id, description: description.trim(), image: req.file ? img.link : '' })
       .then(() => {
         req.flash('success_msg', '貼文新增成功')
-        res.redirect(`/admin/leisurefits/${req.params.id}`)
+        res.redirect(`/admin/leisurefits`)
       })
   },
   getLeisurefit: async (req, res) => {
@@ -32,10 +33,10 @@ const adminController = {
     const { categoryId, name, description } = req.body
     let img = leisurefit.image
     if (req.file) { img = await imgur.uploadFile(req.file.path) }
-    leisurefit.update({ name, CategoryId: Number(categoryId), description, image: img.link })
+    leisurefit.update({ name, CategoryId: Number(categoryId), description, image: req.file ? img.link : leisurefit.image })
       .then(leisurefit => {
         req.flash('success_msg', '貼文編輯成功')
-        res.render(`admin/leisurefit`, { leisurefit: leisurefit.toJSON() })
+        res.redirect(`/admin/leisurefits/${req.params.id}`)
       })
   },
   deleteLeisurefit: async (req, res) => {
