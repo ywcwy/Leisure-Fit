@@ -56,5 +56,6 @@ router.get('/admin/categories', authenticatedAdmin, categoryController.getCatego
 router.get('/admin/categories/:id', authenticatedAdmin, categoryController.getCategories)
 router.post('/admin/categories', authenticatedAdmin, categoryController.postCategory)
 router.put('/admin/categories/:id', authenticatedAdmin, categoryController.editCategory)
+router.delete('/admin/categories/:id', authenticatedAdmin, categoryController.deleteCategory)
 
 module.exports = router

@@ -24,6 +24,14 @@ const categoryController = {
         req.flash('success_msg', '課程更新成功')
         res.redirect('/admin/categories')
       })
+  },
+  deleteCategory: async (req, res) => {
+    const category = await Category.findByPk(req.params.id)
+    category.destroy()
+      .then(() => {
+        req.flash('success_msg', '課程刪除成功')
+        res.redirect('/admin/categories')
+      })
   }
 }
 
