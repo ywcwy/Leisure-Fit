@@ -6,7 +6,9 @@ const leisurefitController = {
     const categoryId = req.query.categoryId
     const categories = await Category.findAll({ raw: true })
     let leisurefits = []
+    let category = ''
     if (categoryId && categoryId !== 'all') {
+      category = await Category.findByPk(Number(categoryId))
       leisurefits = await Leisurefit.findAll({ where: { CategoryId: Number(categoryId) }, raw: true, nest: true, include: [Category] })
     } else {
       leisurefits = await Leisurefit.findAll({ raw: true, nest: true, include: [Category] })
@@ -17,7 +19,7 @@ const leisurefitController = {
         }
       })
     }
-    return res.render('index', { leisurefits, categories, categoryId })
+    return res.render('index', { leisurefits, categories, categoryName: category.name })
   },
   googleMap: (req, res) => {
     return res.render('googleMap')

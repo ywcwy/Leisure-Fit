@@ -1,5 +1,5 @@
 <main>
-  {{#if categoryId}}
+  {{#if categoryName}}
   {{else}}
   <div class="jumbotron" style="background-color: #31583f;">
     <h3 class="display-4 text-white">大人的體育課</h3>
@@ -14,7 +14,11 @@
     <div class="dropdown show">
       <a class="btn btn-outline-secondary btn-sm nav-link dropdown-toggle" href="?categoryId=all" role="button"
         id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{#if categoryName}}
+        {{categoryName}}
+        {{else}}
         Training Course
+        {{/if}}
       </a>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
         <a class="dropdown-item" href="?categoryId=all">全部</a>

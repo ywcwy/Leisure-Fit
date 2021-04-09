@@ -5,6 +5,7 @@ const auth = require('./modules/auth')
 const leisurefitController = require('../controller/leisurefitController')
 const adminController = require('../controller/adminController')
 const userController = require('../controller/userController')
+const categoryController = require('../controller/categoryController')
 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
@@ -50,5 +51,7 @@ router.post('/admin/leisurefits', authenticatedAdmin, upload.single('image'), ad
 router.get('/admin/leisurefits/:id/edit', authenticatedAdmin, adminController.createLeisurefit)
 router.put('/admin/leisurefits/:id', authenticatedAdmin, upload.single('image'), adminController.putLeisurefit)
 router.delete('/admin/leisurefits/:id', authenticatedAdmin, adminController.deleteLeisurefit)
+
+router.get('/admin/categories', authenticatedAdmin, categoryController.getCategories)
 
 module.exports = router
