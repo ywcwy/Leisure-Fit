@@ -1,5 +1,5 @@
 const db = require('../models')
-const { Leisurefit, Category } = db
+const { Leisurefit, Category, User } = db
 
 const leisurefitController = {
   getLeisurefits: async (req, res) => {
@@ -9,14 +9,17 @@ const leisurefitController = {
     let category = ''
     if (categoryId && categoryId !== 'all') {
       category = await Category.findByPk(Number(categoryId))
-      leisurefits = await Leisurefit.findAll({ where: { CategoryId: Number(categoryId) }, raw: true, nest: true, include: [Category] })
+      leisurefits = await Leisurefit.findAll({
+        where: { CategoryId: Number(categoryId) }, raw: true, nest: true, include: [Category, { model: User, as: 'LikedUsers' }]
+      })
     } else {
-      leisurefits = await Leisurefit.findAll({ raw: true, nest: true, include: [Category] })
+      leisurefits = await Leisurefit.findAll({ raw: true, nest: true, include: [Category, { model: User, as: 'LikedUsers' }] })
     }
     leisurefits = leisurefits.map(l => {
       return {
         ...l,
-        description: l.description.substring(0, 50) + '...'
+        description: l.description.substring(0, 50) + '...',
+        isLiked: req.user ? req.user.LikedLeisurefits.map(d => d.id).includes(l.id) : 'false'
       }
     })
     return res.render('index', { leisurefits, categories, categoryName: category.name })

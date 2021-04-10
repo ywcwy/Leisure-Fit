@@ -4,7 +4,8 @@ const LineStrategy = require('passport-line').Strategy
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const db = require('../models')
-const User = db.User
+const { User, Leisurefit } = db
+
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
@@ -42,7 +43,9 @@ passport.use(new LineStrategy({
 
 passport.serializeUser((user, done) => done(null, user.id))
 passport.deserializeUser((id, done) => {
-  User.findByPk(id)
+  User.findByPk(id, {
+    include: [{ model: Leisurefit, as: 'LikedLeisurefits' }]
+  })
     .then(user => {
       user = user.toJSON()
       done(null, user)

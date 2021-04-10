@@ -38,14 +38,23 @@
         <div class="card mb-4 shadow-sm">
           <img class="card-img-top" src="{{this.image}}" alt="Card image cap" width="286px" height="180px">
           <div class="card-body">
-            <p class="card-text">
-              <a href="/leisurefits/{{this.id}}">
-                {{this.name}}
-              </a>
-            </p>
-            <strong class="d-flex mb-1">Training Day: {{this.Category.name}}</strong>
+            <h5 class="card-text">{{this.name}}</h5>
+            <lead class="d-flex mb-1"><a href="?categoryId={{this.CategoryId}}">
+                #{{this.Category.name}}
+              </a></lead>
             <p class="card-text">{{this.description}}</p>
-            <a role="button" class="btn btn-info" href="/leisurefits/{{this.id}}">閱讀更多</a>
+            <div class="d-flex justify-content-around align-items-center">
+              <a role="button" class="btn btn-info" href="/leisurefits/{{this.id}}">閱讀更多</a>
+              {{#if this.isLiked}}
+              <form action="/user/like/{{this.id}}?_method=DELETE" method="POST" class="d-flex align-items-center">
+                <button class="btn bg-white"><i class="fas fa-heart text-danger"></i></button>
+              </form>
+              {{else}}
+              <form action="/user/like/{{this.id}}" method="POST" class="d-flex align-items-center">
+                <button class="btn bg-white"><i class="far fa-heart text-danger"></i></button>
+              </form>
+              {{/if}}
+            </div>
           </div>
         </div>
       </div>

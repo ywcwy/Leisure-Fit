@@ -6,6 +6,7 @@ const leisurefitController = require('../controller/leisurefitController')
 const adminController = require('../controller/adminController')
 const userController = require('../controller/userController')
 const categoryController = require('../controller/categoryController')
+const likeController = require('../controller/likeController')
 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
@@ -38,8 +39,8 @@ router.post('/login', passport.authenticate('local', { failureRedirect: '/login'
 router.get('/logout', userController.logout)
 
 // 需登入頁面
-
-
+router.post('/user/like/:id', authenticated, likeController.addLike)
+router.delete('/user/like/:id', authenticated, likeController.removeLike)
 
 
 // 後台頁面
