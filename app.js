@@ -15,11 +15,15 @@ const PORT = 3000
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main', helpers: require('./config/handlebars-helpers') }))
 app.set('view engine', 'handlebars')
+app.use(express.static('public'))
+
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 // app.use(bodyParser.urlencoded({ extended: true }))
 // app.use(bodyParser.json())
+
 app.use(methodOverride('_method'))
+
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -27,7 +31,9 @@ app.use(session({
 }))
 app.use(passport.initialize())
 app.use(passport.session())
+
 app.use(flash())
+
 app.use((req, res, next) => {
   res.locals.user = req.user
   res.locals.isAuthenticated = req.isAuthenticated()

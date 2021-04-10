@@ -25,7 +25,7 @@ const leisurefitController = {
     return res.render('index', { leisurefits, categories, categoryName: category.name })
   },
   googleMap: (req, res) => {
-    return res.render('googleMap')
+    return res.render('googleMap', { css: 'googleMap.css', javascript: 'googleMap.js' })
   },
   getLeisurefit: async (req, res) => {
     const leisurefit = await Leisurefit.findByPk(req.params.id, { raw: true, nest: true, include: [Category] })
