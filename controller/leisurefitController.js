@@ -3,8 +3,6 @@ const { Leisurefit, Category, User } = db
 
 const leisurefitController = {
   getLeisurefits: async (req, res) => {
-    console.log(req.user)
-    console.log(req.isAuthenticated())
     const categoryId = req.query.categoryId
     const categories = await Category.findAll({ raw: true })
     let leisurefits = await Leisurefit.findAll({ raw: true, nest: true, include: [Category, { model: User, as: 'LikedUsers' }] })
@@ -22,7 +20,6 @@ const leisurefitController = {
         isLiked: req.user ? req.user.LikedLeisurefits.map(d => d.id).includes(l.id) : false
       }
     })
-    leisurefits.map(l => console.log(l.isLiked))
     return res.render('index', { leisurefits, categories, categoryName: category.name })
   },
   googleMap: (req, res) => {
