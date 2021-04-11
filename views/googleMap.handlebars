@@ -1,52 +1,3 @@
-{{!--
-<!DOCTYPE html>
-<html>
-
-<head>
-  <title>Simple Map</title>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-  <style type="text/css">
-    #map {
-      height: 500px;
-      width: 500px;
-    }
-  </style>
-
-  <script>
-    function initMap() {
-      const labels = 'ab'  // ?????
-      const locations = [
-        { lat: 25.018878, lng: 121.534602 }, //台大操場
-        { lat: 25.022428, lng: 121.534221 },  //雨備 辛亥橋下
-        { lat: 25.051801936560064, lng: 121.55047377575801 } // 小巨蛋
-      ]
-      const map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 25.033207446034734, lng: 121.54357533989239 },
-        zoom: 13,
-      })
-
-      const locationInfo = [`<div id="content">週二週四-台大操場</div>`, `<div id="content">雨備場地-辛亥橋下</div>`, `<div id="content">週一瑜珈-不限男女、週三限女-一起變辣</div>`]
-
-      const markers = locations.map((location, i) => {
-        let marker = new google.maps.Marker({
-          position: location,
-          map: map
-        })
-
-        let infowindow = new google.maps.InfoWindow({
-          content: locationInfo[i]
-        })
-
-        marker.addListener('click', () => {
-          infowindow.open(map, marker)
-        })
-
-      })
-
-    }
-  </script>
-</head> --}}
-
 <main>
   <nav class="nav d-flex justify-content-center my-5">
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link " href="/leisurefits?categoryId=all">Training
@@ -64,17 +15,4 @@
     </div>
   </div>
   <div id="map" height="100px;" width="100px" class="mx-auto my-5"></div>
-
-  <!-- Async script exe cutes immediately and must be after any DOM elements used in callback. -->
-
-  {{!--
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvDAucUyB_fHoVFAnSMFwllmNGCwOpY6U&callback=initMap&libraries=&v=weekly"
-    async></script>
-  <script src="https://unpkg.com/@googlemaps/markerclustererplus/dist/index.min.js"></script> --}}
 </main>
-
-
-{{!--
-
-</html> --}}
