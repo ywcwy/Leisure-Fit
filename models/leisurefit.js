@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Leisurefit.belongsTo(models.Category)
       Leisurefit.hasMany(models.Comment)
+      Leisurefit.hasMany(models.Like)
       Leisurefit.belongsToMany(models.User, {
         through: models.Like,
         foreignKey: 'LeisurefitId',

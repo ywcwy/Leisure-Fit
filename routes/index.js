@@ -7,6 +7,7 @@ const adminController = require('../controller/adminController')
 const userController = require('../controller/userController')
 const categoryController = require('../controller/categoryController')
 const likeController = require('../controller/likeController')
+const profileController = require('../controller/profileController')
 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
@@ -38,10 +39,15 @@ router.get('/login', userController.logInPage)
 router.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), userController.logIn)
 router.get('/logout', userController.logout)
 
-// 需登入頁面
+// 前台需登入頁面
+// 收藏貼文
 router.post('/user/like/:id', authenticated, likeController.addLike)
 router.delete('/user/like/:id', authenticated, likeController.removeLike)
 
+// profile
+router.get('/user/profile', authenticated, profileController.getProfile)
+router.get('/user/likedLeisurefits', authenticated, profileController.getLikedLeisurefits)
+router.delete('/user/likedLeisurefits/:id', authenticated, profileController.removeLikedLeisurefits)
 
 // 後台頁面
 router.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/leisurefits'))
@@ -53,6 +59,7 @@ router.get('/admin/leisurefits/:id/edit', authenticatedAdmin, adminController.cr
 router.put('/admin/leisurefits/:id', authenticatedAdmin, upload.single('image'), adminController.putLeisurefit)
 router.delete('/admin/leisurefits/:id', authenticatedAdmin, adminController.deleteLeisurefit)
 
+// 編輯分類
 router.get('/admin/categories', authenticatedAdmin, categoryController.getCategories)
 router.get('/admin/categories/:id', authenticatedAdmin, categoryController.getCategories)
 router.post('/admin/categories', authenticatedAdmin, categoryController.postCategory)

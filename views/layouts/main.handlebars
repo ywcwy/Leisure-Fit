@@ -44,7 +44,17 @@
               <a class="nav-link active" aria-current="page" style="text-decoration:none; margin-right: 5px;"
                 href="/admin/leisurefits">Admin</a>
             </li>
+            {{else}}
+            <li class="nav-item">
+              <a class="nav-link" href="/user/profile">Profile</a>
+            </li>
             {{/if}}
+            <li class="nav-item">
+              <a class="nav-link" href="/location">Location</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact Us</a>
+            </li>
             {{#if isAuthenticated}}
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/logout">Log out</a>
@@ -54,15 +64,6 @@
               <a class="nav-link active" aria-current="page" href="/login">Log in</a>
             </li>
             {{/if}}
-            <li class="nav-item">
-              <a class="nav-link" href="#">Profile</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/location">Location</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Contact Us</a>
-            </li>
           </ul>
         </div>
       </div>

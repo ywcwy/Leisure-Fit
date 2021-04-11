@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Like.belongsTo(models.User)
+      Like.belongsTo(models.Leisurefit)
     }
   };
   Like.init({
