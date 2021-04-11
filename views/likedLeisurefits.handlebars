@@ -5,22 +5,7 @@
     {{else}}
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link mx-3" href="/user/profile">My Profile</a>
     {{/if}}
-    <div class="dropdown show">
-      <a class="btn btn-outline-secondary btn-sm nav-link dropdown-toggle" href="/leisurefits" role="button"
-        id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        {{#if categoryName}}
-        {{categoryName}}
-        {{else}}
-        Training Course
-        {{/if}}
-      </a>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <a class="dropdown-item" href="/leisurefits">全部</a>
-        {{#each categories}}
-        <a class="dropdown-item" href="?categoryId={{this.id}}">{{this.name}}</a>
-        {{/each}}
-      </div>
-    </div>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link" href="/leisurefits">Training Course</a>
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link mx-3" href="#">Calendar</a>
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link" href="/location">Location</a>
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link mx-3" href="#">Contact Us</a>
