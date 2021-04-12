@@ -31,9 +31,9 @@ passport.use(new LineStrategy({
   callbackURL: process.env.LINECORP_PLATFORM_CHANNEL_CALLBACKURL,
   scope: ['profile', 'openid', 'email'],
   botPrompt: 'normal'
-}, (accessToken, refreshToken, parameter, profile, cb) => {
-  console.log(parameter)
-  const { email } = jwt.decode(param.id_token)
+}, (accessToken, refreshToken, params, profile, cb) => {
+  console.log(params)
+  const { email } = jwt.decode(params.id_token)
   profile.email = email
   return cb(null, profile)
   // User.findOrCreate({ id: profile.id }, (err, user) => {
