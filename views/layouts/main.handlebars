@@ -11,17 +11,17 @@
     integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
   {{!-- google map api --}}
   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  {{!-- {{#if css}} --}}
   <link rel="stylesheet" href="/stylesheets/{{css}}">
+  {{!-- {{/if}} --}}
+  {{!-- {{#if javascript}} --}}
   <script src="/javascripts/{{javascript}}"></script>
+  {{!-- {{/if}} --}}
   {{!-- line login api --}}
   <script>
     function lineLogIn() {
       const URL = `https://access.line.me/oauth2/v2.1/authorize?`
-      URL += `response_type = code`
-      URL += `&client_id=${process.env.LINECORP_PLATFORM_CHANNEL_CHANNELID}`
-      URL += `&redirect_uri=${process.env.LINECORP_PLATFORM_CHANNEL_CALLBACKURL}`
-      URL += `&state=abcde`
-      URL += `&scope=openid%20email%20profile`
+      URL += `response_type = code&client_id=${process.env.LINECORP_PLATFORM_CHANNEL_CHANNELID}&redirect_uri=${process.env.LINECORP_PLATFORM_CHANNEL_CALLBACKURL}&state=abcde&scope=openid%20email%20profile`
       window.location.href = URL
     }
   </script>
@@ -76,6 +76,7 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvDAucUyB_fHoVFAnSMFwllmNGCwOpY6U&callback=initMap&libraries=&v=weekly"
     async></script>
   <script src="https://unpkg.com/@googlemaps/markerclustererplus/dist/index.min.js"></script>
+
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>

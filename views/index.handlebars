@@ -67,11 +67,38 @@
       {{/each}}
     </div>
     <br />
+    {{!-- Pagination --}}
+    <div class="d-flex justify-content-center">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" href="/leisurefits?page={{prev}}&categoryId={{categoryId}}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          {{#each totalPage}}
+          {{#ifSelected this ../page}}
+          <li class="page-item"><a class="page-link" href="#">{{../this}}</a></li>
+          {{else}}
+          <li class="page-item"><a class="page-link"
+              href="/leisurefits?page={{../this}}&categoryId={{../categoryId}}">{{../this}}</a></li>
+          {{/ifSelected}}
+          {{/each}}
+          <li class="page-item">
+            <a class="page-link" href="/leisurefits?page={{next}}&categoryId={{categoryId}}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
     <hr>
     <footer>
       <div class="row">
         <div class="col-lg-12">
-          <p>Copyright &copy 2021, Leisure Fit</p>
+          <p>Copyright &copy 2021, Leisure-Fit</p>
         </div>
       </div>
     </footer>
