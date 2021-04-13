@@ -6,10 +6,10 @@
       Courses</a>
   </nav>
   <hr>
-  {{#if category}}
+  {{#if category.id}}
   <form action="/admin/categories/{{category.id}}?_method=PUT" method="POST" class="d-flex align-items-center">
     {{else}}
-    <form action="/admin/categories" method="POST" class="d-flex align-items-center">
+    <form action="/admin/category" method="POST" class="d-flex align-items-center">
       {{/if}}
       Name: <input type="text" name="name" class="ml-2 mr-4" required="required" value={{category.name}}>
       Training Day: <input type="text" name="day" class="mx-2" required="required" value={{category.day}}>

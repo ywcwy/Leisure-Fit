@@ -62,7 +62,7 @@ router.delete('/admin/leisurefits/:id', authenticatedAdmin, adminController.dele
 // 編輯分類
 router.get('/admin/categories', authenticatedAdmin, categoryController.getCategories)
 router.get('/admin/categories/:id', authenticatedAdmin, categoryController.getCategories)
-router.post('/admin/categories', authenticatedAdmin, categoryController.postCategory)
+router.post('/admin/category', authenticatedAdmin, categoryController.postCategory)
 router.put('/admin/categories/:id', authenticatedAdmin, categoryController.editCategory)
 router.delete('/admin/categories/:id', authenticatedAdmin, categoryController.deleteCategory)
 

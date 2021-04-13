@@ -14,11 +14,17 @@ const adminController = {
     res.render('admin/create', { categories, leisurefit })
   },
   postLeisurefit: async (req, res) => {
-    const { category, name, description } = req.body
-    const classCategory = await Category.findOne({ name: category })
+    let { categoryId, name, description } = req.body
+    // console.log(categoryId)
+    // const classCategory = await Category.findOne({ name: category })
     let img = ''
     if (req.file) { img = await imgur.uploadFile(req.file.path) }
-    Leisurefit.create({ name, CategoryId: classCategory.id, description: description.trim(), image: req.file ? img.link : '' })
+    // console.log('********')
+    // console.log(description)
+    // description = description.replace('\n', '<br />')
+    // console.log('^^^^^^^^^^^')
+    console.log(description)
+    Leisurefit.create({ name, CategoryId: Number(categoryId), description, image: req.file ? img.link : '' })
       .then(() => {
         req.flash('success_msg', '貼文新增成功')
         res.redirect(`/admin/leisurefits`)
@@ -26,11 +32,19 @@ const adminController = {
   },
   getLeisurefit: async (req, res) => {
     const leisurefit = await Leisurefit.findByPk(req.params.id, { raw: true, nest: true, include: [Category] })
+    console.log(leisurefit)
+    leisurefit.description = leisurefit.description.replace(/\r?\n/g, '<br />')
+    // console.log(leisurefit)
     res.render('admin/leisurefit', { leisurefit })
   },
   putLeisurefit: async (req, res) => {
     const leisurefit = await Leisurefit.findByPk(req.params.id, { include: [Category] })
-    const { categoryId, name, description } = req.body
+    let { categoryId, name, description } = req.body
+    // console.log('********')
+    // console.log(description)
+    // description = description.replace(/\n/g, '<br />')
+    // console.log('^^^^^^^^^^^')
+    // console.log(description)
     let img = leisurefit.image
     if (req.file) { img = await imgur.uploadFile(req.file.path) }
     leisurefit.update({ name, CategoryId: Number(categoryId), description, image: req.file ? img.link : leisurefit.image })
