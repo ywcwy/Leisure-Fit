@@ -44,7 +44,7 @@ const leisurefitController = {
     const leisurefit = await Leisurefit.findByPk(req.params.id, { raw: true, nest: true, include: [Category] })
     return res.render('leisurefit', { leisurefit })
   },
-  getCalendar: (req, res) => res.render('calendar'),
+  getCalendar: (req, res) => res.render('calendar', { css: 'calendar.css' }),
   getContactUs: (req, res) => res.render('contactUs')
 }
 

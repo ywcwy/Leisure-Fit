@@ -1,24 +1,23 @@
 <main class="m-5">
   <h1>後台</h1>
   {{>message}}
-  <nav class="nav my-5">
+  <nav class="nav mt-5 mb-3">
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link mx-3 active"
       href="/admin/leisurefits">Leisurefits</a>
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link" href="/admin/categories">Training Courses</a>
-    <hr>
   </nav>
-  <a class="btn btn-info mx-3 btn-sm" href='/admin/leisurefits/create'>New Post</a>
+  <hr>
+  <a class="btn btn-light mx-3 btn-sm" href="/admin/leisurefits/create" style="color: #dc6548">New Post</a>
 
   <br />
   <br />
-
   <table class="table">
     <thead class="thead-light">
       <tr>
         <th scope="col">Id</th>
         <th scope="col">Title</th>
         <th scope="col">Training Day</th>
-        <th scope="col">#</th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
@@ -28,13 +27,13 @@
         <td>{{this.Category.day}}</td>
         <td>
           <button type="button" class="btn btn-link">
-            <a href="/admin/leisurefits/{{this.id}}">More</a>
+            <a style="color: #31583f" href="/admin/leisurefits/{{this.id}}">More</a>
           </button>
           <button type="button" class="btn btn-link">
-            <a href="/admin/leisurefits/{{this.id}}/edit">Edit</a>
+            <a style="color: #31583f" href="/admin/leisurefits/{{this.id}}/edit">Edit</a>
           </button>
           <form action="/admin/leisurefits/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
-            <button type="submit" class="btn btn-link">Delete</button>
+            <button style="color: #31583f" type="submit" class="btn btn-link">Delete</button>
           </form>
         </td>
       </tr>

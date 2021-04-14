@@ -1,5 +1,6 @@
 <main class="m-5">
-  <h1>後台</h1> {{>message}}
+  <h1>後台</h1>
+  {{>message}}
   <nav class="nav mt-5 mb-3">
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link mx-3" href="/admin/leisurefits">Leisurefits</a>
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link active" href="/admin/categories">Training
@@ -11,12 +12,13 @@
     {{else}}
     <form action="/admin/category" method="POST" class="d-flex align-items-center">
       {{/if}}
-      Name: <input type="text" name="name" class="ml-2 mr-4" required="required" value={{category.name}}>
-      Training Day: <input type="text" name="day" class="mx-2" required="required" value={{category.day}}>
-      <button type="submit" class=" btn btn-info btn-sm">Submit</button>
+      Name: <input type="text" name="name" class="ml-2 mr-4 border-light rounded" required="required"
+        value={{category.name}}>
+      Training Day: <input type="text" name="day" class="mx-2 border-light rounded" required="required"
+        value={{category.day}}>
+      <button type="submit" class="btn btn-sm ml-2" style="color: #dc6548"> Submit</button>
     </form>
 
-    <br />
     <br />
     <table class="table">
       <thead class="thead-light">
@@ -24,7 +26,7 @@
           <th scope="col">Id</th>
           <th scope="col">Course</th>
           <th scope="col">Training Day</th>
-          <th scope="col">#</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -34,13 +36,13 @@
           <td>{{this.name}}</td>
           <td>{{this.day}}</td>
           <td>
-            <button type="button" class="btn btn-link">
-              <a href="/admin/categories/{{this.id}}">
+            <button type="button" class="btn btn-light mr-3">
+              <a href="/admin/categories/{{this.id}}" style="color: #31583f">
                 Edit
               </a>
             </button>
             <form action="/admin/categories/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
-              <button type="submit" class="btn btn-link">Delete</button>
+              <button style="color: #31583f" type="submit" class="btn btn-light">Delete</button>
             </form>
           </td>
         </tr>
