@@ -1,0 +1,28 @@
+<main class="row d-flex justify-content-center">
+  <nav class="nav d-flex justify-content-center my-5">
+    {{#ifCond user.isAdmin isAuthenticated}}
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/leisurefits">Admin</a>
+    {{/ifCond}}
+    {{#ifOne user.isAdmin isAuthenticated}}
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/user/profile">My Profile</a>
+    {{/ifOne}}
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/leisurefits">Training Course</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/calendar">Calendar</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/location">Location</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link active" href="/contactUs">Contact Us</a>
+  </nav>
+  <div class="col-md-12 d-flex flex-column align-items-center">
+    <h1>聯絡我們</h1>
+    <br>
+    <p>如有任何需求，合作、上課，歡迎以以下方式私訊我們。</p>
+    <div class="d-flex flex-column align-items-start">
+      <h5 class="mx-auto">Instagram：<a href="https://www.instagram.com/leisure.fit/" style="color: #dc6548"">@leisure.fit</a></h5>
+      <br>
+      <h5>Line：</h5>
+      <img src=" https://i.imgur.com/VHCHEXj.png">
+    </div>
+  </div>
+  <div class="col-md-12 d-flex justify-content-center my-5">
+    <a href="javascript:history.back()">回上一頁</a>
+  </div>
+</main>

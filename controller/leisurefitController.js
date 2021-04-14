@@ -43,7 +43,9 @@ const leisurefitController = {
   getLeisurefit: async (req, res) => {
     const leisurefit = await Leisurefit.findByPk(req.params.id, { raw: true, nest: true, include: [Category] })
     return res.render('leisurefit', { leisurefit })
-  }
+  },
+  getCalendar: (req, res) => res.render('calendar'),
+  getContactUs: (req, res) => res.render('contactUs')
 }
 
 module.exports = leisurefitController

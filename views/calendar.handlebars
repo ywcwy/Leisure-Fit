@@ -1,0 +1,40 @@
+<main class="row d-flex justify-content-center">
+  <nav class="nav d-flex justify-content-center my-5">
+    {{#ifCond user.isAdmin isAuthenticated}}
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/leisurefits">Admin</a>
+    {{/ifCond}}
+    {{#ifOne user.isAdmin isAuthenticated}}
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/user/profile">My Profile</a>
+    {{/ifOne}}
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/leisurefits">Training Course</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3 active" href="/calendar">Calendar</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/location">Location</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link" href="/contactUs">Contact Us</a>
+  </nav>
+  <div class="col-md-12 d-flex flex-column align-items-center">
+    <h1>課程表</h1>
+    <h5><strong>Training Month: 2021.04</strong></h5>
+  </div>
+  <div class="well mt-3 col-md-8 d-flex justify-content-center align-items-center">
+    <div class="col-md-4">
+      <ul class="my-4 list-unstyled">
+        <li><strong>固定課程：</strong></li>
+        <li>每週二，一起變強 - <a href="/leisurefits?categoryId=11" style="color: #31583f">戶外訓練</a></li>
+        <li>每週三，一起變辣 - <a href="/leisurefits?categoryId=21" style="color:  #dc6548">女性限定</a></li>
+        <li>每週四，一起變強 - <a href="/leisurefits?categoryId=31" style="color:  #31583f">Cross-Fit</a></li>
+      </ul>
+      <ul class="my-4 list-unstyled">
+        <li><strong>特別課：</strong></li>
+        <li>4/11 我們野行 - 淡蘭古道</li>
+        <li>4/12 基礎拳擊 - 客座教練：Josh</li>
+        <li>4/19 基礎拳擊 - 客座教練：Josh</li>
+        <li>4/26 基礎拳擊 - 客座教練：Josh</li>
+      </ul>
+    </div>
+    <img class="col-md-4" src="https://i.imgur.com/qzzXpU1.png">
+  </div>
+
+  <div class="col-md-12 d-flex justify-content-center my-5">
+    <a href="javascript:history.back()">回上一頁</a>
+  </div>
+</main>

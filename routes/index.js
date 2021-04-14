@@ -29,8 +29,9 @@ router.use('/auth', auth)
 router.get('/', (req, res) => res.redirect('/leisurefits'))
 router.get('/leisurefits', leisurefitController.getLeisurefits)
 router.get('/location', leisurefitController.googleMap)
+router.get('/calendar', leisurefitController.getCalendar)
 router.get('/leisurefits/:id', leisurefitController.getLeisurefit)
-
+router.get('/contactUs', leisurefitController.getContactUs)
 
 //註冊、登入、登出
 router.get('/register', userController.registerPage)
