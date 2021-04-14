@@ -13,16 +13,15 @@ passport.use(new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
   passReqToCallback: true
-}, (req, username, password, done) => {
-  User.findOne({ where: { email: username } }).then(user => {
-    if (!user) {
-      return done(null, false, req.flash('warning_msg', '帳號輸入錯誤。'))
-    }
-    if (!bcrypt.compareSync(password, user.password)) {
-      return done(null, false, req.flash('warning_msg', '密碼輸入錯誤。'))
-    }
-    return done(null, user, req.flash('success_msg', '登入成功。'))
-  })
+}, async (req, username, password, done) => {
+  const user = await User.findOne({ where: { email: username } })
+  if (!user) {
+    return done(null, false, req.flash('warning_msg', '帳號輸入錯誤。'))
+  }
+  if (!bcrypt.compareSync(password, user.password)) {
+    return done(null, false, req.flash('warning_msg', '密碼輸入錯誤。'))
+  }
+  return done(null, user, req.flash('success_msg', '登入成功。'))
 }))
 
 passport.use(new LineStrategy({
@@ -31,25 +30,30 @@ passport.use(new LineStrategy({
   callbackURL: process.env.LINECORP_PLATFORM_CHANNEL_CALLBACKURL,
   scope: ['profile', 'openid', 'email'],
   botPrompt: 'normal'
-}, (accessToken, refreshToken, params, profile, cb) => {
-  console.log(params)
-  const { email } = jwt.decode(params.id_token)
+}, async (accessToken, refreshToken, params, profile, done) => {
+  const { name, email, picture } = jwt.decode(params.id_token)
   profile.email = email
-  return cb(null, profile)
-  // User.findOrCreate({ id: profile.id }, (err, user) => {
-  //   return done(err, user)
-  // })
+
+  const user = await User.findOne({ where: { email } })
+  if (user) { return done(null, user) }
+
+  const randomPassword = Math.random().toString(36).slice(-8)
+  const salt = await bcrypt.genSalt(10)
+  const hash = await bcrypt.hashSync(randomPassword, salt)
+  User.create({ name, email, password: hash })
+    .then(user => done(null, user))
+    .catch(err => done(err, false))
 }))
 
 passport.serializeUser((user, done) => done(null, user.id))
-passport.deserializeUser((id, done) => {
-  User.findByPk(id, {
+passport.deserializeUser(async (id, done) => {
+  let user = await User.findByPk(id, {
     include: [{ model: Leisurefit, as: 'LikedLeisurefits' }]
   })
-    .then(user => {
-      user = user.toJSON()
-      done(null, user)
-    })
+  if (user) {
+    user = user.toJSON()
+    done(null, user)
+  }
 })
 
 module.exports = passport

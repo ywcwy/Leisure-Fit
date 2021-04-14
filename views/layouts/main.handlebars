@@ -17,7 +17,10 @@
   <script>
     function lineLogIn() {
       const URL = `https://access.line.me/oauth2/v2.1/authorize?`
-      URL += `response_type = code&client_id=${process.env.LINECORP_PLATFORM_CHANNEL_CHANNELID}&redirect_uri=${process.env.LINECORP_PLATFORM_CHANNEL_CALLBACKURL}&state=abcde&scope=openid%20email%20profile`
+      URL += `response_type=code`
+      URL += `&client_id=${process.env.LINECORP_PLATFORM_CHANNEL_CHANNELID}`
+      URL += `&redirect_uri=${process.env.LINECORP_PLATFORM_CHANNEL_CALLBACKURL}`
+      URL += `&state=abcde&scope=openid%20email%20profile`
       window.location.href = URL
     }
   </script>

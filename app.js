@@ -24,6 +24,7 @@ app.use(express.json())
 
 app.use(methodOverride('_method'))
 
+passport.use(app)
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -33,7 +34,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use(flash())
-
 app.use((req, res, next) => {
   res.locals.user = req.user
   res.locals.isAuthenticated = req.isAuthenticated()
@@ -41,7 +41,7 @@ app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg')
   next()
 })
-passport.use(app)
+
 app.use(routes)
 app.listen(3000, () => console.log(`app now is running on ${PORT}.`))
 

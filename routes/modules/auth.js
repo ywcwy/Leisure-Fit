@@ -3,16 +3,10 @@ const router = express.Router()
 
 const passport = require('passport')
 
-router.get('/line', passport.authenticate('line', {
-  scope: ['email', 'profile', 'openid'], // scope的值為我們向line要求的資料
-  successRedirect: '/',
-  failureRedirect: '/login'
-}))
+router.get('/line', passport.authenticate('line'))
 
-router.get('/line/callback', passport.authenticate('line', {
-  successRedirect: '/',
-  failureRedirect: '/login'
-}))
+router.get('/line/return', passport.authenticate('line', { failureRedirect: '/login' }),
+  (req, res) => res.redirect('/'))
 
 
 
