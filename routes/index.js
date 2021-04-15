@@ -25,7 +25,7 @@ const authenticatedAdmin = (req, res, next) => {
 }
 
 router.use('/auth', auth)
-router.use('/', line)
+router.use('/line', line)
 
 // 公開頁面
 router.get('/', (req, res) => res.redirect('/leisurefits'))

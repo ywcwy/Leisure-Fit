@@ -11,7 +11,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const routes = require('./routes')
 const app = express()
-console.log(process.env.PORT)
+
 const port = process.env.PORT || 3000
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main', helpers: require('./config/handlebars-helpers') }))

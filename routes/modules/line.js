@@ -16,7 +16,7 @@ const message = {
   text: "Hi, hi , i'm Wendy"
 }
 
-router.post('/', (req, res) => {
+router.post('/callback', (req, res) => {
   console.log(req.body)
 })
 // client.replyMessage('<replytoken>')
