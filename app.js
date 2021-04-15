@@ -11,7 +11,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const routes = require('./routes')
 const app = express()
-const PORT = 3000
+const port = process.env.PORT || 3000
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main', helpers: require('./config/handlebars-helpers') }))
 app.set('view engine', 'handlebars')
@@ -24,14 +24,14 @@ app.use(express.json())
 
 app.use(methodOverride('_method'))
 
+app.use(passport.initialize())
+app.use(passport.session())
 passport.use(app)
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }))
-app.use(passport.initialize())
-app.use(passport.session())
 
 app.use(flash())
 app.use((req, res, next) => {
@@ -43,7 +43,7 @@ app.use((req, res, next) => {
 })
 
 app.use(routes)
-app.listen(3000, () => console.log(`app now is running on ${PORT}.`))
+app.listen(port, () => console.log(`app now is running on ${port}.`))
 
 
 module.exports = app

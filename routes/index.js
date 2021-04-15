@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const passport = require('passport')
 const auth = require('./modules/auth')
+const line = require('./modules/line')
 const leisurefitController = require('../controller/leisurefitController')
 const adminController = require('../controller/adminController')
 const userController = require('../controller/userController')
@@ -24,6 +25,7 @@ const authenticatedAdmin = (req, res, next) => {
 }
 
 router.use('/auth', auth)
+router.use('/', line)
 
 // 公開頁面
 router.get('/', (req, res) => res.redirect('/leisurefits'))

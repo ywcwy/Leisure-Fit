@@ -33,7 +33,7 @@ passport.use(new LineStrategy({
 }, async (accessToken, refreshToken, params, profile, done) => {
   const { name, email, picture } = jwt.decode(params.id_token)
   profile.email = email
-
+  console.log(profile)
   const user = await User.findOne({ where: { email } })
   if (user) { return done(null, user) }
 
