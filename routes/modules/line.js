@@ -15,7 +15,7 @@ const message = {
   type: 'text',
   text: "Hi, hi , i'm Wendy"
 }
-router.get('/', (req, res) => res.end(`I'm listening. Please access with POST.`))
+
 router.post('/', (req, res) => {
   console.log(req.body)
 })
