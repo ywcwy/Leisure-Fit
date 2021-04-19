@@ -43,10 +43,9 @@ router.post('/callback', (req, res) => {
           type: 'image',
           text: '每週二，一起變強 - 戶外體能。每週三，一起變辣 - 女性限定。每週四，一起變強 - Cross - Fit。每週課表請詳連結 https://leisure-fit.herokuapp.com/calendar'
         })
-          .catch(err => {
-            console.log(err.response)
-            console.log(err.response.data)
-          })
+          .catch(err => console.log(err))
+        const stream = client.getMessageContent(message.id)
+        stream.on('error', (err) => console.log(err.message))
       }
     }
   }
