@@ -24,12 +24,8 @@ router.post('/callback', (req, res) => {
   console.log(req.header)
 
   // event
-  console.log(req.body)
   const event = req.body.events[0]
   const { type, replyToken, source, message } = event
-  console.log(event) //[{type, replyToken,...}]
-  console.log('%%%%%%%%%%')
-  console.log(replyToken, message)
 
   // follow event
   if (type === 'follow') {
@@ -41,7 +37,7 @@ router.post('/callback', (req, res) => {
 
   // message event
   if (type === 'message') {
-    if (message.type === 'text' && message.text === '課程' || '課表' || '課程表') {
+    if (message.type === 'text' && message.text === ('課程' || '課表' || '課程表')) {
       if (source.type === 'user') {
         client.replyMessage(replyToken, {
           type: 'image',
