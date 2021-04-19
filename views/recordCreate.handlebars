@@ -1,0 +1,54 @@
+<main class="d-flex justify-content-center">
+  {{#if record}}
+  <form action="/user/training/records/{{record.id}}?_method=PUT" method="POST" class="my-5"
+    enctype="multipart/form-data">
+    <h2 class="d-flex justify-content-center">編輯記錄</h2>
+    {{else}}
+    <form action="/user/training/records" method="POST" class="my-5" enctype="multipart/form-data">
+      <h2 class="d-flex justify-content-center">新增記錄</h2>
+      {{/if}}
+      <br />
+      <div class="form-group">
+        <label for="categoryId">Course</label>
+        <select name="categoryId" id="categoryId" class="form-control" required="required">
+          {{#each categories}}
+          <option value={{this.id}} {{#ifSelected this.id ../record.CategoryId}}selected{{/ifSelected}}>
+            {{this.name}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <br />
+      <div class="form-group">
+        <label for="date">Training Day</label>
+        <input type="text" name="date" id="date" class="form-control" required="required" value={{record.date}}></input>
+      </div>
+      <br />
+      <div class="form-group">
+        <label for="workout">Workout</label>
+        <textarea class="form-control" id="workout" name="workout" required="required">{{record.workout}}</textarea>
+      </div>
+      <br />
+      <div class="form-group">
+        <label for="times">Times</label>
+        <textarea class="form-control" id="times" name="times" required="required">{{record.times}}</textarea>
+      </div>
+      <br />
+      <div class="form-group">
+        <label for="image">Image</label><br />
+        <input type="file" name="image" id="image" class="form-control-file" value={{leisurefit.image}}></input>
+      </div>
+      <br />
+      <div class="d-flex justify-content-center mt-3">
+        <button type="submit" class="btn btn-info">
+          {{#if record}}
+          edit
+          {{else}}
+          create
+          {{/if}}
+        </button>
+      </div>
+      <div class="d-flex justify-content-center m-5">
+        <a href="/user/training">回到</a>
+      </div>
+    </form>
+</main>

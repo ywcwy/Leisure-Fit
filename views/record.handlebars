@@ -19,6 +19,7 @@
         <th scope="col">Id</th>
         <th scope="col">Training Day</th>
         <th scope="col">Workout</th>
+        <th scope="col">Times</th>
         <th scope="col">#</th>
       </tr>
     </thead>
@@ -28,10 +29,17 @@
         <th scope="row">{{this.id}}</th>
         <td>{{this.date}}</td>
         <td>{{this.workout}}</td>
+        <td>{{this.times}}</td>
         <td>
           <button type="button" class="btn btn-link">
             <a href="/user/training/records/{{this.id}}">More</a>
           </button>
+          <button type="button" class="btn btn-link">
+            <a href="/user/training/records/{{this.id}}/edit">Edit</a>
+          </button>
+          <form action="/user/training/records/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+            <button type="submit" class="btn btn-link">Delete</button>
+          </form>
         </td>
       </tr>
       {{/each}}
