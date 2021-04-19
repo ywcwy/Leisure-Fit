@@ -16,12 +16,22 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      CategoryId: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
       workout: {
         allowNull: false,
         type: Sequelize.STRING
       },
       times: {
         allowNull: false,
+        type: Sequelize.STRING
+      },
+      note: {
+        type: Sequelize.STRING
+      },
+      image: {
         type: Sequelize.STRING
       },
       createdAt: {

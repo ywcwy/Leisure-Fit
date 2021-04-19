@@ -12,7 +12,11 @@ const profileController = {
   },
   getRecords: async (req, res) => {
     const records = await Record.findAll({ where: { UserId: Number(req.user.id) }, raw: true, nest: true, include: [User] })
-    res.render('record', { records })
+    res.render('records', { records })
+  },
+  getRecord: async (req, res) => {
+    const record = await Record.findByPk(req.params.id, { raw: true, nest: true, include: [User, Category] })
+    res.render('record', { record })
   },
   getLikedLeisurefits: async (req, res) => {
     const likes = await Like.findAll({ where: { UserId: Number(req.user.id) }, raw: true, nest: true, include: [User, { model: Leisurefit, include: Category }] })

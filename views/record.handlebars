@@ -1,48 +1,20 @@
-<main class="m-5">
-  <h1>Profile</h1>
-  <nav class="nav mt-5">
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3 active" href="/user/profile">My
-      Profile</a>
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/user/likedLeisurefits">My
-      Collection</a>
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link" href="/user/training">My Training</a>
-  </nav>
-  <hr>
-  <a class="btn btn-info mx-3 btn-sm" href='/user/training/create'>Add Training Record</a>
-
-  <br />
-  <br />
-
-  <table class="table">
-    <thead class="thead-light">
-      <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Training Day</th>
-        <th scope="col">Workout</th>
-        <th scope="col">Times</th>
-        <th scope="col">#</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each records}}
-      <tr>
-        <th scope="row">{{this.id}}</th>
-        <td>{{this.date}}</td>
-        <td>{{this.workout}}</td>
-        <td>{{this.times}}</td>
-        <td>
-          <button type="button" class="btn btn-link">
-            <a href="/user/training/records/{{this.id}}">More</a>
-          </button>
-          <button type="button" class="btn btn-link">
-            <a href="/user/training/records/{{this.id}}/edit">Edit</a>
-          </button>
-          <form action="/user/training/records/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
-            <button type="submit" class="btn btn-link">Delete</button>
-          </form>
-        </td>
-      </tr>
-      {{/each}}
-    </tbody>
-  </table>
+<main class="row mt-5 ml-5 d-flex justify-content-center">
+  <div class="col-md-12 d-flex justify-content-center">
+    <h1>{{record.workout}}</h1>
+  </div>
+  <div class="col-md-8">
+    <br>
+    <div class="well">
+      <ul class="list-unstyled">
+        <li><strong>Training Day: {{record.date}}</strong></li><br>
+        <li>次數：{{record.times}}</li><br>
+        <li><a href="?categoryId={{record.CategoryId}}" style="color: #c9461e;">#{{record.Category.name}}</a></li><br>
+        <li>Note: {{record.note}}</li><br>
+        <li class="d-flex justify-content-center"><img src="{{record.image}}"></li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-12 d-flex justify-content-center my-5">
+    <a href="javascript:history.back()" style="color: #31583f">回上一頁</a>
+  </div>
 </main>

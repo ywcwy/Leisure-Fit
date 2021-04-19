@@ -11,13 +11,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Record.belongsTo(models.User)
+      Record.belongsTo(models.Category)
     }
   };
   Record.init({
     UserId: DataTypes.INTEGER,
+    CategoryId: DataTypes.INTEGER,
     date: DataTypes.STRING,
     workout: DataTypes.STRING,
-    times: DataTypes.STRING
+    times: DataTypes.STRING,
+    image: DataTypes.STRING,
+    note: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Record',

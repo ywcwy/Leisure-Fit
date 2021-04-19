@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Category.hasMany(models.Leisurefit)
+      Category.hasMany(models.Record)
     }
   };
   Category.init({
