@@ -40,7 +40,7 @@ router.get('/register', userController.registerPage)
 router.post('/register', userController.register)
 router.get('/login', userController.logInPage)
 router.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), userController.logIn)
-router.get('/logout', userController.logout)
+router.get('/logout', userController.logOut)
 
 // 前台需登入頁面
 // 收藏貼文

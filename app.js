@@ -1,4 +1,5 @@
 const express = require('express')
+const cookieParser = require('cookie-parser')
 const exphbs = require('express-handlebars')
 const flash = require('connect-flash')
 const session = require('express-session')
@@ -24,17 +25,20 @@ app.use(express.json())
 // app.use(bodyParser.json())
 
 app.use(methodOverride('_method'))
+app.use(cookieParser())
 
-app.use(passport.initialize())
-app.use(passport.session())
-passport.use(app)
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  // cookie: { secure: process.env.NODE_ENV === 'production' }
 }))
+app.use(passport.initialize())
+app.use(passport.session())
 
+// passport.use(app)
 app.use(flash())
+
 app.use((req, res, next) => {
   res.locals.user = req.user
   res.locals.isAuthenticated = req.isAuthenticated()
