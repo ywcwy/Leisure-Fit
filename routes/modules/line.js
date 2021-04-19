@@ -18,13 +18,39 @@ const message = {
 }
 
 
-let replyToken = ''
+
 router.post('/callback', (req, res) => {
-  replyToken = req.body.events.replyToken
-  console.log(replyToken)
-  console.log(req.body.events)
-  console.log(req.body.events.message)
+  // 驗證 signature
+  console.log(req.header)
+
+  // event
+  console.log(req.body)
+  const event = req.body.events[0]
+  const { type, replyToken, source, message } = event
+  console.log(event) //[{type, replyToken,...}]
+  console.log('%%%%%%%%%%')
+  console.log(replyToken, message)
+
+  // follow event
+  if (type === 'follow') {
+    client.replyMessage(replyToken, {
+      type: 'text',
+      text: '歡迎加入 Leisure-Fit 戶外訓練，每週課表請詳連結 https://leisure-fit.herokuapp.com/calendar 。'
+    })
+  }
+
+  // message event
+  if (type === 'message') {
+    if (message.type === 'text' && message.text === '課程' || '課表' || '課程表') {
+      if (source.type === 'user') {
+        client.replyMessage(replyToken, {
+          type: 'image',
+          text: '每週二，一起變強 - 戶外體能。每週三，一起變辣 - 女性限定。每週四，一起變強 - Cross - Fit。每週課表請詳連結 https://leisure-fit.herokuapp.com/calendar'
+        })
+      }
+    }
+  }
 })
-// client.replyMessage('<replytoken>')
+
 
 module.exports = router
