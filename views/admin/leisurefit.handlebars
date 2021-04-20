@@ -6,10 +6,12 @@
     </div>
     <div class="col-md-8">
       <br>
+      <br>
       <div class="well">
         <ul class="list-unstyled">
-          <li><strong>Training Day: {{leisurefit.Category.day}}</strong></li>
-          <br>
+          <li class="d-flex justify-content-between"><strong>Training Day: {{leisurefit.Category.day}}</strong>
+            <p>posted on {{leisurefit.createdAt}}</p>
+          </li>
           <li>{{leisurefit.description}}</li><br>
           <li class="d-flex justify-content-center"><img src="{{leisurefit.image}}"></li>
         </ul>

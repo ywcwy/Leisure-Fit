@@ -8,7 +8,7 @@ const categoryController = {
     if (req.params.id) {
       category = await Category.findByPk(req.params.id, { raw: true })
     }
-    res.render('admin/courses', { categories, category })
+    res.render('admin/categories', { categories, category })
   },
   postCategory: async (req, res) => {
     Category.create({ name: req.body.name, day: req.body.day })

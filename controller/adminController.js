@@ -1,12 +1,19 @@
 const db = require('../models')
 const { Leisurefit, Category } = db
+const moment = require('moment')
 const imgur = require('imgur')
 imgur.setClientId(process.env.IMGUR_CLIENT_ID)
 
 const adminController = {
-  getLeisurefits: (req, res) => {
-    Leisurefit.findAll({ raw: true, nest: true, include: [Category] })
-      .then(leisurefits => res.render('admin/leisurefits', { leisurefits }))
+  getLeisurefits: async (req, res) => {
+    let leisurefits = await Leisurefit.findAll({ raw: true, nest: true, include: [Category] })
+    leisurefits = leisurefits.map(l => {
+      return {
+        ...l,
+        createdAt: moment(l.createdAt).format('YYYY-MM-DD')
+      }
+    })
+    res.render('admin/leisurefits', { leisurefits })
   },
   createLeisurefit: async (req, res) => {
     const categories = await Category.findAll({ raw: true })
@@ -33,6 +40,7 @@ const adminController = {
   getLeisurefit: async (req, res) => {
     const leisurefit = await Leisurefit.findByPk(req.params.id, { raw: true, nest: true, include: [Category] })
     console.log(leisurefit)
+    leisurefit.createdAt = moment(leisurefit.createdAt).format('YYYY-MM-DD')
     leisurefit.description = leisurefit.description.replace(/\r?\n/g, '<br />')
     // console.log(leisurefit)
     res.render('admin/leisurefit', { leisurefit })
