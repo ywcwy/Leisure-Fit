@@ -36,7 +36,7 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
-// passport.use(app)
+app.use('/upload', express.static(__dirname + '/upload'))
 app.use(flash())
 
 app.use((req, res, next) => {

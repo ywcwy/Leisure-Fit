@@ -14,7 +14,7 @@ module.exports = {
       },
       date: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.DATE
       },
       CategoryId: {
         allowNull: false,

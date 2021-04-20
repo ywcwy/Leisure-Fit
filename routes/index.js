@@ -51,7 +51,11 @@ router.delete('/user/like/:id', authenticated, likeController.removeLike)
 router.get('/user/profile', authenticated, profileController.getProfile)
 router.get('/user/training', authenticated, profileController.getRecords)
 router.get('/user/training/create', authenticated, profileController.createRecord)
+router.post('/user/training/records', authenticated, upload.single('image'), profileController.postRecord)
 router.get('/user/training/records/:id', authenticated, profileController.getRecord)
+router.get('/user/training/records/:id/edit', authenticated, profileController.createRecord)
+router.put('/user/training/records/:id', authenticated, upload.single('image'), profileController.putRecord)
+
 router.get('/user/likedLeisurefits', authenticated, profileController.getLikedLeisurefits)
 router.delete('/user/likedLeisurefits/:id', authenticated, profileController.removeLikedLeisurefits)
 
@@ -65,7 +69,7 @@ router.get('/admin/leisurefits/:id/edit', authenticatedAdmin, adminController.cr
 router.put('/admin/leisurefits/:id', authenticatedAdmin, upload.single('image'), adminController.putLeisurefit)
 router.delete('/admin/leisurefits/:id', authenticatedAdmin, adminController.deleteLeisurefit)
 
-// 編輯分類
+// 後台編輯課程分類
 router.get('/admin/categories', authenticatedAdmin, categoryController.getCategories)
 router.get('/admin/categories/:id', authenticatedAdmin, categoryController.getCategories)
 router.post('/admin/category', authenticatedAdmin, categoryController.postCategory)

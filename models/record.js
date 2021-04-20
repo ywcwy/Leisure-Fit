@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   Record.init({
     UserId: DataTypes.INTEGER,
     CategoryId: DataTypes.INTEGER,
-    date: DataTypes.STRING,
+    date: DataTypes.DATE,
     workout: DataTypes.STRING,
     times: DataTypes.STRING,
     image: DataTypes.STRING,

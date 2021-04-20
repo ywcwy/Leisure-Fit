@@ -1,5 +1,5 @@
 <main class="d-flex justify-content-center">
-  {{#if record}}
+  {{#if record.id}}
   <form action="/user/training/records/{{record.id}}?_method=PUT" method="POST" class="my-5"
     enctype="multipart/form-data">
     <h2 class="d-flex justify-content-center">編輯記錄</h2>
@@ -20,27 +20,34 @@
       <br />
       <div class="form-group">
         <label for="date">Training Day</label>
-        <input type="text" name="date" id="date" class="form-control" required="required" value={{record.date}}></input>
+        <input type="date" name="date" id="date" class="form-control" required="required" value={{record.date}}></input>
       </div>
       <br />
       <div class="form-group">
         <label for="workout">Workout</label>
-        <textarea class="form-control" id="workout" name="workout" required="required">{{record.workout}}</textarea>
+        <input type="text" name="workout" id="workout" class="form-control" required="required"
+          value={{record.workout}}></input>
       </div>
       <br />
       <div class="form-group">
         <label for="times">Times</label>
-        <textarea class="form-control" id="times" name="times" required="required">{{record.times}}</textarea>
+        <input type="text" name="times" id="times" class="form-control" required="required"
+          value={{record.times}}></input>
       </div>
       <br />
       <div class="form-group">
+        <label for="note">Note</label>
+        <textarea class="form-control" id="note" name="note">{{record.note}}</textarea>
+      </div>
+      <br />
+      <div class=" form-group">
         <label for="image">Image</label><br />
         <input type="file" name="image" id="image" class="form-control-file" value={{leisurefit.image}}></input>
       </div>
       <br />
       <div class="d-flex justify-content-center mt-3">
         <button type="submit" class="btn btn-info">
-          {{#if record}}
+          {{#if record.id}}
           edit
           {{else}}
           create
@@ -48,7 +55,7 @@
         </button>
       </div>
       <div class="d-flex justify-content-center m-5">
-        <a href="/user/training">回到</a>
+        <a href="/user/training">回到 My Training</a>
       </div>
     </form>
 </main>
