@@ -14,6 +14,7 @@
     "unstyled",
     "javascripts",
     "Cond",
-    "CLEARDB"
+    "CLEARDB",
+    "linebot"
   ]
 }

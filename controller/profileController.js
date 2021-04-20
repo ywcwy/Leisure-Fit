@@ -1,11 +1,18 @@
 const db = require('../models')
 const { Leisurefit, Category, User, Like, Record } = db
+const moment = require('moment')
 const imgur = require('imgur')
 imgur.setClientId(process.env.IMGUR_CLIENT_ID)
 
 const profileController = {
   getProfile: async (req, res) => {
-    const records = await Record.findAll({ where: { UserId: Number(req.user.id) }, raw: true, nest: true, include: [User] })
+    let records = await Record.findAll({ where: { UserId: Number(req.user.id) }, raw: true, nest: true, include: [User] })
+    records = records.map(r => {
+      return {
+        ...r,
+        date: moment(r.date).format('YYYY-MM-DD')
+      }
+    })
     res.render('profile', { records })
   },
   createRecord: async (req, res) => {
@@ -28,11 +35,18 @@ const profileController = {
       .then(() => res.redirect('/user/training'))
   },
   getRecords: async (req, res) => {
-    const records = await Record.findAll({ where: { UserId: Number(req.user.id) }, raw: true, nest: true, include: [User] })
+    let records = await Record.findAll({ where: { UserId: Number(req.user.id) }, raw: true, nest: true, include: [User] })
+    records = records.map(r => {
+      return {
+        ...r,
+        date: moment(r.date).format('YYYY-MM-DD')
+      }
+    })
     res.render('records', { records })
   },
   getRecord: async (req, res) => {
     const record = await Record.findByPk(req.params.id, { raw: true, nest: true, include: [User, Category] })
+    record.date = moment(record.date).format('YYYY-MM-DD')
     res.render('record', { record })
   },
   putRecord: async (req, res) => {
@@ -46,7 +60,13 @@ const profileController = {
       .then(() => res.redirect(`/user/training/records/${req.params.id}`))
   },
   getLikedLeisurefits: async (req, res) => {
-    const likes = await Like.findAll({ where: { UserId: Number(req.user.id) }, raw: true, nest: true, include: [User, { model: Leisurefit, include: Category }] })
+    let likes = await Like.findAll({ where: { UserId: Number(req.user.id) }, raw: true, nest: true, include: [User, { model: Leisurefit, include: Category }] })
+    likes = likes.map(l => {
+      return {
+        ...l,
+        description: l.Leisurefit.description.substring(0, 50) + '...'
+      }
+    })
     res.render('likedLeisurefits', { likes })
   },
   removeLikedLeisurefits: async (req, res) => {
