@@ -80,9 +80,16 @@ router.delete('/admin/categories/:id', authenticatedAdmin, categoryController.de
 
 // 後台編輯訓練課程 (細項)
 router.get('/admin/courses', authenticatedAdmin, courseController.getTrainingDays)
+
 router.get('/admin/courses/trainingdays', authenticatedAdmin, courseController.getTrainingDays)
+router.post('/admin/courses/trainingdays', authenticatedAdmin, courseController.postTrainingDays)
+router.get('/admin/courses/trainingdays/:id', authenticatedAdmin, courseController.getTrainingDays)
+router.put('/admin/courses/trainingdays/:id', authenticatedAdmin, courseController.putTrainingDays)
+router.delete('/admin/courses/trainingdays/:id', authenticatedAdmin, courseController.deleteTrainingDays)
+
 router.get('/admin/courses/exercises', authenticatedAdmin, courseController.getExercises)
 router.get('/admin/courses/equipments', authenticatedAdmin, courseController.getEquipments)
 router.get('/admin/courses/trainings', authenticatedAdmin, courseController.getTrainings)
+router.get('/admin/courses/workouts', authenticatedAdmin, courseController.getWorkouts)
 
 module.exports = router
