@@ -15,11 +15,11 @@ module.exports = {
       EquipmentId: {
         type: Sequelize.INTEGER
       },
-      repetition: {
+      repetitions: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      set: {
+      sets: {
         allowNull: false,
         type: Sequelize.STRING
       },

@@ -9,6 +9,7 @@ const userController = require('../controller/userController')
 const categoryController = require('../controller/categoryController')
 const likeController = require('../controller/likeController')
 const profileController = require('../controller/profileController')
+const courseController = require('../controller/courseController')
 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
@@ -60,6 +61,7 @@ router.get('/user/likedLeisurefits', authenticated, profileController.getLikedLe
 router.delete('/user/likedLeisurefits/:id', authenticated, profileController.removeLikedLeisurefits)
 
 // 後台頁面
+// 後台編輯貼文
 router.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/leisurefits'))
 router.get('/admin/leisurefits', authenticatedAdmin, adminController.getLeisurefits)
 router.get('/admin/leisurefits/create', authenticatedAdmin, adminController.createLeisurefit)
@@ -69,11 +71,17 @@ router.get('/admin/leisurefits/:id/edit', authenticatedAdmin, adminController.cr
 router.put('/admin/leisurefits/:id', authenticatedAdmin, upload.single('image'), adminController.putLeisurefit)
 router.delete('/admin/leisurefits/:id', authenticatedAdmin, adminController.deleteLeisurefit)
 
-// 後台編輯課程分類
+// 後台編輯課程（大分類）
 router.get('/admin/categories', authenticatedAdmin, categoryController.getCategories)
 router.get('/admin/categories/:id', authenticatedAdmin, categoryController.getCategories)
 router.post('/admin/category', authenticatedAdmin, categoryController.postCategory)
 router.put('/admin/categories/:id', authenticatedAdmin, categoryController.editCategory)
 router.delete('/admin/categories/:id', authenticatedAdmin, categoryController.deleteCategory)
+
+// 後台編輯訓練課程 (細項)
+router.get('/admin/courses', authenticatedAdmin, courseController.getTrainingDays)
+router.get('/admin/courses/trainingdays', authenticatedAdmin, courseController.getTrainingDays)
+router.get('/admin/courses/exercises', authenticatedAdmin, courseController.getExercises)
+
 
 module.exports = router
