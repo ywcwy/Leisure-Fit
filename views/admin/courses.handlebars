@@ -24,6 +24,8 @@
       href="/admin/courses/workouts">Workout</a>
   </nav>
   <hr>
+
+  {{!-- 課程日 --}}
   {{#if trainingdays}}
   {{#if trainingday.id}}
   <form action="/admin/courses/trainingdays/{{trainingday.id}}?_method=PUT" method="POST"
@@ -32,20 +34,25 @@
     <form action="/admin/courses/trainingdays" method="POST" class="d-flex align-items-center">
       {{/if}}
       <div class="form-inline d-flex align-items-center">
-        Training Date:<input type="date" name="date" class="ml-2 mr-4 rounded form-control" required="required"
+        Training Date:<input type="date" name="date" class="ml-2 mr-2 rounded form-control" required="required"
           value={{trainingday.date}}>
         <label for="categoryId">Training Category: </label>
-        <select name="categoryId" id="categoryId" class="ml-2 mr-4 form-control" required="required">
+        <select name="categoryId" id="categoryId" class="ml-2 mr-2 form-control" required="required">
           <option>分類：</option>
           {{#each categories}}
           <option value={{this.id}} {{#ifSelected this.id ../trainingday.CategoryId}}selected{{/ifSelected}}>
             {{this.name}}</option>
           {{/each}}
         </select>
-        Duration: <input type="text" name="duration" class="ml-2 rounded form-control" required="required"
-          value={{trainingday.duration}}>
+        Duration: <input type="text" name="duration" style="width:80px;" class="ml-2 rounded form-control"
+          required="required" value={{trainingday.duration}}>
       </div>
-      <button type="submit" class="btn btn-sm ml-2" style="color: #dc6548"> Create</button>
+      {{#if trainingday.id}}
+      <button type="submit" class="btn btn-sm ml-2" style="color: #dc6548">編輯</button>
+      <a href="/admin/courses/trainingdays" role="button" aria-disabled="true" class="btn btn-sm btn-light ml-2"
+        style="color: #dc6548">取消編輯</a>
+      {{else}}
+      <button type="submit" class="btn btn-sm ml-2" style="color: #dc6548">新增</button>{{/if}}
     </form>
     <br />
     <table class="table">
@@ -78,7 +85,7 @@
       {{/if}}
     </table>
 
-
+    {{!-- 動作項目 --}}
     {{#if exercises}}
     {{#if exercise.id}}
     <form action="/admin/courses/exercises/{{exercise.id}}?_method=PUT" method="POST" class="d-flex align-items-center">
@@ -90,7 +97,12 @@
             value={{exercise.move}}>
           描述: <input type="text" name="description" class="ml-2 rounded form-control" value={{exercise.description}}>
         </div>
-        <button type="submit" class="btn btn-sm ml-2" style="color: #dc6548"> Create</button>
+        {{#if exercise.id}}
+        <button type="submit" class="btn btn-sm ml-2" style="color: #dc6548">編輯</button>
+        <a href="/admin/courses/exercises" role="button" aria-disabled="true" class="btn btn-sm btn-light ml-2"
+          style="color: #dc6548">取消編輯</a>
+        {{else}}
+        <button type="submit" class="btn btn-sm ml-2" style="color: #dc6548">新增</button>{{/if}}
       </form>
       <br>
       <table class="table">
