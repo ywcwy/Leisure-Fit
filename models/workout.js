@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Workout.hasMany(model.Trainingday)
-      Workout.hasMany(model.Training)
+      Workout.hasMany(models.Trainingday)
+      Workout.hasMany(models.Training)
     }
   };
   Workout.init({

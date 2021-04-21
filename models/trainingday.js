@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Trainingday.belongsTo(model.Workout)
-      Trainingday.HasMany(model.Record)
+      Trainingday.belongsTo(models.Workout)
+      Trainingday.hasMany(models.Record)
     }
   };
   Trainingday.init({
@@ -22,5 +22,5 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Trainingday',
   });
-  return TrainingDay;
+  return Trainingday;
 };

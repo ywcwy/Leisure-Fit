@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Record.belongsTo(model.User)
-      Record.belongsTo(model.Trainingday)
+      Record.belongsTo(models.User)
+      Record.belongsTo(models.Trainingday)
     }
   };
   Record.init({

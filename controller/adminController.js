@@ -18,7 +18,7 @@ const adminController = {
   createLeisurefit: async (req, res) => {
     const categories = await Category.findAll({ raw: true })
     const leisurefit = await Leisurefit.findByPk(req.params.id, { raw: true })
-    res.render('admin/create', { categories, leisurefit })
+    res.render('admin/leisurefitCreate', { categories, leisurefit })
   },
   postLeisurefit: async (req, res) => {
     let { categoryId, name, description } = req.body
