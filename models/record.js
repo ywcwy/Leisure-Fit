@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Record.init({
-    Trainingday: DataTypes.INTEGER,
+    TrainingdayId: DataTypes.INTEGER,
     UserId: DataTypes.INTEGER,
     note: DataTypes.STRING,
     image: DataTypes.STRING

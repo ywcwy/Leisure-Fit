@@ -12,13 +12,14 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Training.belongsTo(model.Workout)
       Training.hasMany(model.Exercise)
+      Training.hasMany(model.Equipment)
     }
   };
   Training.init({
     ExerciseId: DataTypes.INTEGER,
-    repetition: DataTypes.INTEGER,
-    set: DataTypes.INTEGER,
-    TrainingdayId: DataTypes.INTEGER
+    EquipmentId: DataTypes.INTEGER,
+    repetition: DataTypes.STRING,
+    set: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Training',

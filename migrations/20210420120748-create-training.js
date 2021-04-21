@@ -12,17 +12,16 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER
       },
+      EquipmentId: {
+        type: Sequelize.INTEGER
+      },
       repetition: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       set: {
         allowNull: false,
-        type: Sequelize.INTEGER
-      },
-      TrainingdayId: {
-        allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
