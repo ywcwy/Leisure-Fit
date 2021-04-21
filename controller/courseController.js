@@ -1,5 +1,5 @@
 const db = require('../models')
-const { Leisurefit, Category, User, Trainingday, Exercise } = db
+const { Category, User, Trainingday, Exercise, Equipment, Training, Workout, Record } = db
 const moment = require('moment')
 
 const courseController = {
@@ -16,6 +16,14 @@ const courseController = {
   getExercises: async (req, res) => {
     const exercises = await Exercise.findAll({ raw: true })
     res.render('admin/courses', { exercises })
+  },
+  getEquipments: async (req, res) => {
+    const equipments = await Equipment.findAll({ raw: true })
+    res.render('admin/courses', { equipments })
+  },
+  getTrainings: async (req, res) => {
+    const trainings = await Training.findAll({ raw: true, nest: true, include: [Exercise, Equipment] })
+    res.render('admin/courses', { trainings })
   }
 }
 

@@ -27,6 +27,7 @@
   <a class="btn btn-light mx-3 btn-sm" href="/admin/leisurefits/create" style="color: #dc6548">New Post</a>
   <br />
   <br />
+
   {{#if trainingdays}}
   <table class="table">
     <thead class="thead-light">
@@ -91,6 +92,79 @@
           </form>
         </td>
       </tr>
+      {{/each}}
+    </tbody>
+
+    {{/if}}
+  </table>
+
+
+  {{#if equipments}}
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Item</th>
+        <th scope="col">Description</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each equipments}}
+      <tr>
+        <th scope="row">{{this.id}}</th>
+        <td>{{this.item}}</td>
+        <td>{{this.description}}</td>
+        <td>
+          <button type="button" class="btn btn-link">
+            <a style="color: #31583f" href="/admin/leisurefits/{{this.id}}">More</a>
+          </button>
+          <button type="button" class="btn btn-link">
+            <a style="color: #31583f" href="/admin/leisurefits/{{this.id}}/edit">Edit</a>
+          </button>
+          <form action="/admin/leisurefits/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+            <button style="color: #31583f" type="submit" class="btn btn-link">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+
+    {{/if}}
+  </table>
+
+  {{#if trainings}}
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Exercise</th>
+        <th scope="col">Equipment</th>
+        <th scope="col">Repetitions</th>
+        <th scope="col">Sets</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each trainings}}
+      {{!-- <tr>
+        <th scope="row">{{this.id}}</th>
+        <td>{{this.Exercise.move}}</td>
+        <td>{{this.Equipment.item}}</td>
+        <td>{{this.repetitions}}</td>
+        <td>{{this.sets}}</td>
+        <td>
+          <button type="button" class="btn btn-link">
+            <a style="color: #31583f" href="/admin/leisurefits/{{this.id}}">More</a>
+          </button>
+          <button type="button" class="btn btn-link">
+            <a style="color: #31583f" href="/admin/leisurefits/{{this.id}}/edit">Edit</a>
+          </button>
+          <form action="/admin/leisurefits/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+            <button style="color: #31583f" type="submit" class="btn btn-link">Delete</button>
+          </form>
+        </td>
+      </tr> --}}
       {{/each}}
     </tbody>
 

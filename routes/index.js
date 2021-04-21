@@ -82,6 +82,7 @@ router.delete('/admin/categories/:id', authenticatedAdmin, categoryController.de
 router.get('/admin/courses', authenticatedAdmin, courseController.getTrainingDays)
 router.get('/admin/courses/trainingdays', authenticatedAdmin, courseController.getTrainingDays)
 router.get('/admin/courses/exercises', authenticatedAdmin, courseController.getExercises)
-
+router.get('/admin/courses/equipments', authenticatedAdmin, courseController.getEquipments)
+router.get('/admin/courses/trainings', authenticatedAdmin, courseController.getTrainings)
 
 module.exports = router
