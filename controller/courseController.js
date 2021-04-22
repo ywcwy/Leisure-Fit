@@ -20,7 +20,7 @@ const courseController = {
     }
     res.render('admin/courses', { trainingdays, categories, trainingday })
   },
-  postTrainingDays: (req, res) => {
+  postTrainingDay: (req, res) => {
     const { date, categoryId, duration } = req.body
     Trainingday.create({ date, CategoryId: Number(categoryId), duration })
       .then(() => {
@@ -28,7 +28,7 @@ const courseController = {
         res.redirect('/admin/courses/trainingdays')
       })
   },
-  putTrainingDays: (req, res) => {
+  putTrainingDay: (req, res) => {
     const { date, categoryId, duration } = req.body
     Trainingday.update({ date, CategoryId: Number(categoryId), duration }, { where: { id: req.params.id } })
       .then(() => {
@@ -36,7 +36,7 @@ const courseController = {
         res.redirect('/admin/courses/trainingdays')
       })
   },
-  deleteTrainingDays: (req, res) => {
+  deleteTrainingDay: (req, res) => {
     Trainingday.destroy({ where: { id: req.params.id } })
       .then(() => {
         req.flash('success_msg', '課程日刪除成功。')
@@ -51,7 +51,7 @@ const courseController = {
     if (req.params.id) { exercise = await Exercise.findByPk(req.params.id, { raw: true }) }
     res.render('admin/courses', { exercises, exercise })
   },
-  postExercises: (req, res) => {
+  postExercise: (req, res) => {
     const { move, description } = req.body
     Exercise.create({ move, description })
       .then(() => {
@@ -59,7 +59,7 @@ const courseController = {
         res.redirect('/admin/courses/exercises')
       })
   },
-  putExercises: (req, res) => {
+  putExercise: (req, res) => {
     const { move, description } = req.body
     Exercise.update({ move, description }, { where: { id: req.params.id } })
       .then(() => {
@@ -67,7 +67,7 @@ const courseController = {
         res.redirect('/admin/courses/exercises')
       })
   },
-  deleteExercises: (req, res) => {
+  deleteExercise: (req, res) => {
     Exercise.destroy({ where: { id: req.params.id } })
       .then(() => {
         req.flash('success_msg', '動作項目刪除成功。')
@@ -82,7 +82,7 @@ const courseController = {
     if (req.params.id) { equipment = await Equipment.findByPk(req.params.id, { raw: true }) }
     res.render('admin/courses', { equipments, equipment })
   },
-  postEquipments: (req, res) => {
+  postEquipment: (req, res) => {
     const { item, description } = req.body
     Equipment.create({ item, description })
       .then(() => {
@@ -90,7 +90,7 @@ const courseController = {
         res.redirect('/admin/courses/equipments')
       })
   },
-  putEquipments: (req, res) => {
+  putEquipment: (req, res) => {
     const { item, description } = req.body
     Equipment.update({ item, description }, { where: { id: req.params.id } })
       .then(() => {
@@ -98,7 +98,7 @@ const courseController = {
         res.redirect('/admin/courses/equipments')
       })
   },
-  deleteEquipments: (req, res) => {
+  deleteEquipment: (req, res) => {
     Equipment.destroy({ where: { id: req.params.id } })
       .then(() => {
         req.flash('success_msg', '器材刪除成功。')
@@ -106,15 +106,24 @@ const courseController = {
       })
   },
 
-  // 動作、器材、次數組合
-  getTrainings: async (req, res) => {
-    const trainings = await Training.findAll({ raw: true, nest: true, include: [Exercise, Equipment] })
-    res.render('admin/courses', { trainings })
-  },
-
   // 訓練日的菜單
   getWorkouts: async (req, res) => {
-    let workouts = await Workout.findAll({ raw: true, nest: true, include: [{ model: Trainingday, include: [Category] }, { model: Training, include: [Exercise] }] })
+    // const trainingdays = await Trainingday.findAll({ raw: true })
+    // let workouts = await Promise.all(trainingdays.map(async (t) => {
+    //   const trainings = await Workout.findAll({
+    //     where: { TrainingdayId: t.id }, raw: true, nest: true,
+    //     include: [{ model: Trainingday, include: [Category] }, { model: Training, include: [Exercise, Equipment] }]
+    //   })
+    //   console.log(trainings)
+    //   console.log(trainings[0].Training)
+    //   return {
+    //     date: moment(t.date).format('YYYY-MM-DD'),
+    //     trainings,
+    //     length: trainings.length
+    //   }
+    // }))
+
+    let workouts = await Workout.findAll({ raw: true, nest: true, include: [{ model: Trainingday, include: [Category] }, { model: Training, include: [Exercise, Equipment] }] })
     workouts = workouts.map(w => {
       return {
         ...w,
@@ -122,6 +131,61 @@ const courseController = {
       }
     })
     res.render('admin/courses', { workouts })
+  },
+  createWorkout: async (req, res) => {
+    const categories = await Category.findAll({ raw: true })
+    const exercises = await Exercise.findAll({ raw: true })
+    const equipments = await Equipment.findAll({ raw: true })
+    let workout = {}
+    if (req.params.id) {
+      const event = await Workout.findByPk(req.params.id, { raw: true })
+      const trainingday = await Trainingday.findByPk(event.TrainingdayId, { raw: true })
+      const training = await Training.findByPk(event.TrainingId, { raw: true })
+      workout = {
+        id: req.params.id,
+        date: moment(trainingday.date).format('YYYY-MM-DD'),
+        categoryId: trainingday.CategoryId,
+        duration: trainingday.duration,
+        exerciseId: training.ExerciseId,
+        equipmentId: training.EquipmentId,
+        repetitions: training.repetitions,
+        sets: training.sets
+      }
+      console.log(workout)
+    }
+    res.render('admin/workoutCreate', { workout, categories, exercises, equipments })
+  },
+  postWorkout: async (req, res) => {
+    const { date, categoryId, duration, exerciseId, equipmentId, repetitions, sets } = req.body
+    const trainingday = await Trainingday.create({ date, CategoryId: Number(categoryId), duration })
+    const training = await Training.create({ ExerciseId: Number(exerciseId), Equipment: Number(equipmentId), repetitions, sets })
+    Workout.create({ TrainingdayId: Number(trainingday.id), TrainingId: Number(training.id) })
+      .then(() => {
+        req.flash('success_msg', '訓練項目新增成功。')
+        res.redirect('/admin/courses/workouts')
+      })
+  },
+  putWorkout: async (req, res) => {
+    const { date, categoryId, duration, exerciseId, equipmentId, repetitions, sets } = req.body
+    const workout = await Workout.findByPk(req.params.id, { raw: true })
+    Promise.all([
+      Trainingday.update({ date, categoryId, duration }, { where: { id: workout.TrainingdayId } }),
+      Training.update({ ExerciseId: Number(exerciseId), EquipmentId: Number(equipmentId), repetitions, sets }, { where: { id: workout.TrainingId } })])
+      .then(() => {
+        req.flash('success_msg', '訓練項目更新成功。')
+        res.redirect('/admin/courses/workouts')
+      })
+  },
+  deleteWorkout: async (req, res) => {
+    const workout = await Workout.findByPk(req.params.id)
+    Promise.all([
+      Trainingday.destroy({ where: { id: workout.TrainingdayId } }),
+      workout.destroy()
+    ]).then(() => {
+      req.flash('success_msg', '訓練項目刪除成功。')
+      res.redirect('/admin/courses/workouts')
+    })
+
   }
 }
 

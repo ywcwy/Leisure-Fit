@@ -18,8 +18,6 @@
       href="/admin/courses/exercises">Exercise</a>
     <a role="button" class="btn btn-outline-info btn-sm nav-link mr-3 {{#if equipments}}active{{/if}}"
       href="/admin/courses/equipments">Equipment</a>
-    <a role="button" class="btn btn-outline-info btn-sm nav-link mr-3 {{#if trainings}}active{{/if}}"
-      href="/admin/courses/trainings">Training</a>
     <a role="button" class="btn btn-outline-info btn-sm nav-link {{#if workouts}}active{{/if}}"
       href="/admin/courses/workouts">Workout</a>
   </nav>
@@ -181,48 +179,18 @@
           {{/if}}
         </table>
 
-        {{!-- 動作、器材、次數組合 --}}
-        {{#if trainings}}
-        <table class="table">
-          <thead class="thead-light">
-            <tr>
-              <th scope="col">Exercise</th>
-              {{!-- <th scope="col">Equipment</th> --}}
-              <th scope="col">Repetitions</th>
-              <th scope="col">Sets</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {{#each trainings}}
-            <tr>
-              <td>{{this.Exercise.move}}</td>
-              {{!-- <td>{{this.Equipment.item}}</td> --}}
-              <td>{{this.repetitions}}</td>
-              <td>{{this.sets}}</td>
-              <td>
-                <button type="button" class="btn btn-link">
-                  <a style="color: #31583f" href="/admin/leisurefits/{{this.id}}/edit">Edit</a>
-                </button>
-                <form action="/admin/leisurefits/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
-                  <button style="color: #31583f" type="submit" class="btn btn-link">Delete</button>
-                </form>
-              </td>
-            </tr>
-            {{/each}}
-          </tbody>
-          {{/if}}
-        </table>
-
-
         {{!-- 訓練日的菜單 --}}
         {{#if workouts}}
+        <a class="btn btn-light mx-3 btn-sm" href="/admin/courses/workouts/create" style="color: #dc6548">
+          New Workout</a>
+        <br>
+        <br>
         <table class="table">
           <thead class="thead-light">
             <tr>
               <th scope="col">Training Date</th>
               <th scope="col">Exercise</th>
-              {{!-- <th scope="col">Equipment</th> --}}
+              <th scope="col">Equipment</th>
               <th scope="col">Repetitions</th>
               <th scope="col">Sets</th>
               <th scope="col"></th>
@@ -232,18 +200,24 @@
             {{#each workouts}}
             <tr>
               <td>{{this.date}}</td>
+              {{!-- <td rowspan="{{this.length}}">{{this.date}}</td> --}}
+              {{!-- <td>{{this.trainings.Training.Exercise.move}}</td>
+              <td>{{this.trainings.Training.Equipment.item}}</td>
+              <td>{{this.trainings.Training.repetitions}}</td>
+              <td>{{this.trainings.Training.sets}}</td> --}}
               <td>{{this.Training.Exercise.move}}</td>
-              {{!-- <td>{{this.Training.Equipment.item}}</td> --}}
+              <td>{{this.Training.Equipment.item}}</td>
               <td>{{this.Training.repetitions}}</td>
               <td>{{this.Training.sets}}</td>
               <td>
                 <button type="button" class="btn btn-link">
-                  <a style="color: #31583f" href="/admin/leisurefits/{{this.id}}">More</a>
+                  <a style="color: #31583f" href="/admin/courses/workouts/{{this.id}}">More</a>
                 </button>
                 <button type="button" class="btn btn-link">
-                  <a style="color: #31583f" href="/admin/leisurefits/{{this.id}}/edit">Edit</a>
+                  <a style="color: #31583f" href="/admin/courses/workouts/{{this.id}}">Edit</a>
                 </button>
-                <form action="/admin/leisurefits/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+                <form action="/admin/courses/workouts/{{this.id}}?_method=DELETE" method="POST"
+                  style="display: inline;">
                   <button style="color: #31583f" type="submit" class="btn btn-link">Delete</button>
                 </form>
               </td>

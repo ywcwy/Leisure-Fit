@@ -82,24 +82,28 @@ router.delete('/admin/categories/:id', authenticatedAdmin, categoryController.de
 router.get('/admin/courses', authenticatedAdmin, courseController.getTrainingDays)
 
 router.get('/admin/courses/trainingdays', authenticatedAdmin, courseController.getTrainingDays)
-router.post('/admin/courses/trainingdays', authenticatedAdmin, courseController.postTrainingDays)
+router.post('/admin/courses/trainingdays', authenticatedAdmin, courseController.postTrainingDay)
 router.get('/admin/courses/trainingdays/:id', authenticatedAdmin, courseController.getTrainingDays)
-router.put('/admin/courses/trainingdays/:id', authenticatedAdmin, courseController.putTrainingDays)
-router.delete('/admin/courses/trainingdays/:id', authenticatedAdmin, courseController.deleteTrainingDays)
+router.put('/admin/courses/trainingdays/:id', authenticatedAdmin, courseController.putTrainingDay)
+router.delete('/admin/courses/trainingdays/:id', authenticatedAdmin, courseController.deleteTrainingDay)
 
 router.get('/admin/courses/exercises', authenticatedAdmin, courseController.getExercises)
-router.post('/admin/courses/exercises', authenticatedAdmin, courseController.postExercises)
+router.post('/admin/courses/exercises', authenticatedAdmin, courseController.postExercise)
 router.get('/admin/courses/exercises/:id', authenticatedAdmin, courseController.getExercises)
-router.put('/admin/courses/exercises/:id', authenticatedAdmin, courseController.putExercises)
-router.delete('/admin/courses/exercises/:id', authenticatedAdmin, courseController.deleteExercises)
+router.put('/admin/courses/exercises/:id', authenticatedAdmin, courseController.putExercise)
+router.delete('/admin/courses/exercises/:id', authenticatedAdmin, courseController.deleteExercise)
 
 router.get('/admin/courses/equipments', authenticatedAdmin, courseController.getEquipments)
-router.post('/admin/courses/equipments', authenticatedAdmin, courseController.postEquipments)
+router.post('/admin/courses/equipments', authenticatedAdmin, courseController.postEquipment)
 router.get('/admin/courses/equipments/:id', authenticatedAdmin, courseController.getEquipments)
-router.put('/admin/courses/equipments/:id', authenticatedAdmin, courseController.putEquipments)
-router.delete('/admin/courses/equipments/:id', authenticatedAdmin, courseController.deleteEquipments)
+router.put('/admin/courses/equipments/:id', authenticatedAdmin, courseController.putEquipment)
+router.delete('/admin/courses/equipments/:id', authenticatedAdmin, courseController.deleteEquipment)
 
-router.get('/admin/courses/trainings', authenticatedAdmin, courseController.getTrainings)
 router.get('/admin/courses/workouts', authenticatedAdmin, courseController.getWorkouts)
+router.get('/admin/courses/workouts/create', authenticatedAdmin, courseController.createWorkout)
+router.post('/admin/courses/workouts', authenticatedAdmin, courseController.postWorkout)
+router.get('/admin/courses/workouts/:id', authenticatedAdmin, courseController.createWorkout)
+router.put('/admin/courses/workouts/:id', authenticatedAdmin, courseController.putWorkout)
+router.delete('/admin/courses/workouts/:id', authenticatedAdmin, courseController.deleteWorkout)
 
 module.exports = router
