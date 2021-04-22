@@ -16,8 +16,8 @@ const courseController = {
     let trainingday = {}
     if (req.params.id) {
       trainingday = await Trainingday.findByPk(req.params.id, { raw: true })
+      trainingday.date = moment(trainingday.date).format('YYYY-MM-DD')
     }
-    trainingday.date = moment(trainingday.date).format('YYYY-MM-DD')
     res.render('admin/courses', { trainingdays, categories, trainingday })
   },
   postTrainingDays: (req, res) => {
@@ -48,9 +48,7 @@ const courseController = {
   getExercises: async (req, res) => {
     const exercises = await Exercise.findAll({ raw: true })
     let exercise = {}
-    if (req.params.id) {
-      exercise = await Exercise.findByPk(req.params.id, { raw: true })
-    }
+    if (req.params.id) { exercise = await Exercise.findByPk(req.params.id, { raw: true }) }
     res.render('admin/courses', { exercises, exercise })
   },
   postExercises: (req, res) => {
@@ -80,7 +78,32 @@ const courseController = {
   // 器材項目
   getEquipments: async (req, res) => {
     const equipments = await Equipment.findAll({ raw: true })
-    res.render('admin/courses', { equipments })
+    let equipment = {}
+    if (req.params.id) { equipment = await Equipment.findByPk(req.params.id, { raw: true }) }
+    res.render('admin/courses', { equipments, equipment })
+  },
+  postEquipments: (req, res) => {
+    const { item, description } = req.body
+    Equipment.create({ item, description })
+      .then(() => {
+        req.flash('success_msg', '器材新增成功。')
+        res.redirect('/admin/courses/equipments')
+      })
+  },
+  putEquipments: (req, res) => {
+    const { item, description } = req.body
+    Equipment.update({ item, description }, { where: { id: req.params.id } })
+      .then(() => {
+        req.flash('success_msg', '器材更新成功。')
+        res.redirect('/admin/courses/equipments')
+      })
+  },
+  deleteEquipments: (req, res) => {
+    Equipment.destroy({ where: { id: req.params.id } })
+      .then(() => {
+        req.flash('success_msg', '器材刪除成功。')
+        res.redirect('/admin/courses/equipments')
+      })
   },
 
   // 動作、器材、次數組合

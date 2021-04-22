@@ -93,9 +93,12 @@ router.get('/admin/courses/exercises/:id', authenticatedAdmin, courseController.
 router.put('/admin/courses/exercises/:id', authenticatedAdmin, courseController.putExercises)
 router.delete('/admin/courses/exercises/:id', authenticatedAdmin, courseController.deleteExercises)
 
-
-
 router.get('/admin/courses/equipments', authenticatedAdmin, courseController.getEquipments)
+router.post('/admin/courses/equipments', authenticatedAdmin, courseController.postEquipments)
+router.get('/admin/courses/equipments/:id', authenticatedAdmin, courseController.getEquipments)
+router.put('/admin/courses/equipments/:id', authenticatedAdmin, courseController.putEquipments)
+router.delete('/admin/courses/equipments/:id', authenticatedAdmin, courseController.deleteEquipments)
+
 router.get('/admin/courses/trainings', authenticatedAdmin, courseController.getTrainings)
 router.get('/admin/courses/workouts', authenticatedAdmin, courseController.getWorkouts)
 
