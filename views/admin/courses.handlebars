@@ -132,7 +132,7 @@
         {{/if}}
       </table>
 
-
+      {{!-- 器材項目 --}}
       {{#if equipments}}
       <table class="table">
         <thead class="thead-light">
@@ -161,12 +161,13 @@
         {{/if}}
       </table>
 
+      {{!-- 動作、器材、次數組合 --}}
       {{#if trainings}}
       <table class="table">
         <thead class="thead-light">
           <tr>
             <th scope="col">Exercise</th>
-            <th scope="col">Equipment</th>
+            {{!-- <th scope="col">Equipment</th> --}}
             <th scope="col">Repetitions</th>
             <th scope="col">Sets</th>
             <th scope="col"></th>
@@ -176,7 +177,7 @@
           {{#each trainings}}
           <tr>
             <td>{{this.Exercise.move}}</td>
-            <td>{{this.Equipment.item}}</td>
+            {{!-- <td>{{this.Equipment.item}}</td> --}}
             <td>{{this.repetitions}}</td>
             <td>{{this.sets}}</td>
             <td>
@@ -193,6 +194,8 @@
         {{/if}}
       </table>
 
+
+      {{!-- 訓練日的菜單 --}}
       {{#if workouts}}
       <table class="table">
         <thead class="thead-light">
