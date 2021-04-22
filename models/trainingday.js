@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => {
       Trainingday.hasMany(models.Workout)
       Trainingday.hasMany(models.Record)
       Trainingday.belongsTo(models.Category)
+      Trainingday.belongsToMany(models.Training, {
+        through: models.Workout,
+        foreignKey: 'TrainingdayId',
+        as: 'TrainingList'
+      })
     }
   };
   Trainingday.init({

@@ -51,11 +51,8 @@ router.delete('/user/like/:id', authenticated, likeController.removeLike)
 // profile
 router.get('/user/profile', authenticated, profileController.getProfile)
 router.get('/user/training', authenticated, profileController.getRecords)
-router.get('/user/training/create', authenticated, profileController.createRecord)
-router.post('/user/training/records', authenticated, upload.single('image'), profileController.postRecord)
 router.get('/user/training/records/:id', authenticated, profileController.getRecord)
-router.get('/user/training/records/:id/edit', authenticated, profileController.createRecord)
-router.put('/user/training/records/:id', authenticated, upload.single('image'), profileController.putRecord)
+
 
 router.get('/user/likedLeisurefits', authenticated, profileController.getLikedLeisurefits)
 router.delete('/user/likedLeisurefits/:id', authenticated, profileController.removeLikedLeisurefits)
@@ -81,29 +78,36 @@ router.delete('/admin/categories/:id', authenticatedAdmin, categoryController.de
 // 後台編輯訓練課程 (細項)
 router.get('/admin/courses', authenticatedAdmin, courseController.getTrainingDays)
 
+// 後台編輯訓練課程日期
 router.get('/admin/courses/trainingdays', authenticatedAdmin, courseController.getTrainingDays)
 router.post('/admin/courses/trainingdays', authenticatedAdmin, courseController.postTrainingDay)
 router.get('/admin/courses/trainingdays/:id', authenticatedAdmin, courseController.getTrainingDays)
 router.put('/admin/courses/trainingdays/:id', authenticatedAdmin, courseController.putTrainingDay)
 router.delete('/admin/courses/trainingdays/:id', authenticatedAdmin, courseController.deleteTrainingDay)
 
+// 後台編輯訓練動作
 router.get('/admin/courses/exercises', authenticatedAdmin, courseController.getExercises)
 router.post('/admin/courses/exercises', authenticatedAdmin, courseController.postExercise)
 router.get('/admin/courses/exercises/:id', authenticatedAdmin, courseController.getExercises)
 router.put('/admin/courses/exercises/:id', authenticatedAdmin, courseController.putExercise)
 router.delete('/admin/courses/exercises/:id', authenticatedAdmin, courseController.deleteExercise)
 
+
+// 後台編輯訓練器材
 router.get('/admin/courses/equipments', authenticatedAdmin, courseController.getEquipments)
 router.post('/admin/courses/equipments', authenticatedAdmin, courseController.postEquipment)
 router.get('/admin/courses/equipments/:id', authenticatedAdmin, courseController.getEquipments)
 router.put('/admin/courses/equipments/:id', authenticatedAdmin, courseController.putEquipment)
 router.delete('/admin/courses/equipments/:id', authenticatedAdmin, courseController.deleteEquipment)
 
+// 後台編輯訓練課程菜單
 router.get('/admin/courses/workouts', authenticatedAdmin, courseController.getWorkouts)
 router.get('/admin/courses/workouts/create', authenticatedAdmin, courseController.createWorkout)
 router.post('/admin/courses/workouts', authenticatedAdmin, courseController.postWorkout)
 router.get('/admin/courses/workouts/:id', authenticatedAdmin, courseController.createWorkout)
 router.put('/admin/courses/workouts/:id', authenticatedAdmin, courseController.putWorkout)
 router.delete('/admin/courses/workouts/:id', authenticatedAdmin, courseController.deleteWorkout)
+
+
 
 module.exports = router
