@@ -9,62 +9,66 @@
       <br />
       <div class=" d-flex flex-column align-items-center">
         {{!-- Trainingday --}}
-        <fieldset>
-          <legend>訓練日：</legend>
-          <div>
-            <div class="form-group">
-              日期:<input type="date" name="date" id="date" class="rounded form-control" required="required" value={{
-                workout.date}}>
-            </div>
-            <div class="form-group">
-              <label for="categoryId">分類: </label>
-              <select name="categoryId" id="categoryId" class="rounded form-control" required="required">
-                {{#each categories}}
-                <option value={{this.id}} {{#ifSelected this.id ../workout.categoryId}}selected{{/ifSelected}}>
-                  {{this.name}}</option>
-                {{/each}}
-              </select>
-            </div>
-            <div class="form-group">
-              時數: <input type="text" name="duration" class="rounded form-control" required="required"
-                value={{workout.duration}}>
-            </div>
-          </div>
-        </fieldset>
 
-        <fieldset>
-          <legend>訓練項目：</legend>
-          {{!-- Exercise --}}
-          <div class="form-group">
-            <label for="exerciseId">動作: </label>
-            <select name="exerciseId" id="exerciseId" class="rounded form-control" required="required">
-              {{#each exercises}}
-              <option value={{this.id}} {{#ifSelected this.id ../workout.exerciseId}}selected{{/ifSelected}}>
-                {{this.move}}</option>
-              {{/each}}
-            </select>
-          </div>
+        {{!-- <div class="form-group">
+          日期:<input type="date" name="date" id="date" class="rounded form-control" required="required" value={{
+            workout.date}}>
+        </div> --}}
+        <div class="form-group">
+          <label for="trainingdayId">日期: </label>
+          <select name="trainingdayId" id="trainingdayId" class="rounded form-control" required="required">
+            {{#each trainingdays}}
+            <option value={{this.id}} {{#ifSelected this.id ../workout.TrainingdayId}}selected{{/ifSelected}}>
+              {{this.date}}</option>
+            {{/each}}
+          </select>
+        </div>
+        {{!-- <div class="form-group">
+          <label for="categoryId">分類: </label>
+          <select name="categoryId" id="categoryId" class="rounded form-control" required="required">
+            {{#each categories}}
+            <option value={{this.id}} {{#ifSelected this.id ../workout.categoryId}}selected{{/ifSelected}}>
+              {{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="form-group">
+          時數: <input type="text" name="duration" class="rounded form-control" required="required"
+            value={{workout.duration}}>
+        </div> --}}
 
-          {{!-- Equipment --}}
-          <div class="form-group">
-            <label for="equipmentId">器材: </label>
-            <select name="equipmentId" id="equipmentId" class="rounded form-control" required="required">
-              {{#each equipments}}
-              <option value={{this.id}} {{#ifSelected this.id ../workout.equipmentId}}selected{{/ifSelected}}>
-                {{this.item}}</option>
-              {{/each}}
-            </select>
-          </div>
 
-          {{!-- Training --}}
-          <div class="form-group">
-            次數/每組:<input type="text" name="repetitions" class="rounded form-control" required="required"
-              value={{workout.repetitions}}>
-          </div>
-          <div class="form-group">
-            組數: <input type="text" name="sets" class="rounded form-control" value={{workout.sets}}>
-          </div>
-        </fieldset>
+        {{!-- Exercise --}}
+        <div class="form-group">
+          <label for="exerciseId">動作: </label>
+          <select name="exerciseId" id="exerciseId" class="rounded form-control" required="required">
+            {{#each exercises}}
+            <option value={{this.id}} {{#ifSelected this.id ../workout.exerciseId}}selected{{/ifSelected}}>
+              {{this.move}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        {{!-- Equipment --}}
+        <div class="form-group">
+          <label for="equipmentId">器材: </label>
+          <select name="equipmentId" id="equipmentId" class="rounded form-control" required="required">
+            <option value="null">無</option>
+            {{#each equipments}}
+            <option value={{this.id}} {{#ifSelected this.id ../workout.equipmentId}}selected{{/ifSelected}}>
+              {{this.item}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        {{!-- Training --}}
+        <div class="form-group">
+          次數/每組:<input type="text" name="repetitions" class="rounded form-control" required="required"
+            value={{workout.repetitions}}>
+        </div>
+        <div class="form-group">
+          組數: <input type="text" name="sets" class="rounded form-control" value={{workout.sets}}>
+        </div>
       </div>
 
       {{!-- {{#if workout.id}}

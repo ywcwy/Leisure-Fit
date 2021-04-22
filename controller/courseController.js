@@ -133,7 +133,13 @@ const courseController = {
     res.render('admin/courses', { workouts })
   },
   createWorkout: async (req, res) => {
-    const categories = await Category.findAll({ raw: true })
+    let trainingdays = await Trainingday.findAll({ raw: true })
+    trainingdays = trainingdays.map(t => {
+      return {
+        ...t,
+        date: moment(t.date).format('YYYY-MM-DD')
+      }
+    })
     const exercises = await Exercise.findAll({ raw: true })
     const equipments = await Equipment.findAll({ raw: true })
     let workout = {}
@@ -148,29 +154,29 @@ const courseController = {
         duration: trainingday.duration,
         exerciseId: training.ExerciseId,
         equipmentId: training.EquipmentId,
-        repetitions: training.repetitions,
-        sets: training.sets
+        repetitions: event.repetitions,
+        sets: event.sets
       }
       console.log(workout)
     }
-    res.render('admin/workoutCreate', { workout, categories, exercises, equipments })
+    res.render('admin/workoutCreate', { workout, trainingdays, exercises, equipments })
   },
   postWorkout: async (req, res) => {
-    const { date, categoryId, duration, exerciseId, equipmentId, repetitions, sets } = req.body
-    const trainingday = await Trainingday.create({ date, CategoryId: Number(categoryId), duration })
-    const training = await Training.create({ ExerciseId: Number(exerciseId), Equipment: Number(equipmentId), repetitions, sets })
-    Workout.create({ TrainingdayId: Number(trainingday.id), TrainingId: Number(training.id) })
+    const { trainingdayId, exerciseId, equipmentId, repetitions, sets } = req.body
+    const training = await Training.create({ ExerciseId: Number(exerciseId), Equipment: Number(equipmentId) })
+    Workout.create({ TrainingdayId: Number(trainingdayId), TrainingId: Number(training.id), repetitions, sets })
       .then(() => {
         req.flash('success_msg', '訓練項目新增成功。')
         res.redirect('/admin/courses/workouts')
       })
   },
   putWorkout: async (req, res) => {
-    const { date, categoryId, duration, exerciseId, equipmentId, repetitions, sets } = req.body
+    const { trainingdayId, exerciseId, equipmentId, repetitions, sets } = req.body
     const workout = await Workout.findByPk(req.params.id, { raw: true })
     Promise.all([
-      Trainingday.update({ date, categoryId, duration }, { where: { id: workout.TrainingdayId } }),
-      Training.update({ ExerciseId: Number(exerciseId), EquipmentId: Number(equipmentId), repetitions, sets }, { where: { id: workout.TrainingId } })])
+      Training.update({ ExerciseId: Number(exerciseId), EquipmentId: Number(equipmentId) }, { where: { id: workout.TrainingId } }),
+      Workout.update({ repetitions, sets }, { where: { id: req.params.id } })
+    ])
       .then(() => {
         req.flash('success_msg', '訓練項目更新成功。')
         res.redirect('/admin/courses/workouts')
