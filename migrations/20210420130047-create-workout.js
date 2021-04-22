@@ -16,6 +16,17 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER
       },
+      repetitions: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      sets: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      note: {
+        type: Sequelize.TEXT
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

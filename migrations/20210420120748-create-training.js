@@ -15,14 +15,6 @@ module.exports = {
       EquipmentId: {
         type: Sequelize.INTEGER
       },
-      repetitions: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      sets: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -16,7 +16,9 @@ module.exports = (sequelize, DataTypes) => {
   };
   Workout.init({
     TrainingdayId: DataTypes.INTEGER,
-    TrainingId: DataTypes.INTEGER
+    TrainingId: DataTypes.INTEGER,
+    repetitions: DataTypes.STRING,
+    sets: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Workout',
