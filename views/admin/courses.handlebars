@@ -2,24 +2,21 @@
   <h1>後台</h1>
   {{>message}}
   <nav class="nav mt-5 mb-3">
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/leisurefits">Leisurefits</a>
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/categories">Training
-      Categories</a>
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3 active" href="/admin/courses">Training
-      Courses</a>
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link" href="/admin/trainee">Trainee</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/leisurefits">貼文</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/categories">分類</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3 active" href="/admin/courses">課程</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link" href="/admin/trainee">學員</a>
   </nav>
   <hr>
   <nav class="nav mt-3 mb-3">
     <a role="button" class="btn btn-outline-info btn-sm nav-link mr-3 {{#if trainingdays}}active{{/if}}"
-      href="/admin/courses/trainingdays">Training
-      Day</a>
+      href="/admin/courses/trainingdays">訓練日期</a>
     <a role="button" class="btn btn-outline-info btn-sm nav-link mr-3 {{#if exercises}}active{{/if}}"
-      href="/admin/courses/exercises">Exercise</a>
+      href="/admin/courses/exercises">動作</a>
     <a role="button" class="btn btn-outline-info btn-sm nav-link mr-3 {{#if equipments}}active{{/if}}"
-      href="/admin/courses/equipments">Equipment</a>
+      href="/admin/courses/equipments">器材</a>
     <a role="button" class="btn btn-outline-info btn-sm nav-link {{#if workouts}}active{{/if}}"
-      href="/admin/courses/workouts">Workout</a>
+      href="/admin/courses/workouts">訓練菜單</a>
   </nav>
   <hr>
 
@@ -32,18 +29,18 @@
     <form action="/admin/courses/trainingdays" method="POST" class="d-flex align-items-center">
       {{/if}}
       <div class="form-inline d-flex align-items-center">
-        Training Date:<input type="date" name="date" class="ml-2 mr-2 rounded form-control" required="required"
+        訓練日期：<input type="date" name="date" class="ml-2 mr-2 rounded form-control" required="required"
           value={{trainingday.date}}>
-        <label for="categoryId">Training Category: </label>
+        <label for="categoryId">訓練分類：</label>
         <select name="categoryId" id="categoryId" class="ml-2 mr-2 form-control" required="required">
-          <option>分類：</option>
+          <option>選擇：</option>
           {{#each categories}}
           <option value={{this.id}} {{#ifSelected this.id ../trainingday.CategoryId}}selected{{/ifSelected}}>
             {{this.name}}</option>
           {{/each}}
         </select>
-        Duration: <input type="text" name="duration" style="width:80px;" class="ml-2 rounded form-control"
-          required="required" value={{trainingday.duration}}>
+        時數：<input type="text" name="duration" style="width:80px;" class="ml-2 rounded form-control" required="required"
+          value={{trainingday.duration}}>
       </div>
       {{#if trainingday.id}}
       <button type="submit" class="btn btn-sm ml-2" style="color: #dc6548">編輯</button>
@@ -56,9 +53,9 @@
     <table class="table">
       <thead class="thead-light">
         <tr>
-          <th scope="col">Training Date</th>
-          <th scope="col">Training Category</th>
-          <th scope="col">Duration</th>
+          <th scope="col">訓練日期</th>
+          <th scope="col">課程分類</th>
+          <th scope="col">時數</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -188,11 +185,11 @@
         <table class="table">
           <thead class="thead-light">
             <tr>
-              <th scope="col">Training Date</th>
-              <th scope="col">Exercise</th>
-              <th scope="col">Equipment</th>
-              <th scope="col">Repetitions</th>
-              <th scope="col">Sets</th>
+              <th scope="col">訓練日期</th>
+              <th scope="col">動作</th>
+              <th scope="col">器材</th>
+              <th scope="col">次數/組</th>
+              <th scope="col">組數</th>
               <th scope="col"></th>
             </tr>
           </thead>

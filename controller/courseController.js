@@ -157,7 +157,6 @@ const courseController = {
         repetitions: event.repetitions,
         sets: event.sets
       }
-      console.log(workout)
     }
     res.render('admin/workoutCreate', { workout, trainingdays, exercises, equipments })
   },

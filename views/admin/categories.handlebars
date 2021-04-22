@@ -2,11 +2,10 @@
   <h1>後台</h1>
   {{>message}}
   <nav class="nav mt-5 mb-3">
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/leisurefits">Leisurefits</a>
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3 active" href="/admin/categories">Training
-      Categories</a>
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/courses">Training Courses</a>
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link" href="/admin/trainee">Trainee</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/leisurefits">貼文</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3 active" href="/admin/categories">分類</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/courses">課程</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link" href="/admin/trainee">學員</a>
   </nav>
   <hr>
   {{#if category.id}}
@@ -14,27 +13,29 @@
     {{else}}
     <form action="/admin/category" method="POST" class="d-flex align-items-center">
       {{/if}}
-      Name: <input type="text" name="name" class="ml-2 mr-4 border-light rounded" required="required"
+      分類: <input type="text" name="name" class="ml-2 mr-4 border-light rounded" required="required"
         value={{category.name}}>
-      Training Day: <input type="text" name="day" class="mx-2 border-light rounded" required="required"
-        value={{category.day}}>
-      <button type="submit" class="btn btn-sm ml-2" style="color: #dc6548"> Submit</button>
+      課程日: <input type="text" name="day" class="mx-2 border-light rounded" required="required" value={{category.day}}>
+      {{#if category.id}}
+      <button type="submit" class="btn btn-sm ml-2" style="color: #dc6548">編輯</button>
+      <a href="/admin/categories" role="button" aria-disabled="true" class="btn btn-sm btn-light ml-2"
+        style="color: #dc6548">取消編輯</a>
+      {{else}}
+      <button type="submit" class="btn btn-sm ml-2" style="color: #dc6548">新增</button>{{/if}}
     </form>
 
     <br />
     <table class="table">
       <thead class="thead-light">
         <tr>
-          <th scope="col">Id</th>
-          <th scope="col">Training Category</th>
-          <th scope="col">Training Day</th>
+          <th scope="col">分類</th>
+          <th scope="col">課程日</th>
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         {{#each categories}}
         <tr>
-          <th scope="row">{{this.id}}</th>
           <td>{{this.name}}</td>
           <td>{{this.day}}</td>
           <td>

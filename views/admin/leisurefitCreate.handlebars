@@ -9,7 +9,7 @@
       {{/if}}
       <br />
       <div class="form-group">
-        <label for="categoryId">Category</label>
+        <label for="categoryId">分類：</label>
         <select name="categoryId" id="categoryId" class="form-control" required="required">
           {{#each categories}}
           <option value={{this.id}} {{#ifSelected this.id ../leisurefit.CategoryId}}selected{{/ifSelected}}>
@@ -19,19 +19,19 @@
       </div>
       <br />
       <div class="form-group">
-        <label for="name">Title</label>
+        <label for="name">標題：</label>
         <input type="text" name="name" id="name" class="form-control" required="required"
           value={{leisurefit.name}}></input>
       </div>
       <br />
       <div class="form-group">
-        <label for="description">Description</label>
+        <label for="description">內文：</label>
         <textarea class="form-control" id="description" name="description"
           required="required">{{leisurefit.description}}</textarea>
       </div>
       <br />
       <div class="form-group">
-        <label for="image">Image</label><br />
+        <label for="image">圖片：</label><br />
         <input type="file" name="image" id="image" class="form-control-file" value={{leisurefit.image}}></input>
       </div>
       <br />
