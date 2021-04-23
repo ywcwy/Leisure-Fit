@@ -22,9 +22,11 @@ router.get('/', (req, res) => res.end(`I'm listening. Please access with POST.`)
 router.post('/callback', (req, res) => {
   // 驗證 signature
   console.log(req.header)
+  console.log(req.body)
+  console.log(req.body.events)
 
   // event
-  const event = req.body.events[0]
+  const event = req.body.events
   const { type, replyToken, source, message } = event
 
   // follow event
