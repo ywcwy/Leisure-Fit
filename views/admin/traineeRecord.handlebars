@@ -1,0 +1,45 @@
+<main class="m-5">
+  <h1>後台</h1>
+
+  <nav class="nav mt-5 mb-3">
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3 " href="/admin/leisurefits">貼文</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/categories">分類</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/courses">課程</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link active" href="/admin/trainees">學員</a>
+  </nav>
+  <hr>
+  <strong>學員：{{name}}</strong>
+
+  <br />
+  <br />
+  {{#each trainings}}
+  <table class="table mb-4">
+    <strong>訓練日：{{this.date}} #{{this.category}}</strong>
+    <thead class="thead-light mt-2">
+      <tr>
+        <th scope="col" width="30%">動作</th>
+        <th scope="col" width="30%">器材</th>
+        <th scope="col" width="30%">次數/組</th>
+        <th scope="col" width="10%">組數</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each this.workout}}
+      <tr>
+        <td>{{this.exercise}} {{#if this.exerciseDescription
+          }}（{{this.exerciseDescription}}）{{/if}}
+        </td>
+        <td>{{this.equipment}}{{#if this.equipmentDescription
+          }}（{{this.equipmentDescription}}）{{else}}無{{/if}}
+        </td>
+        <td>{{this.repetitions}}</td>
+        <td>{{this.sets}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  {{/each}}
+  <div class="col-md-12 d-flex justify-content-center my-5">
+    <a href="javascript:history.back()" style="color: #31583f">回上一頁</a>
+  </div>
+</main>

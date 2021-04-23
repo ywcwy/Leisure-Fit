@@ -10,6 +10,7 @@ const categoryController = require('../controller/categoryController')
 const likeController = require('../controller/likeController')
 const profileController = require('../controller/profileController')
 const courseController = require('../controller/courseController')
+const traineeController = require('../controller/traineeController')
 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
@@ -52,7 +53,6 @@ router.delete('/user/like/:id', authenticated, likeController.removeLike)
 router.get('/user/profile', authenticated, profileController.getProfile)
 router.get('/user/training', authenticated, profileController.getRecords)
 router.get('/user/training/records/:id', authenticated, profileController.getRecord)
-
 
 router.get('/user/likedLeisurefits', authenticated, profileController.getLikedLeisurefits)
 router.delete('/user/likedLeisurefits/:id', authenticated, profileController.removeLikedLeisurefits)
@@ -108,6 +108,9 @@ router.get('/admin/courses/workouts/:id', authenticatedAdmin, courseController.c
 router.put('/admin/courses/workouts/:id', authenticatedAdmin, courseController.putWorkout)
 router.delete('/admin/courses/workouts/:id', authenticatedAdmin, courseController.deleteWorkout)
 
-
+// 學員
+router.get('/admin/trainees', authenticatedAdmin, traineeController.getTrainees)
+router.get('/admin/trainees/:id/records', authenticatedAdmin, traineeController.getTraineeRecord)
+router.delete('/admin/trainees/:id', authenticatedAdmin, traineeController.deleteTrainee)
 
 module.exports = router

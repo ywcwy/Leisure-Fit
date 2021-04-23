@@ -5,7 +5,7 @@
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/leisurefits">貼文</a>
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3 active" href="/admin/categories">分類</a>
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/courses">課程</a>
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link" href="/admin/trainee">學員</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link" href="/admin/trainees">學員</a>
   </nav>
   <hr>
   {{#if category.id}}
@@ -40,9 +40,7 @@
           <td>{{this.day}}</td>
           <td>
             <button type="button" class="btn btn-light mr-3">
-              <a href="/admin/categories/{{this.id}}" style="color: #31583f">
-                Edit
-              </a>
+              <a href="/admin/categories/{{this.id}}" style="color: #c9461e">Edit</a>
             </button>
             <form action="/admin/categories/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
               <button style="color: #31583f" type="submit" class="btn btn-light">Delete</button>

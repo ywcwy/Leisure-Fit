@@ -5,7 +5,7 @@
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/leisurefits">貼文</a>
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/categories">分類</a>
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3 active" href="/admin/courses">課程</a>
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link" href="/admin/trainee">學員</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link" href="/admin/trainees">學員</a>
   </nav>
   <hr>
   <nav class="nav mt-3 mb-3">
@@ -66,12 +66,12 @@
           <td>{{this.Category.name}}</td>
           <td>{{this.duration}}</td>
           <td>
-            <button type="button" class="btn btn-link">
-              <a style="color: #31583f" href="/admin/courses/trainingdays/{{this.id}}">Edit</a>
+            <button type="button" class="btn btn-light mr-3">
+              <a style="color: #c9461e" href="/admin/courses/trainingdays/{{this.id}}">Edit</a>
             </button>
             <form action="/admin/courses/trainingdays/{{this.id}}?_method=DELETE" method="POST"
               style="display: inline;">
-              <button style="color: #31583f" type="submit" class="btn btn-link">Delete</button>
+              <button style="color: #31583f" type="submit" class="btn btn-light">Delete</button>
             </form>
           </td>
         </tr>
@@ -114,11 +114,11 @@
             <td>{{this.move}}</td>
             <td>{{this.description}}</td>
             <td>
-              <button type="button" class="btn btn-link">
-                <a style="color: #31583f" href="/admin/courses/exercises/{{this.id}}">Edit</a>
+              <button type="button" class="btn btn-light mr-3">
+                <a style="color: #c9461e" href="/admin/courses/exercises/{{this.id}}">Edit</a>
               </button>
               <form action="/admin/courses/exercises/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
-                <button style="color: #31583f" type="submit" class="btn btn-link">Delete</button>
+                <button style="color: #31583f" type="submit" class="btn btn-light">Delete</button>
               </form>
             </td>
           </tr>
@@ -162,12 +162,12 @@
               <td>{{this.item}}</td>
               <td>{{this.description}}</td>
               <td>
-                <button type="button" class="btn btn-link">
-                  <a style="color: #31583f" href="/admin/courses/equipments/{{this.id}}">Edit</a>
+                <button type="button" class="btn btn-light mr-3">
+                  <a style="color: #c9461e" href="/admin/courses/equipments/{{this.id}}">Edit</a>
                 </button>
                 <form action="/admin/courses/equipments/{{this.id}}?_method=DELETE" method="POST"
                   style="display: inline;">
-                  <button style="color: #31583f" type="submit" class="btn btn-link">Delete</button>
+                  <button style="color: #31583f" type="submit" class="btn btn-light">Delete</button>
                 </form>
               </td>
             </tr>
@@ -207,15 +207,15 @@
               <td>{{this.repetitions}}</td>
               <td>{{this.sets}}</td>
               <td>
-                <button type="button" class="btn btn-link">
-                  <a style="color: #31583f" href="/admin/courses/workouts/{{this.id}}">More</a>
+                <button type="button" class="btn btn-light mr-3">
+                  <a style="color: #c9461e" href="/admin/courses/workouts/{{this.id}}">More</a>
                 </button>
-                <button type="button" class="btn btn-link">
-                  <a style="color: #31583f" href="/admin/courses/workouts/{{this.id}}">Edit</a>
+                <button type="button" class="btn btn-light mr-3">
+                  <a style="color: #c9461e" href="/admin/courses/workouts/{{this.id}}">Edit</a>
                 </button>
                 <form action="/admin/courses/workouts/{{this.id}}?_method=DELETE" method="POST"
                   style="display: inline;">
-                  <button style="color: #31583f" type="submit" class="btn btn-link">Delete</button>
+                  <button style="color: #31583f" type="submit" class="btn btn-light">Delete</button>
                 </form>
               </td>
             </tr>
