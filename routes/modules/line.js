@@ -26,7 +26,7 @@ router.post('/callback', (req, res) => {
   console.log(req.body.events) //undefined
 
   // event
-  const event = req.body.events
+  const event = req.body.events[0]
   const { type, replyToken, source, message } = event
 
   // follow event
