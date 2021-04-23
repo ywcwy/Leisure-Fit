@@ -17,7 +17,7 @@ const message = {
   text: "Hi, hi , i'm Wendy"
 }
 
-
+router.get('/', (req, res) => res.end(`I'm listening. Please access with POST.`))
 
 router.post('/callback', (req, res) => {
   // 驗證 signature
