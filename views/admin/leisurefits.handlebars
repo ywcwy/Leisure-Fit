@@ -18,6 +18,7 @@
         <th scope="col">貼文</th>
         <th scope="col">分類</th>
         <th scope="col">日期</th>
+        <th><i class="fas fa-heart text-danger"></i></th>
         <th scope="col"></th>
       </tr>
     </thead>
@@ -27,6 +28,7 @@
         <td>{{this.name}}</td>
         <td>{{this.Category.name}}</td>
         <td>{{this.createdAt}}</td>
+        <td>{{this.likes}}</td>
         <td>
           <button type="button" class="btn btn-light mr-3">
             <a style="color: #c9461e" href="/admin/leisurefits/{{this.id}}">More</a>

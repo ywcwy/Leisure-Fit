@@ -1,5 +1,5 @@
 const db = require('../models')
-const { Leisurefit, Category } = db
+const { Leisurefit, Category, Like } = db
 const moment = require('moment')
 const imgur = require('imgur')
 imgur.setClientId(process.env.IMGUR_CLIENT_ID)
@@ -7,12 +7,14 @@ imgur.setClientId(process.env.IMGUR_CLIENT_ID)
 const adminController = {
   getLeisurefits: async (req, res) => {
     let leisurefits = await Leisurefit.findAll({ raw: true, nest: true, include: [Category] })
-    leisurefits = leisurefits.map(l => {
+    leisurefits = await Promise.all(leisurefits.map(async (l) => {
+      const { count } = await Like.findAndCountAll({ where: { LeisurefitId: l.id } })
       return {
         ...l,
-        createdAt: moment(l.createdAt).format('YYYY-MM-DD')
+        createdAt: moment(l.createdAt).format('YYYY-MM-DD'),
+        likes: count
       }
-    })
+    }))
     res.render('admin/leisurefits', { leisurefits })
   },
   createLeisurefit: async (req, res) => {
