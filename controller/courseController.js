@@ -1,5 +1,5 @@
 const db = require('../models')
-const { Category, User, Trainingday, Exercise, Equipment, Training, Workout, Record } = db
+const { Category, Trainingday, Exercise, Equipment, Training, Workout } = db
 const moment = require('moment')
 
 const courseController = {
@@ -108,29 +108,30 @@ const courseController = {
 
   // 訓練日的菜單
   getWorkouts: async (req, res) => {
-    // const trainingdays = await Trainingday.findAll({ raw: true })
-    // let workouts = await Promise.all(trainingdays.map(async (t) => {
-    //   const trainings = await Workout.findAll({
-    //     where: { TrainingdayId: t.id }, raw: true, nest: true,
-    //     include: [{ model: Trainingday, include: [Category] }, { model: Training, include: [Exercise, Equipment] }]
-    //   })
-    //   console.log(trainings)
-    //   console.log(trainings[0].Training)
-    //   return {
-    //     date: moment(t.date).format('YYYY-MM-DD'),
-    //     trainings,
-    //     length: trainings.length
-    //   }
-    // }))
-
-    let workouts = await Workout.findAll({ raw: true, nest: true, include: [{ model: Trainingday, include: [Category] }, { model: Training, include: [Exercise, Equipment] }] })
-    workouts = workouts.map(w => {
-      return {
-        ...w,
-        date: moment(w.Trainingday.date).format('YYYY-MM-DD')
-      }
-    })
-    res.render('admin/courses', { workouts })
+    const trainingdays = await Trainingday.findAll({ raw: true })
+    let trainings = await Promise.all(trainingdays.map(async (t) => {
+      const workouts = await Workout.findAll({ //找每個訓練日的 workout 項目
+        where: { TrainingdayId: t.id }, attributes: ['id', 'repetitions', 'sets'], raw: true, nest: true,
+        include: [{ model: Trainingday, include: [Category] }, { model: Training, include: [Exercise, Equipment] }]
+      })
+      let date = moment(t.date).format('YYYY-MM-DD') // 訓練日
+      let training = {}
+      let workout = await Promise.all(workouts.map(async (w) => {
+        return {
+          id: w.id,
+          repetitions: w.repetitions,
+          sets: w.sets,
+          exercise: w.Training.Exercise.move,
+          exerciseDescription: w.Training.Exercise.description,
+          equipment: w.Training.Equipment.item,
+          equipmentDescription: w.Training.Equipment.description
+        }
+      }))
+      training.date = date
+      training.workout = workout
+      return training
+    }))
+    res.render('admin/courses', { trainings })
   },
   createWorkout: async (req, res) => {
     let trainingdays = await Trainingday.findAll({ raw: true })
@@ -144,7 +145,7 @@ const courseController = {
     const equipments = await Equipment.findAll({ raw: true })
     let workout = {}
     if (req.params.id) {
-      const event = await Workout.findByPk(req.params.id, { raw: true })
+      const event = await Workout.findOne({ where: { id: req.params.id }, raw: true })
       const trainingday = await Trainingday.findByPk(event.TrainingdayId, { raw: true })
       const training = await Training.findByPk(event.TrainingId, { raw: true })
       workout = {
@@ -182,14 +183,12 @@ const courseController = {
       })
   },
   deleteWorkout: async (req, res) => {
-    const workout = await Workout.findByPk(req.params.id)
-    Promise.all([
-      Trainingday.destroy({ where: { id: workout.TrainingdayId } }),
-      workout.destroy()
-    ]).then(() => {
-      req.flash('success_msg', '訓練項目刪除成功。')
-      res.redirect('/admin/courses/workouts')
-    })
+    const workout = await Workout.findOne({ where: { id: req.params.id } })
+    workout.destroy()
+      .then(() => {
+        req.flash('success_msg', '訓練項目刪除成功。')
+        res.redirect('/admin/courses/workouts')
+      })
 
   }
 }

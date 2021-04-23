@@ -1,4 +1,4 @@
-<main>
+<main class="d-flex justify-content-center">
   {{#if workout.id}}
   <form action="/admin/courses/workouts/{{workout.id}}?_method=PUT" method="POST" class="mt-5">
     <h2 class="d-flex justify-content-center">編輯訓練</h2>
@@ -7,12 +7,12 @@
       <h2 class="d-flex justify-content-center">新增訓練</h2>
       {{/if}}
       <br />
-      <div class=" d-flex flex-column align-items-center">
+      {{!-- <div class=" d-flex flex-column align-items-center"> --}}
 
         {{!-- Trainingday --}}
         <div class="form-group">
           <label for="trainingdayId">日期: </label>
-          <select name="trainingdayId" id="trainingdayId" class="rounded form-control" required="required">
+          <select name="trainingdayId" id="trainingdayId" class="form-control" required="required">
             {{#each trainingdays}}
             <option value={{this.id}} {{#ifSelected this.id ../workout.TrainingdayId}}selected{{/ifSelected}}>
               {{this.date}}</option>
@@ -23,7 +23,7 @@
         {{!-- Exercise --}}
         <div class="form-group">
           <label for="exerciseId">動作: </label>
-          <select name="exerciseId" id="exerciseId" class="rounded form-control" required="required">
+          <select name="exerciseId" id="exerciseId" class=" form-control" required="required">
             {{#each exercises}}
             <option value={{this.id}} {{#ifSelected this.id ../workout.exerciseId}}selected{{/ifSelected}}>
               {{this.move}}</option>
@@ -34,7 +34,7 @@
         {{!-- Equipment --}}
         <div class="form-group">
           <label for="equipmentId">器材: </label>
-          <select name="equipmentId" id="equipmentId" class="rounded form-control" required="required">
+          <select name="equipmentId" id="equipmentId" class=" form-control" required="required">
             <option value="null">無</option>
             {{#each equipments}}
             <option value={{this.id}} {{#ifSelected this.id ../workout.equipmentId}}selected{{/ifSelected}}>
@@ -45,20 +45,20 @@
 
         {{!-- Training --}}
         <div class="form-group">
-          次數/每組:<input type="text" name="repetitions" class="rounded form-control" required="required"
+          次數/每組:<input type="text" name="repetitions" class=" form-control" required="required"
             value={{workout.repetitions}}>
         </div>
         <div class="form-group">
-          組數: <input type="text" name="sets" class="rounded form-control" value={{workout.sets}}>
+          組數: <input type="text" name="sets" class=" form-control" value={{workout.sets}}>
         </div>
-      </div>
+        {{!--
+      </div> --}}
       <br />
       <div class="d-flex justify-content-center my-2">
         <button type="submit" class="btn btn-info">{{#if workout}}edit{{else}}create{{/if}}</button>
       </div>
+      <div class="d-flex justify-content-center m-5">
+        <a style="color: #31583f" href="/admin/courses/workouts">返回</a>
+      </div>
     </form>
-
-    <div class="d-flex justify-content-center m-5">
-      <a href="/admin/courses/workouts">返回</a>
-    </div>
 </main>

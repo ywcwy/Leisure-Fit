@@ -15,7 +15,7 @@
       href="/admin/courses/exercises">動作</a>
     <a role="button" class="btn btn-outline-info btn-sm nav-link mr-3 {{#if equipments}}active{{/if}}"
       href="/admin/courses/equipments">器材</a>
-    <a role="button" class="btn btn-outline-info btn-sm nav-link {{#if workouts}}active{{/if}}"
+    <a role="button" class="btn btn-outline-info btn-sm nav-link {{#if trainings}}active{{/if}}"
       href="/admin/courses/workouts">訓練菜單</a>
   </nav>
   <hr>
@@ -177,39 +177,31 @@
         </table>
 
         {{!-- 訓練日的菜單 --}}
-        {{#if workouts}}
+        {{#if trainings}}
         <a class="btn btn-light mx-3 btn-sm" href="/admin/courses/workouts/create" style="color: #dc6548">
           New Workout</a>
         <br>
         <br>
+        {{#each trainings}}
         <table class="table">
+          <strong class="ml-2">訓練日：{{this.date}}</strong>
           <thead class="thead-light">
             <tr>
-              <th scope="col">訓練日期</th>
-              <th scope="col">動作</th>
-              <th scope="col">器材</th>
-              <th scope="col">次數/組</th>
-              <th scope="col">組數</th>
-              <th scope="col"></th>
+              <th scope="col" width="20%">動作</th>
+              <th scope="col" width="20%">器材</th>
+              <th scope="col" width="20%">次數/組</th>
+              <th scope="col" width="15%">組數</th>
+              <th scope="col" width="25%"></th>
             </tr>
           </thead>
           <tbody>
-            {{#each workouts}}
+            {{#each this.workout}}
             <tr>
-              <td>{{this.date}}</td>
-              {{!-- <td rowspan="{{this.length}}">{{this.date}}</td> --}}
-              {{!-- <td>{{this.trainings.Training.Exercise.move}}</td>
-              <td>{{this.trainings.Training.Equipment.item}}</td>
-              <td>{{this.trainings.Training.repetitions}}</td>
-              <td>{{this.trainings.Training.sets}}</td> --}}
-              <td>{{this.Training.Exercise.move}}</td>
-              <td>{{this.Training.Equipment.item}}</td>
+              <td>{{this.exercise}}</td>
+              <td>{{this.equipment}}</td>
               <td>{{this.repetitions}}</td>
               <td>{{this.sets}}</td>
               <td>
-                <button type="button" class="btn btn-light mr-3">
-                  <a style="color: #c9461e" href="/admin/courses/workouts/{{this.id}}">More</a>
-                </button>
                 <button type="button" class="btn btn-light mr-3">
                   <a style="color: #c9461e" href="/admin/courses/workouts/{{this.id}}">Edit</a>
                 </button>
@@ -221,6 +213,7 @@
             </tr>
             {{/each}}
           </tbody>
-          {{/if}}
         </table>
+        {{/each}}
+        {{/if}}
 </main>
