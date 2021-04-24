@@ -1,18 +1,18 @@
-<main>
+<main class="m-auto">
   <nav class="nav d-flex justify-content-center my-5">
     {{#ifCond user.isAdmin isAuthenticated}}
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/leisurefits">Admin</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/leisurefits">後台</a>
     {{/ifCond}}
     {{#ifOne user.isAdmin isAuthenticated}}
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/user/profile">My Profile</a>
     {{/ifOne}}
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/leisurefits">Training Course</a>
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/calendar">Calendar</a>
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3 active" href="/location">Location</a>
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link" href="/contactUs">Contact Us</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/leisurefits">課程</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/calendar">課程表</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3 active" href="/location">上課地點</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link" href="/contactUs">聯絡我們</a>
   </nav>
   <div class="d-flex flex-column  align-items-center">
-    <h1>訓練場地</h1>
+    <h1>上課地點</h1>
     <div class="mt-5">
       <p>週二、週四，我們在台大操場訓練，雨天會在辛亥橋下。</p>
       <p>週一、週三，我們在小巨蛋室內場地，一起瑜珈、一起變辣。</p>

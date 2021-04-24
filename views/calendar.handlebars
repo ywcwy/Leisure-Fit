@@ -1,37 +1,42 @@
-<main class="row d-flex justify-content-center">
+<main class="row  m-auto d-flex justify-content-center calendar">
   <nav class="nav d-flex justify-content-center my-5">
     {{#ifCond user.isAdmin isAuthenticated}}
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/leisurefits">Admin</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/leisurefits">後台</a>
     {{/ifCond}}
     {{#ifOne user.isAdmin isAuthenticated}}
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/user/profile">My Profile</a>
     {{/ifOne}}
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/leisurefits">Training Course</a>
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3 active" href="/calendar">Calendar</a>
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/location">Location</a>
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link" href="/contactUs">Contact Us</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/leisurefits">課程</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3 active" href="/calendar">課程表</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/location">上課地點</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link" href="/contactUs">聯絡我們</a>
   </nav>
   <div class="col-md-12 d-flex flex-column align-items-center">
     <h1>課程表</h1>
     <h5 style="color: #31583f"><strong>Training Month: 2021.04</strong></h5>
   </div>
-  <div class="well mt-3 col-md-8 d-flex justify-content-center align-items-center">
-    <div class="col-md-4">
-      <img src="https://i.imgur.com/tinktPR.png" style="width: 25px;"><strong> 固定課程：</strong>
-      <ul class="my-4 list-unstyled">
+  <div class="mt-5 col-md-10 d-flex justify-content-center align-items-center">
+    <div class="col-md-5 ml-3">
+      <div class="d-flex  justify-content-center ">
+        <img src="https://i.imgur.com/tinktPR.png" style="width: 25px;"><strong> 固定課程：</strong>
+      </div>
+      <ul class="my-2 list-unstyled d-flex flex-column align-items-center">
         <li>每週二，一起變強 - <a href="/leisurefits?categoryId=11" style="color: #31583f"><b>戶外體能</b></a></li>
         <li>每週三，一起變辣 - <a href="/leisurefits?categoryId=21" style="color: #dc6548"><b>女性限定</b></a></li>
         <li>每週四，一起變強 - <a href="/leisurefits?categoryId=31" style="color: #31583f"><b>Cross-Fit</b></a></li>
       </ul>
-      <br>
-      <img src="https://i.imgur.com/tinktPR.png" style="width: 25px;"><strong> 特別課：</strong>
-      <ul class="my-4 list-unstyled">
+    </div>
+    <div class="col-md-5 mr-3">
+      <div class="d-flex  justify-content-center ">
+        <img src="https://i.imgur.com/tinktPR.png" style="width: 25px;"><strong> 特別課：</strong>
+      </div>
+      <ul class="my-2 list-unstyled d-flex flex-column align-items-center">
         <li>4/11 我們野行 - 淡蘭古道</li>
         <li>4/12 基礎拳擊 - 客座教練：Josh</li>
         <li>4/19 基礎拳擊 - 客座教練：Josh</li>
         <li>4/26 基礎拳擊 - 客座教練：Josh</li>
       </ul>
     </div>
-    <img class="col-md-4" id="calendar" src="https://i.imgur.com/qzzXpU1.png">
   </div>
+  <img id="calendar" width="400" src="https://i.imgur.com/qzzXpU1.png">
 </main>
