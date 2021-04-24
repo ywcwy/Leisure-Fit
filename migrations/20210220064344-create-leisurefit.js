@@ -6,15 +6,18 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER.UNSIGNED
       },
       name: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       CategoryId: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER.UNSIGNED
       },
       description: {
+        allowNull: false,
         type: Sequelize.TEXT
       },
       image: {
