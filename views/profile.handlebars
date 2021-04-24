@@ -1,5 +1,5 @@
 <main class="m-5">
-  <h1>Profile</h1>
+  <h1>Profile</h1> {{>message}}
   <nav class="nav mt-5">
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3 active" href="/user/profile">My
       Profile</a>
@@ -9,27 +9,14 @@
 
   <br />
   <br />
+  {{!-- show --}}
+  <p>Name: {{name}}</p>
+  <p>Email: {{email}}</p>
+  <a href="/user/profile/edit" role="button" aria-disabled="true" class="btn btn-sm btn-light ml-2"
+    style="color: #dc6548">編輯</a>
 
-  {{!-- <table class="table">
-    <thead class="thead-light">
-      <tr>
-        <th scope="col">Date</th>
-        <th scope="col">Workout</th>
-        <th scope="col">#</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each records}}
-      <tr>
-        <td>{{this.date}}</td>
-        <td>{{this.workout}}</td>
-        <td>
-          <button type="button" class="btn btn-link">
-            <a href="/user/training/records/{{this.id}}">More</a>
-          </button>
-        </td>
-      </tr>
-      {{/each}}
-    </tbody>
-  </table> --}}
+
+
+
+
 </main>

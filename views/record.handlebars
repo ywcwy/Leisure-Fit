@@ -20,7 +20,8 @@
         <tbody>
           {{#each training}}
           <tr>
-            <td>{{this.exercise}} {{#if this.exerciseDescription }}（{{this.exerciseDescription}}）{{else}}{{/if}}</td>
+            <td>{{#if this.exercise}}{{this.exercise}}{{else}}-{{/if}}
+              {{#if this.exerciseDescription}}（{{this.exerciseDescription}}）{{else}}{{/if}}</td>
             <td>{{#if this.equipment}}{{this.equipment}}{{else}}-{{/if}}
               {{#if this.equipmentDescription}}（{{this.equipmentDescription}}）{{else}}{{/if}}</td>
             <td>{{this.repetitions}}</td>
@@ -29,15 +30,6 @@
           {{/each}}
         </tbody>
       </table>
-      {{!-- <ul class="list-unstyled">
-        <li>動作：{{record.exercise}} {{#if record.exerciseDescription }}（{{record.exerciseDescription}}）{{/if}}</li><br>
-        <li>器材：{{record.equipment}}{{#if record.equipmentDescription }}（{{record.equipmentDescription}}）{{else}}無{{/if}}
-        </li><br>
-        <li>次數：{{record.repetitions}} /組</li><br>
-        <li>組數：共 {{record.sets}} 組</li><br>
-        <li>Note: {{record.note}}</li><br>
-        <li class="d-flex justify-content-center"><img src="{{record.image}}"></li>
-      </ul> --}}
     </div>
   </div>
   <div class="col-md-12 d-flex justify-content-center my-5">

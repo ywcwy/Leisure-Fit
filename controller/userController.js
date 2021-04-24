@@ -9,7 +9,7 @@ const userController = {
       req.flash('warning_msg', '所有欄位都是必填。')
       return res.render('register', { name, email, password, passwordConfirm })
     }
-    const user = await User.findOne({ where: { email: email } })
+    const user = await User.findOne({ where: { email } })
     if (user) {
       const error = [{ message: '此email已註冊過。' }]
       return res.render('register', { error, name, email })
@@ -19,9 +19,7 @@ const userController = {
       return res.render('register', { error, name, email })
     }
     User.create({
-      name: name,
-      email: email,
-      password: bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+      name, email, password: bcrypt.hashSync(password, bcrypt.genSaltSync(10))
     }).then(() => {
       req.flash('success_msg', '帳號註冊成功。')
       return res.redirect('/login')

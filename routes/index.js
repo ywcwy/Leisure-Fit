@@ -51,6 +51,8 @@ router.delete('/user/like/:id', authenticated, likeController.removeLike)
 
 // profile
 router.get('/user/profile', authenticated, profileController.getProfile)
+router.get('/user/profile/edit', authenticated, profileController.getProfileEdit)
+router.put('/user/profile', authenticated, profileController.editProfile)
 router.get('/user/training', authenticated, profileController.getRecords)
 router.get('/user/training/records/:id', authenticated, profileController.getRecord)
 
