@@ -62,7 +62,8 @@ const profileController = {
     res.render('records', { records })
   },
   getRecord: async (req, res) => {
-    let record = await Record.findByPk(req.params.id, { raw: true, nest: true, include: [{ model: Trainingday, include: [Category] }] })
+    let record = await Record.findOne({ where: { id: req.params.id }, raw: true, nest: true, include: [{ model: Trainingday, include: [Category] }] })
+    console.log(record)
     let { id, date, duration } = record.Trainingday
     date = moment(date).format('YYYY-MM-DD')
     category = record.Trainingday.Category.name
