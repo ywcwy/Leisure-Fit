@@ -1,16 +1,17 @@
+<div class="jumbotron"
+  style="background-color: #688071; background-image: url({{cover}}); background-position: 50% 75%; background-repeat:no-repeat; background-size:cover;">
+  <h3 class="display-4 text-white">大人的體育課</h3>
+  <p class="lead text-white">一起在都市的束縛中，大力呼吸，解放心靈，奔放四肢</p>
+  <hr class="my-4 bg-white">
+  <p class="lead">
+    <a class="btn  btn-white btn-md text-white" href="/leisurefits" role="button"
+      style="background-color: #de6548;">Ｍore...</a>
+  </p>
+</div>
+<br>
+<br>
 <main>
-  {{#if categoryName}}
-  {{else}}
-  <div class="jumbotron" style="background-color: #31583f;">
-    <h3 class="display-4 text-white">大人的體育課</h3>
-    <p class="lead text-white">一起在都市的束縛中，大力呼吸，解放心靈，奔放四肢</p>
-    <hr class="my-4 bg-white">
-    <p class="lead">
-      <a class="btn  btn-white btn-md text-white" href="#" role="button" style="background-color: #de6548;">Ｍore...</a>
-    </p>
-  </div>
-  {{/if}}
-  <nav class="nav d-flex justify-content-center my-5">
+  <nav class="d-flex justify-content-center">
     {{#ifCond user.isAdmin isAuthenticated}}
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/leisurefits">後台</a>
     {{/ifCond}}
@@ -33,7 +34,7 @@
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/location">上課地點</a>
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link" href="/contactUs">聯絡我們</a>
   </nav>
-  <div class="container">
+  <div class="container mt-5">
     <div class="row">
       {{#each leisurefits}}
       <div class="col-md-4" height="400">

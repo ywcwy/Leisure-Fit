@@ -67,7 +67,7 @@
           <td>{{this.duration}}</td>
           <td>
             <button type="button" class="btn btn-light mr-3">
-              <a style="color: #c9461e" href="/admin/courses/trainingdays/{{this.id}}">Edit</a>
+              <a style="color: #c9461e; text-decoration: none;" href="/admin/courses/trainingdays/{{this.id}}">Edit</a>
             </button>
             <form action="/admin/courses/trainingdays/{{this.id}}?_method=DELETE" method="POST"
               style="display: inline;">
@@ -95,7 +95,7 @@
         {{#if exercise.id}}
         <button type="submit" class="btn btn-sm ml-2" style="color: #dc6548">編輯</button>
         <a href="/admin/courses/exercises" role="button" aria-disabled="true" class="btn btn-sm btn-light ml-2"
-          style="color: #dc6548">取消編輯</a>
+          style="color: #dc6548; text-decoration: none;">取消編輯</a>
         {{else}}
         <button type="submit" class="btn btn-sm ml-2" style="color: #dc6548">新增</button>{{/if}}
       </form>
@@ -115,7 +115,7 @@
             <td>{{this.description}}</td>
             <td>
               <button type="button" class="btn btn-light mr-3">
-                <a style="color: #c9461e" href="/admin/courses/exercises/{{this.id}}">Edit</a>
+                <a style="color: #c9461e; text-decoration: none;" href="/admin/courses/exercises/{{this.id}}">Edit</a>
               </button>
               <form action="/admin/courses/exercises/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
                 <button style="color: #31583f" type="submit" class="btn btn-light">Delete</button>
@@ -143,7 +143,7 @@
           {{#if equipment.id}}
           <button type="submit" class="btn btn-sm ml-2" style="color: #dc6548">編輯</button>
           <a href="/admin/courses/equipments" role="button" aria-disabled="true" class="btn btn-sm btn-light ml-2"
-            style="color: #dc6548">取消編輯</a>
+            style="color: #dc6548; text-decoration: none;">取消編輯</a>
           {{else}}
           <button type="submit" class="btn btn-sm ml-2" style="color: #dc6548">新增</button>{{/if}}
         </form>
@@ -163,7 +163,8 @@
               <td>{{this.description}}</td>
               <td>
                 <button type="button" class="btn btn-light mr-3">
-                  <a style="color: #c9461e" href="/admin/courses/equipments/{{this.id}}">Edit</a>
+                  <a style="color: #c9461e; text-decoration: none;"
+                    href="/admin/courses/equipments/{{this.id}}">Edit</a>
                 </button>
                 <form action="/admin/courses/equipments/{{this.id}}?_method=DELETE" method="POST"
                   style="display: inline;">
@@ -178,7 +179,8 @@
 
         {{!-- 訓練日的菜單 --}}
         {{#if trainings}}
-        <a class="btn btn-light mx-3 btn-sm" href="/admin/courses/workouts/create" style="color: #dc6548">
+        <a class="btn btn-light mx-3 btn-sm" href="/admin/courses/workouts/create"
+          style="color: #dc6548; text-decoration: none;">
           New Workout</a>
         <br>
         <br>
@@ -203,7 +205,7 @@
               <td>{{this.sets}}</td>
               <td>
                 <button type="button" class="btn btn-light mr-3">
-                  <a style="color: #c9461e" href="/admin/courses/workouts/{{this.id}}">Edit</a>
+                  <a style="color: #c9461e; text-decoration: none;" href="/admin/courses/workouts/{{this.id}}">Edit</a>
                 </button>
                 <form action="/admin/courses/workouts/{{this.id}}?_method=DELETE" method="POST"
                   style="display: inline;">

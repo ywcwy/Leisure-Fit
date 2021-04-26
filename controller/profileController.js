@@ -84,13 +84,14 @@ const profileController = {
     res.render('record', { training, date, duration, category })
   },
   getLikedLeisurefits: async (req, res) => {
-    let likes = await Like.findAll({ where: { UserId: Number(req.user.id) }, raw: true, nest: true, include: [User, { model: Leisurefit, include: Category }] })
-    console.log(likes)
+    let likes = await Like.findAll({
+      where: { UserId: Number(req.user.id) }, raw: true, nest: true,
+      include: [User, { model: Leisurefit, include: Category }]
+    })
     likes = likes.map(l => {
       return {
         ...l,
-        description: l.Leisurefit.description
-        // .substring(0, 50) + '...'
+        description: l.Leisurefit.description.substring(0, 50) + '...'
       }
     })
     res.render('likedLeisurefits', { likes })

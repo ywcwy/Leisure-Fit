@@ -3,6 +3,7 @@ const { Leisurefit, Category, User } = db
 
 const leisurefitController = {
   getLeisurefits: async (req, res) => {
+    const cover = '/images/01.jpg'
     const categories = await Category.findAll({ raw: true })
     const itemInPage = 9 // 每頁九筆資料
     let offset = 0
@@ -35,17 +36,15 @@ const leisurefitController = {
         isLiked: req.user ? req.user.LikedLeisurefits.map(d => d.id).includes(l.id) : false
       }
     })
-    return res.render('index', { leisurefits, categories, categoryId, categoryName, totalPage, prev, next, page })
+    return res.render('index', { cover, leisurefits, categories, categoryId, categoryName, totalPage, prev, next, page })
   },
-  googleMap: (req, res) => {
-    return res.render('googleMap', { css: 'googleMap.css', javascript: 'googleMap.js' })
-  },
+  googleMap: (req, res) => res.render('googleMap', { css: 'googleMap.css', javascript: 'googleMap.js', cover: '/images/02.jpg' }),
   getLeisurefit: async (req, res) => {
     const leisurefit = await Leisurefit.findByPk(req.params.id, { raw: true, nest: true, include: [Category] })
     return res.render('leisurefit', { leisurefit })
   },
-  getCalendar: (req, res) => res.render('calendar', { css: 'calendar.css' }),
-  getContactUs: (req, res) => res.render('contactUs')
+  getCalendar: (req, res) => res.render('calendar', { css: 'calendar.css', cover: '/images/04.jpg' }),
+  getContactUs: (req, res) => res.render('contactUs', { cover: '/images/05.jpg' })
 }
 
 module.exports = leisurefitController

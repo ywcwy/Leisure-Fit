@@ -31,10 +31,10 @@
         <td>{{this.likes}}</td>
         <td>
           <button type="button" class="btn btn-light mr-3">
-            <a style="color: #c9461e" href="/admin/leisurefits/{{this.id}}">More</a>
+            <a style="color: #c9461e; text-decoration: none;" href="/admin/leisurefits/{{this.id}}">More</a>
           </button>
           <button type="button" class="btn btn-light mr-3">
-            <a style="color: #c9461e" href="/admin/leisurefits/{{this.id}}/edit">Edit</a>
+            <a style="color: #c9461e; text-decoration: none;" href="/admin/leisurefits/{{this.id}}/edit">Edit</a>
           </button>
           <form action="/admin/leisurefits/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
             <button style="color: #31583f" type="submit" class="btn btn-light">Delete</button>
