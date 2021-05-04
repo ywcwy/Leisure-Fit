@@ -25,7 +25,7 @@ router.post('/callback', (req, res) => {
   const headerXLine = req.get('X-Line-Signature')
   const body = JSON.stringify(req.body) // Request body string
   const signature = crypto
-    .createHmac('SHA256', client.channelSecret)
+    .createHmac('SHA256', process.env.LINE_BOT_CHANNEL_SECRET)
     .update(body).digest('base64')
 
   if (headerXLine === signature) { // 如果驗證後確認是由 LINE server 發來的訊息
