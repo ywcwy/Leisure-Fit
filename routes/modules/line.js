@@ -29,34 +29,47 @@ router.post('/callback', (req, res) => {
     .update(body).digest('base64')
 
   if (headerXLine === signature) { // 如果驗證後確認是由 LINE server 發來的訊息
-    res.status(200)
+
     // event
     const event = req.body.events[0]
     const { type, replyToken, source, message } = event
-    console.log(type, replyToken, source, message)
+    // console.log(type, replyToken, source, message)
 
     // follow event
     if (type === 'follow') {
-      client.replyMessage(replyToken, {
-        type: 'text',
-        text: '歡迎加入 Leisure-Fit 戶外訓練，每週課表請詳連結 https://leisure-fit.herokuapp.com/calendar 。'
-      })
+      handleFollow(replyToken)
     }
 
     // message event
     if (type === 'message') {
-      if (message.type === 'text' && message.text === '課程') {
-        if (source.type === 'user') {
-          client.replyMessage(replyToken, {
-            type: 'image',
-            text: '每週二，一起變強 - 戶外體能。每週三，一起變辣 - 女性限定。每週四，一起變強 - Cross - Fit。每週課表請詳連結 https://leisure-fit.herokuapp.com/calendar'
-          })
-            .catch(err => console.log(err))
-        }
-      }
+      handleMessage(message, source, replyToken)
     }
+
+    res.status(200).end()
   }
 })
+
+
+function handleFollow(replyToken) {
+  client.replyMessage(replyToken, {
+    type: 'text',
+    text: '歡迎加入 Leisure-Fit 戶外訓練，每週課表請詳連結 https://leisure-fit.herokuapp.com/calendar 。'
+  })
+}
+
+function handleMessage(message, source, replyToken) {
+  if (message.type === 'text' && message.text === '課程') {
+    if (source.type === 'user') {
+      client.replyMessage(replyToken, {
+        type: 'image',
+        text: '每週二，一起變強 - 戶外體能。每週三，一起變辣 - 女性限定。每週四，一起變強 - Cross - Fit。每週課表請詳連結 https://leisure-fit.herokuapp.com/calendar'
+      })
+        .catch(err => console.log(err))
+    }
+  }
+
+}
+
 
 
 module.exports = router
