@@ -13,11 +13,6 @@ const client = new line.Client({
 })
 
 
-const message = {
-  type: 'text',
-  text: "Hi, hi , i'm Wendy"
-}
-
 router.get('/', (req, res) => res.end(`I'm listening. Please access with POST.`))
 
 router.post('/callback', (req, res) => {
@@ -28,25 +23,28 @@ router.post('/callback', (req, res) => {
     .createHmac('SHA256', process.env.LINE_BOT_CHANNEL_SECRET)
     .update(body).digest('base64')
 
-  if (headerXLine === signature) { // 如果驗證後確認是由 LINE server 發來的訊息
-
-    // event
-    const event = req.body.events[0]
-    const { type, replyToken, source, message } = event
-    // console.log(type, replyToken, source, message)
-
-    // follow event
-    if (type === 'follow') {
-      handleFollow(replyToken)
-    }
-
-    // message event
-    if (type === 'message') {
-      handleMessage(message, source, replyToken)
-    }
-
-    res.status(200).end()
+  if (headerXLine !== signature) { // 驗證後，發現不是由 LINE server 發來的訊息
+    return res.status(401).send('Unauthorized');
   }
+
+  // 如果驗證後確認是由 LINE server 發來的訊息
+  // event
+  const event = req.body.events[0]
+  const { type, replyToken, source, message } = event
+  // console.log(type, replyToken, source, message)
+
+  // follow event
+  if (type === 'follow') {
+    handleFollow(replyToken)
+  }
+
+  // message event
+  if (type === 'message') {
+    handleMessage(message, source, replyToken)
+  }
+
+  return res.status(200).end()
+
 })
 
 
