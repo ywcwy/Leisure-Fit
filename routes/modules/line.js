@@ -14,7 +14,6 @@ const client = new line.Client({
 
 
 router.get('/', (req, res) => res.end(`I'm listening. Please access with POST.`))
-
 router.post('/callback', (req, res) => {
   // 驗證 signature
   const headerXLine = req.get('X-Line-Signature')
@@ -32,7 +31,6 @@ router.post('/callback', (req, res) => {
   handleEvent(event)
 
   return res.status(200).end()
-
 })
 
 function handleEvent(event) {
@@ -59,16 +57,14 @@ function handleFollow(replyToken) {
 }
 
 function handleMessage(message, replyToken) {
-  console.log(message.text)
   switch (message.text) {
     case '課程':
     case '課表':
     case '課程表':
-      console.log('1')
       return client.replyMessage(replyToken, [{
         type: 'image',
-        originalContentUrl: 'https://i.imgur.com/qzzXpU1.png',
-        previewImageUrl: 'https://i.imgur.com/qzzXpU1.png'
+        originalContentUrl: 'images/schedule_202105.png',
+        previewImageUrl: 'images/schedule_202105.png'
       }, {
         type: 'text',
         text: '每週二，一起變強 - 戶外體能。每週三，一起變辣 - 女性限定。每週四，一起變強 - Cross - Fit。每週課表請詳連結 https://leisure-fit.herokuapp.com/calendar'
@@ -76,7 +72,6 @@ function handleMessage(message, replyToken) {
 
     case '雨備':
     case '雨備場地':
-      console.log('2')
       return client.replyMessage(replyToken, {
         type: 'location',
         title: '雨備場地',
@@ -87,7 +82,6 @@ function handleMessage(message, replyToken) {
 
     case '台大場地':
     case '操場':
-      console.log('3')
       return client.replyMessage(replyToken, {
         type: 'location',
         title: '台大場地',
