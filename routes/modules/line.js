@@ -60,36 +60,37 @@ function handleFollow(replyToken) {
 
 function handleMessage(message, replyToken) {
   console.log(message.text)
-  if (message.text === '課程' || '課表' || '課程表') {
-    return client.replyMessage(replyToken, [{
-      type: 'image',
-      originalContentUrl: 'https://i.imgur.com/qzzXpU1.png',
-      previewImageUrl: 'https://i.imgur.com/qzzXpU1.png'
-    }, {
-      type: 'text',
-      text: '每週二，一起變強 - 戶外體能。每週三，一起變辣 - 女性限定。每週四，一起變強 - Cross - Fit。每週課表請詳連結 https://leisure-fit.herokuapp.com/calendar'
-    }]).catch(err => console.log(err))
+  switch (message.text) {
+    case '課程' || '課表' || '課程表':
+      console.log('1')
+      return client.replyMessage(replyToken, [{
+        type: 'image',
+        originalContentUrl: 'https://i.imgur.com/qzzXpU1.png',
+        previewImageUrl: 'https://i.imgur.com/qzzXpU1.png'
+      }, {
+        type: 'text',
+        text: '每週二，一起變強 - 戶外體能。每週三，一起變辣 - 女性限定。每週四，一起變強 - Cross - Fit。每週課表請詳連結 https://leisure-fit.herokuapp.com/calendar'
+      }]).catch(err => console.log(err))
 
-  }
+    case '雨備' || '雨備場地':
+      console.log('2')
+      return client.replyMessage(replyToken, {
+        type: 'location',
+        title: '雨備場地',
+        address: '辛亥橋下(辛亥與新生南路交接口）',
+        latitude: 25.022428,
+        longitude: 121.534221
+      }).catch(err => console.log(err))
 
-  if (message.text === '雨備' || '雨備場地') {
-    return client.replyMessage(replyToken, {
-      type: 'location',
-      title: '雨備場地',
-      address: '辛亥橋下(辛亥與新生南路交接口）',
-      latitude: 25.022428,
-      longitude: 121.534221
-    }).catch(err => console.log(err))
-  }
-
-  if (message.text === '台大場地' || '操場') {
-    return client.replyMessage(replyToken, {
-      type: 'location',
-      title: '台大場地',
-      address: '台大操場',
-      latitude: 25.018878,
-      longitude: 121.534602
-    }).catch(err => console.log(err))
+    case '台大場地' || '操場':
+      console.log('3')
+      return client.replyMessage(replyToken, {
+        type: 'location',
+        title: '台大場地',
+        address: '台大操場',
+        latitude: 25.018878,
+        longitude: 121.534602
+      }).catch(err => console.log(err))
   }
 }
 
