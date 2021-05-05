@@ -31,16 +31,6 @@ router.post('/callback', (req, res) => {
   const event = req.body.events[0]
   handleEvent(event)
 
-  // follow event
-  if (type === 'follow') {
-    handleFollow(replyToken)
-  }
-
-  // message event
-  if (type === 'message') {
-    handleMessage(message, source, replyToken)
-  }
-
   return res.status(200).end()
 
 })
@@ -69,6 +59,7 @@ function handleFollow(replyToken) {
 }
 
 function handleMessage(message, replyToken) {
+  console.log(message.text)
   if (message.text === '課程' || '課表' || '課程表') {
     return client.replyMessage(replyToken, [{
       type: 'image',
