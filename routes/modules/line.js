@@ -71,10 +71,10 @@ function handleMessage(message, source, replyToken) {
     if (source.type === 'user') {
       client.replyMessage(replyToken, {
         type: 'location',
-        "title": "雨備場地",
-        "address": "辛亥橋下(辛亥與新生南路交接口）",
-        "latitude": 25.022428,
-        "longitude": 121.534221
+        title: '雨備場地',
+        address: '辛亥橋下(辛亥與新生南路交接口）',
+        latitude: 25.022428,
+        longitude: 121.534221
       }).catch(err => console.log(err))
     }
   }
@@ -83,10 +83,10 @@ function handleMessage(message, source, replyToken) {
     if (source.type === 'user') {
       client.replyMessage(replyToken, {
         type: 'location',
-        "title": "台大場地",
-        "address": "台大操場",
-        "latitude": 25.018878,
-        "longitude": 121.534602
+        title: '台大場地',
+        address: '台大操場',
+        latitude: 25.018878,
+        longitude: 121.534602
       }).catch(err => console.log(err))
     }
   }
