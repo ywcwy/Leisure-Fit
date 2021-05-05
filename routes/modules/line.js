@@ -28,10 +28,8 @@ router.post('/callback', (req, res) => {
   }
 
   // 如果驗證後確認是由 LINE server 發來的訊息
-  // event
   const event = req.body.events[0]
   const { type, replyToken, source, message } = event
-  // console.log(type, replyToken, source, message)
 
   // follow event
   if (type === 'follow') {
@@ -66,6 +64,30 @@ function handleMessage(message, source, replyToken) {
         type: 'text',
         text: '每週二，一起變強 - 戶外體能。每週三，一起變辣 - 女性限定。每週四，一起變強 - Cross - Fit。每週課表請詳連結 https://leisure-fit.herokuapp.com/calendar'
       }]).catch(err => console.log(err))
+    }
+  }
+
+  if (message.type === 'text' && message.text === '雨備' || '雨備場地') {
+    if (source.type === 'user') {
+      client.replyMessage(replyToken, {
+        type: 'location',
+        "title": "雨備場地",
+        "address": "辛亥橋下(辛亥與新生南路交接口）",
+        "latitude": 25.022428,
+        "longitude": 121.534221
+      }).catch(err => console.log(err))
+    }
+  }
+
+  if (message.type === 'text' && message.text === '台大場地' || '操場') {
+    if (source.type === 'user') {
+      client.replyMessage(replyToken, {
+        type: 'location',
+        "title": "台大場地",
+        "address": "台大操場",
+        "latitude": 25.018878,
+        "longitude": 121.534602
+      }).catch(err => console.log(err))
     }
   }
 }
