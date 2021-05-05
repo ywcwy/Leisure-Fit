@@ -1,8 +1,9 @@
 const db = require('../models')
 const { Leisurefit, Category, Like } = db
 const moment = require('moment')
-const imgur = require('imgur')
-imgur.setClientId(process.env.IMGUR_CLIENT_ID)
+const { ImgurClient } = require('imgur')
+const client = new ImgurClient({ clientId: process.env.IMGUR_CLIENT_ID })
+client.on('uploadProgress', (progress) => console.log(progress))
 
 const adminController = {
   getLeisurefits: async (req, res) => {
@@ -23,21 +24,21 @@ const adminController = {
     res.render('admin/leisurefitCreate', { categories, leisurefit })
   },
   postLeisurefit: async (req, res) => {
-    let { categoryId, name, description } = req.body
-    // console.log(categoryId)
-    // const classCategory = await Category.findOne({ name: category })
-    let img = ''
-    if (req.file) { img = await imgur.uploadFile(req.file.path) }
-    // console.log('********')
-    // console.log(description)
-    // description = description.replace('\n', '<br />')
-    // console.log('^^^^^^^^^^^')
-    console.log(description)
-    Leisurefit.create({ name, CategoryId: Number(categoryId), description, image: req.file ? img.link : '' })
-      .then(() => {
-        req.flash('success_msg', '貼文新增成功')
-        res.redirect(`/admin/leisurefits`)
-      })
+    try {
+      let { categoryId, name, description } = req.body
+      // console.log(categoryId)
+      // const classCategory = await Category.findOne({ name: category })
+      let img = ''
+      if (req.file) { img = await client.upload(req.file.path) }
+      // console.log('********')
+      // console.log(description)
+      // description = description.replace('\n', '<br />')
+      Leisurefit.create({ name, CategoryId: Number(categoryId), description, image: req.file ? img.data.link : '' })
+        .then(() => {
+          req.flash('success_msg', '貼文新增成功')
+          res.redirect(`/admin/leisurefits`)
+        })
+    } catch (error) { console.log(error) }
   },
   getLeisurefit: async (req, res) => {
     const leisurefit = await Leisurefit.findByPk(req.params.id, { raw: true, nest: true, include: [Category] })
@@ -56,9 +57,9 @@ const adminController = {
     // console.log('^^^^^^^^^^^')
     // console.log(description)
     let img = leisurefit.image
-    if (req.file) { img = await imgur.uploadFile(req.file.path) }
-    leisurefit.update({ name, CategoryId: Number(categoryId), description, image: req.file ? img.link : leisurefit.image })
-      .then(leisurefit => {
+    if (req.file) { img = await client.upload(req.file.path) }
+    leisurefit.update({ name, CategoryId: Number(categoryId), description, image: req.file ? img.data.link : leisurefit.image })
+      .then(() => {
         req.flash('success_msg', '貼文編輯成功')
         res.redirect(`/admin/leisurefits/${req.params.id}`)
       })

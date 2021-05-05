@@ -2,8 +2,7 @@ const db = require('../models')
 const { Leisurefit, Category, User, Like, Record, Trainingday, Training, Equipment, Exercise, Workout } = db
 const bcrypt = require('bcryptjs')
 const moment = require('moment')
-const imgur = require('imgur')
-imgur.setClientId(process.env.IMGUR_CLIENT_ID)
+
 
 const profileController = {
   getProfile: async (req, res) => {

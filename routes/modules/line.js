@@ -63,8 +63,8 @@ function handleMessage(message, replyToken) {
     case '課程表':
       return client.replyMessage(replyToken, [{
         type: 'image',
-        originalContentUrl: 'images/schedule_202105.png',
-        previewImageUrl: 'images/schedule_202105.png'
+        originalContentUrl: 'https://i.imgur.com/xfLhBxy.png',
+        previewImageUrl: 'https://i.imgur.com/xfLhBxy.png'
       }, {
         type: 'text',
         text: '每週二，一起變強 - 戶外體能。每週三，一起變辣 - 女性限定。每週四，一起變強 - Cross - Fit。每週課表請詳連結 https://leisure-fit.herokuapp.com/calendar'
