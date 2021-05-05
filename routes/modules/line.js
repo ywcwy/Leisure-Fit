@@ -59,9 +59,9 @@ function handleMessage(message, source, replyToken) {
   if (message.type === 'text' && message.text === '課程') {
     if (source.type === 'user') {
       client.replyMessage(replyToken, {
-        type: 'text',
-        text: '每週二，一起變強 - 戶外體能。每週三，一起變辣 - 女性限定。每週四，一起變強 - Cross - Fit。每週課表請詳連結 https://leisure-fit.herokuapp.com/calendar'
-      }, {
+        //   type: 'text',
+        //   text: '每週二，一起變強 - 戶外體能。每週三，一起變辣 - 女性限定。每週四，一起變強 - Cross - Fit。每週課表請詳連結 https://leisure-fit.herokuapp.com/calendar'
+        // }, {
         type: 'image',
         originalContentUrl: 'https://i.imgur.com/qzzXpU1.png',
         previewImageUrl: 'https://i.imgur.com/qzzXpU1.png'
