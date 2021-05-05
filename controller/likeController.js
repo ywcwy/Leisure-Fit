@@ -1,15 +1,20 @@
 const db = require('../models')
-const { User, Like } = db
+const { Like } = db
 
 const likeController = {
-  addLike: (req, res) => {
-    Like.create({ UserId: Number(req.user.id), LeisurefitId: Number(req.params.id) })
-      .then(() => res.redirect('/'))
+  addLike: async (req, res) => {
+    try {
+      await Like.create({ UserId: Number(req.user.id), LeisurefitId: Number(req.params.id) })
+      return res.redirect('/')
+    } catch (error) { console.log(error) }
+
   },
   removeLike: async (req, res) => {
-    const like = await Like.findOne({ UserId: Number(req.user.id), LeisurefitId: Number(req.params.id) })
-    like.destroy()
-      .then(() => res.redirect('/'))
+    try {
+      await Like.destroy({ where: { UserId: Number(req.user.id), LeisurefitId: Number(req.params.id) } })
+      return res.redirect('/')
+    } catch (error) { console.log(error) }
+
   }
 }
 

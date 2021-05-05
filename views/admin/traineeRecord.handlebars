@@ -26,11 +26,11 @@
     <tbody>
       {{#each this.workout}}
       <tr>
-        <td>{{this.exercise}} {{#if this.exerciseDescription
-          }}（{{this.exerciseDescription}}）{{/if}}
+        <td>{{#if this.exercise}}{{this.exercise}}{{else}}-{{/if}}{{#if
+          this.exerciseDescription}}（{{this.exerciseDescription}}）{{/if}}
         </td>
         <td>{{this.equipment}}{{#if this.equipmentDescription
-          }}（{{this.equipmentDescription}}）{{else}}無{{/if}}
+          }}（{{this.equipmentDescription}}）{{else}}-{{/if}}
         </td>
         <td>{{this.repetitions}}</td>
         <td>{{this.sets}}</td>

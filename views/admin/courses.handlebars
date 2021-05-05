@@ -199,8 +199,8 @@
           <tbody>
             {{#each this.workout}}
             <tr>
-              <td>{{this.exercise}}</td>
-              <td>{{this.equipment}}</td>
+              <td>{{#if this.exercise}}{{this.exercise}}{{else}}-{{/if}}</td>
+              <td>{{#if this.equipment}}{{this.equipment}}{{else}}-{{/if}}</td>
               <td>{{this.repetitions}}</td>
               <td>{{this.sets}}</td>
               <td>
