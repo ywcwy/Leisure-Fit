@@ -22,7 +22,7 @@ const traineeController = {
             where: { TrainingdayId: Number(c) }, raw: true, nest: true,
             include: [{ model: Trainingday, include: [Category] }, { model: Training, include: [Exercise, Equipment] }]
           })
-          let date = {}
+          let date = ''
           let category = ''
           let workout = records.map(r => {
             date = moment(r.Trainingday.date).format('YYYY-MM-DD')

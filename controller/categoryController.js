@@ -1,5 +1,5 @@
 const db = require('../models')
-const { Leisurefit, Category } = db
+const { Category } = db
 
 const categoryController = {
   getCategories: async (req, res) => {
