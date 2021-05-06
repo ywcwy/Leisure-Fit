@@ -41,7 +41,7 @@ module.exports = {
       name: '女性限定',
       categoryId: 21,
       description: '每次練完，妳們總是碎嘴太累，但卻又每週三準時出現，且一次比一次地更有自信地越穿越辣。',
-      image: '/images/Girls-only(Wed).jpeg',
+      image: '/images/Girls-only(Wed).jpg',
       createdAt: new Date(),
       updatedAt: new Date()
     }
