@@ -2,6 +2,10 @@ const db = require('../models')
 const { Leisurefit, Category, User } = db
 
 const leisurefitController = {
+  getIndex: (req, res) => {
+    const cover = '/images/Leisurefit-cover.png'
+    return res.render('index', { cover, css: 'index.css' })
+  },
   getLeisurefits: async (req, res) => {
     try {
       const cover = '/images/01.jpg'
@@ -38,7 +42,10 @@ const leisurefitController = {
           isLiked: req.user ? req.user.LikedLeisurefits.map(d => d.id).includes(l.id) : false
         }
       })
-      return res.render('index', { cover, leisurefits, categories, categoryId, categoryName, totalPage, prev, next, currentPage, maxPage })
+      return res.render('leisurefits', {
+        cover, leisurefits, categories, categoryId, categoryName,
+        totalPage, prev, next, currentPage, maxPage, css: 'leisurefits.css'
+      })
     } catch (error) { console.log(error) }
   },
   googleMap: (req, res) => { return res.render('googleMap', { css: 'googleMap.css', javascript: 'googleMap.js', cover: '/images/02.jpg' }) },

@@ -1,0 +1,14 @@
+.carousel{
+  background-color: rgb(27, 65, 40, 0.5);
+}
+
+.cover img {
+  min-width: 150px; 
+  max-width: 200px; 
+  object-fit: cover; 
+  filter: opacity(80%);
+}
+
+.more-button{
+  background-color: rgb(220, 101, 72, 0.75);
+}

@@ -1,0 +1,10 @@
+
+.card-img-top{
+  object-fit:cover; 
+  object-position: right
+}
+
+.read-more-button{
+background-color:#31583f; 
+color:white;
+}

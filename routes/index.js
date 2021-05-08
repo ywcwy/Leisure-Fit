@@ -30,7 +30,8 @@ router.use('/auth', auth)
 router.use('/line', line)
 
 // 公開頁面
-router.get('/', (req, res) => res.redirect('/leisurefits'))
+router.get('/', (req, res) => res.redirect('/index'))
+router.get('/index', leisurefitController.getIndex)
 router.get('/leisurefits', leisurefitController.getLeisurefits)
 router.get('/location', leisurefitController.googleMap)
 router.get('/calendar', leisurefitController.getCalendar)
