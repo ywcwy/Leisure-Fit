@@ -1,5 +1,5 @@
 const db = require('../models')
-const { Category, Trainingday, Exercise, Equipment, Training, Workout, Enroll } = db
+const { Category, Trainingday, Exercise, Equipment, Training, Workout, Enroll, WaitingList } = db
 const moment = require('moment')
 
 const courseController = {
@@ -8,12 +8,14 @@ const courseController = {
     try {
       const categories = await Category.findAll({ raw: true })
       let trainingdays = await Trainingday.findAll({ raw: true, nest: true, include: [Category] })
-      trainingdays = trainingdays.map(t => {
+      trainingdays = await Promise.all(trainingdays.map(async (t) => {
         return {
           ...t,
-          date: moment(t.date).format('YYYY-MM-DD')
+          date: moment(t.date).format('YYYY-MM-DD'),
+          enrollNumbers: await Enroll.count({ where: { TrainingdayId: t.id } }),
+          waitingNumbers: await WaitingList.count({ where: { TrainingdayId: t.id } })
         }
-      })
+      }))
       let trainingday = {}
       if (req.params.id) {
         trainingday = await Trainingday.findByPk(req.params.id, { raw: true })

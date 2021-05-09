@@ -54,8 +54,10 @@
       <thead class="thead-light">
         <tr>
           <th scope="col">訓練日期</th>
-          <th scope="col">課程分類</th>
-          <th scope="col">時數</th>
+          <th scope="col" class="d-none d-md-table-cell">課程分類</th>
+          <th scope="col" class="d-none d-md-table-cell text-center">時數</th>
+          <th scope="col" class="text-center">正取人數</th>
+          <th scope="col" class="text-center">備取人數</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -63,8 +65,10 @@
         {{#each trainingdays}}
         <tr>
           <td style="vertical-align: middle;">{{this.date}}</td>
-          <td style="vertical-align: middle;">{{this.Category.name}}</td>
-          <td style="vertical-align: middle;">{{this.duration}}</td>
+          <td style="vertical-align: middle;" class="d-none d-md-table-cell">{{this.Category.name}}</td>
+          <td style="vertical-align: middle;" class="d-none d-md-table-cell text-center">{{this.duration}}</td>
+          <td style="vertical-align: middle;" class="text-center">{{this.enrollNumbers}}</td>
+          <td style="vertical-align: middle;" class="text-center">{{this.waitingNumbers}}</td>
           <td style="vertical-align: middle;">
             <button type="button" class="btn btn-sm btn-light mr-3">
               <a style="color: #c9461e; text-decoration: none;" href="/admin/courses/trainingdays/{{this.id}}">Edit</a>
