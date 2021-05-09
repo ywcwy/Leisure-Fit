@@ -13,6 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       Trainingday.hasMany(models.Workout)
       Trainingday.hasMany(models.Record)
       Trainingday.belongsTo(models.Category)
+      Trainingday.hasMany(models.Enroll)
+      Trainingday.hasMany(models.WaitingList)
       Trainingday.belongsToMany(models.Training, {
         through: models.Workout,
         foreignKey: 'TrainingdayId',
@@ -28,7 +30,8 @@ module.exports = (sequelize, DataTypes) => {
   Trainingday.init({
     date: DataTypes.DATE,
     CategoryId: DataTypes.INTEGER,
-    duration: DataTypes.STRING
+    duration: DataTypes.STRING,
+    enroll: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Trainingday',

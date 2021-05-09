@@ -12,6 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       User.hasMany(models.Like)
       User.hasMany(models.Record)
+      User.hasMany(models.Enroll)
+      User.hasMany(models.WaitingList)
       User.belongsToMany(models.Leisurefit, {
         through: models.Like,
         foreignKey: 'UserId',

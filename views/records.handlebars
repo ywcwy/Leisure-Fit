@@ -6,8 +6,31 @@
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/user/likedLeisurefits">貼文收藏</a>
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link active" href="/user/training">課程</a>
   </nav>
-  <br />
-  <br />
+  {{#if message}}
+  <div class="mt-2">
+    {{>message}}
+  </div>
+  {{/if}}
+
+  {{#each enrollList}}
+  <p class="lead my-3 py-1 d-flex justify-content-center"
+    style="font-size:14px; background-color:rgb(220, 101, 72, 0.8); width:250px; color: white; border-radius: 30px;">
+    已成功報名
+    {{this.date}} 課程</p>
+  {{/each}}
+
+  {{#each waitingList}}
+  <p class="lead my-3 py-1 d-flex justify-content-center"
+    style="font-size:14px; background-color:rgb(27, 65, 40, 0.6); width:250px; color: white; border-radius: 30px;">目前備取
+    {{this.date}} 課程</p>
+  {{/each}}
+
+  {{#each waitToEnroll}}
+  <form action="/user/training/enroll/{{this.id}}" method="POST" style="display: inline;">
+    <button style="color: #31583f" type="submit" class="btn btn-warning my-4 d-flex justify-content-center">報名
+      {{this.date}} 課程</button>
+  </form>
+  {{/each}}
 
   <table class="table">
     <thead class="thead-light">
@@ -21,10 +44,10 @@
     <tbody>
       {{#each records}}
       <tr>
-        <td>{{this.date}}</td>
-        <td>{{this.category}}</td>
-        <td>{{this.duration}}</td>
-        <td>
+        <td style="vertical-align: middle;">{{this.date}}</td>
+        <td style="vertical-align: middle;">{{this.category}}</td>
+        <td style="vertical-align: middle;">{{this.duration}}</td>
+        <td style="vertical-align: middle;">
           <button type="button" class="btn btn-link">
             <a style="color: #31583f" href="/user/training/records/{{this.id}}">More</a>
           </button>

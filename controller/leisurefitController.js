@@ -32,7 +32,6 @@ const leisurefitController = {
       })
       const maxPage = Math.ceil(leisurefits.count / itemInPage) // 最大頁數
       const totalPage = Array.from({ length: maxPage }).map((item, index) => index + 1) // 將每個頁數帶入分頁表顯示
-      console.log(totalPage)
       const prev = currentPage - 1 < 1 ? 1 : currentPage - 1
       const next = currentPage + 1 > maxPage ? maxPage : currentPage + 1
       leisurefits = leisurefits.rows.map(l => {

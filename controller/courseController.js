@@ -1,5 +1,5 @@
 const db = require('../models')
-const { Category, Trainingday, Exercise, Equipment, Training, Workout } = db
+const { Category, Trainingday, Exercise, Equipment, Training, Workout, Enroll } = db
 const moment = require('moment')
 
 const courseController = {
@@ -25,7 +25,7 @@ const courseController = {
   postTrainingDay: async (req, res) => {
     try {
       const { date, categoryId, duration } = req.body
-      await Trainingday.create({ date, CategoryId: Number(categoryId), duration })
+      await Trainingday.create({ date, CategoryId: Number(categoryId), duration }, { raw: true })
       req.flash('success_msg', '課程日新增成功。')
       return res.redirect('/admin/courses/trainingdays')
     } catch (error) { console.log(error) }
@@ -44,6 +44,13 @@ const courseController = {
       req.flash('success_msg', '課程日刪除成功。')
       return res.redirect('/admin/courses/trainingdays')
     } catch (error) { console.log(error) }
+  },
+
+  // 開放/截止報名日期
+  handleEnrollment: async (req, res) => {
+    const trainingDay = await Trainingday.findByPk(req.params.id)
+    await trainingDay.update({ enroll: !trainingDay.enroll })
+    return res.redirect('/admin/courses/trainingdays')
   },
 
   // 動作項目

@@ -1,5 +1,5 @@
 const db = require('../models')
-const { Leisurefit, Category, User, Like, Record, Trainingday, Training, Equipment, Exercise, Workout } = db
+const { Leisurefit, Category, User, Like, Record, Trainingday, Training, Equipment, Exercise, Workout, Enroll, WaitingList } = db
 const bcrypt = require('bcryptjs')
 const moment = require('moment')
 
@@ -53,6 +53,38 @@ const profileController = {
   },
   getRecords: async (req, res) => {
     try {
+      // 自己目前的報名狀況
+      const enrollTraining = await Trainingday.findAll({ where: { enroll: 1 }, order: [['date', 'ASC']], raw: true, nest: true })
+      const enrollList = []
+      const waitingList = []
+      const waitToEnroll = []
+      await Promise.all(enrollTraining.map(async (e) => {
+        const alreadyEnroll = await Enroll.findOne({ where: { UserId: req.user.id, TrainingdayId: e.id } })
+        if (alreadyEnroll) {
+          enrollList.push({
+            ...e,
+            date: moment(e.date).format('YYYY-MM-DD')
+          })
+        }
+
+        const alreadyOnWaitingList = await WaitingList.findOne({ where: { UserId: req.user.id, TrainingdayId: e.id } })
+        if (alreadyOnWaitingList) {
+          waitingList.push({
+            ...e,
+            date: moment(e.date).format('YYYY-MM-DD'),
+            myEnroll: alreadyOnWaitingList ? 1 : 0
+          })
+        }
+
+        if (!alreadyEnroll && !alreadyOnWaitingList) {
+          waitToEnroll.push({
+            ...e,
+            date: moment(e.date).format('YYYY-MM-DD')
+          })
+        }
+      }))
+
+      // 自己已上過的課程
       let records = await Record.findAll({
         where: { UserId: Number(req.user.id) }, attributes: ['id'], raw: true, nest: true,
         include: [User, { model: Trainingday, include: [Category] }]
@@ -66,7 +98,7 @@ const profileController = {
           duration: r.Trainingday.duration
         }
       })
-      return res.render('records', { records })
+      return res.render('records', { records, enrollList, waitingList, waitToEnroll })
     } catch (error) { console.log(error) }
   },
   getRecord: async (req, res) => {

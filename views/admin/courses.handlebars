@@ -66,13 +66,26 @@
           <td style="vertical-align: middle;">{{this.Category.name}}</td>
           <td style="vertical-align: middle;">{{this.duration}}</td>
           <td style="vertical-align: middle;">
-            <button type="button" class="btn btn-light mr-3">
+            <button type="button" class="btn btn-sm btn-light mr-3">
               <a style="color: #c9461e; text-decoration: none;" href="/admin/courses/trainingdays/{{this.id}}">Edit</a>
             </button>
             <form action="/admin/courses/trainingdays/{{this.id}}?_method=DELETE" method="POST"
               style="display: inline;">
-              <button style="color: #31583f" type="submit" class="btn btn-light">Delete</button>
+              <button style="color: #31583f" type="submit" class="btn btn-sm btn-light mr-3">Delete</button>
             </form>
+            {{#ifSelected this.enroll 1}}
+            <button type="button" class="btn btn-sm btn-light">
+              <a style="color: #c9461e; text-decoration: none;"
+                href="/admin/courses/trainingdays/enroll/{{../this.id}}">開放報名中
+              </a>
+            </button>
+            {{else}}
+            <button type="button" class="btn btn-sm btn-dark">
+              <a style="color: white; text-decoration: none;"
+                href="/admin/courses/trainingdays/enroll/{{../this.id}}">已截止報名
+              </a>
+            </button>
+            {{/ifSelected}}
           </td>
         </tr>
         {{/each}}

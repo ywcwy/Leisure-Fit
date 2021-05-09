@@ -11,6 +11,8 @@ const likeController = require('../controller/likeController')
 const profileController = require('../controller/profileController')
 const courseController = require('../controller/courseController')
 const traineeController = require('../controller/traineeController')
+const enrollController = require('../controller/enrollController')
+
 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
@@ -60,6 +62,10 @@ router.get('/user/training/records/:id', authenticated, profileController.getRec
 router.get('/user/likedLeisurefits', authenticated, profileController.getLikedLeisurefits)
 router.delete('/user/likedLeisurefits/:id', authenticated, profileController.removeLikedLeisurefits)
 
+// 報名課程
+router.post('/user/training/enroll/:id', authenticated, enrollController.enroll)
+
+
 // 後台頁面
 // 後台編輯貼文
 router.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/leisurefits'))
@@ -87,6 +93,8 @@ router.post('/admin/courses/trainingdays', authenticatedAdmin, courseController.
 router.get('/admin/courses/trainingdays/:id', authenticatedAdmin, courseController.getTrainingDays)
 router.put('/admin/courses/trainingdays/:id', authenticatedAdmin, courseController.putTrainingDay)
 router.delete('/admin/courses/trainingdays/:id', authenticatedAdmin, courseController.deleteTrainingDay)
+
+router.get('/admin/courses/trainingdays/enroll/:id', authenticatedAdmin, courseController.handleEnrollment)
 
 // 後台編輯訓練動作
 router.get('/admin/courses/exercises', authenticatedAdmin, courseController.getExercises)
