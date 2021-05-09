@@ -55,12 +55,14 @@ const enrollController = {
     await Enroll.destroy({ where: { UserId: Number(req.user.id), TrainingdayId: Number(req.params.id) } })
 
     //目前備取第一位要改為正取
-    const turnToBeEnrolled = await WaitingList.findOne({ where: { TrainingdayId: Number(req.params.id) }, order: [['createdAt', 'ASC']], limit: 1 })
-    console.log(turnToBeEnrolled)
+    const { UserId, TrainingdayId } = await WaitingList.findOne({ where: { TrainingdayId: Number(req.params.id) }, order: [['createdAt', 'ASC']], limit: 1 })
+    await WaitingList.destroy({ where: { UserId, TrainingdayId } })
+    await Enroll.create({ UserId, TrainingdayId })
+    return res.redirect('/user/training')
   },
   cancelWaiting: async (req, res) => {
     // 取消備取
-    const destroy = await WaitingList.destroy({ where: { UserId: Number(req.user.id), TrainingdayId: Number(req.params.id) } })
+    await WaitingList.destroy({ where: { UserId: Number(req.user.id), TrainingdayId: Number(req.params.id) } })
     return res.redirect('/user/training')
   }
 
