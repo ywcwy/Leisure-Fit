@@ -7,27 +7,39 @@
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link active" href="/user/training">課程</a>
   </nav>
   {{#if message}}
-  <div class="mt-2">
+  <div class="my-2">
     {{>message}}
   </div>
   {{/if}}
 
   {{#each enrollList}}
-  <p class="lead my-3 py-1 d-flex justify-content-center"
-    style="font-size:14px; background-color:rgb(220, 101, 72, 0.8); width:250px; color: white; border-radius: 30px;">
-    已成功報名
-    {{this.date}} 課程</p>
+  <div class="mt-3 d-flex">
+    <p class="lead d-flex justify-content-center my-auto"
+      style="font-size:15px; background-color:rgb(220, 101, 72, 0.8); width: 230px; color: white; border-radius: 30px;">
+      已成功報名
+      {{this.date}} 課程</p>
+    <form action="/user/training/enroll/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+      <button style="color: #dc6548" type="submit" class="btn btn-sm btn-light ml-2">取消報名</button>
+    </form>
+  </div>
   {{/each}}
 
   {{#each waitingList}}
-  <p class="lead my-3 py-1 d-flex justify-content-center"
-    style="font-size:14px; background-color:rgb(27, 65, 40, 0.6); width:250px; color: white; border-radius: 30px;">目前備取
-    {{this.date}} 課程</p>
+  <div class="mt-3 d-flex">
+    <p class="lead d-flex justify-content-center my-auto"
+      style="font-size:15px; background-color:rgb(27, 65, 40, 0.6); width:230px; color: white; border-radius: 30px;">
+      目前備取 {{this.date}} 課程</p>
+    <form action="/user/training/waiting/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+      <button style="color: #31583f" type="submit"
+        class="btn btn-sm btn-light ml-2 d-flex justify-content-center">取消報名</button>
+    </form>
+  </div>
   {{/each}}
 
   {{#each waitToEnroll}}
   <form action="/user/training/enroll/{{this.id}}" method="POST" style="display: inline;">
-    <button style="color: #31583f" type="submit" class="btn btn-warning my-4 d-flex justify-content-center">報名
+    <button style="font-size:15px; color: #31583f;" type="submit"
+      class="btn btn-sm btn-warning my-3 d-flex justify-content-center">報名
       {{this.date}} 課程</button>
   </form>
   {{/each}}

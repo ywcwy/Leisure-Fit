@@ -63,8 +63,9 @@ router.get('/user/likedLeisurefits', authenticated, profileController.getLikedLe
 router.delete('/user/likedLeisurefits/:id', authenticated, profileController.removeLikedLeisurefits)
 
 // 報名課程
-router.post('/user/training/enroll/:id', authenticated, enrollController.enroll)
-
+router.post('/user/training/enroll/:id', authenticated, enrollController.enrollCourse)
+router.delete('/user/training/enroll/:id', authenticated, enrollController.cancelEnroll)
+router.delete('/user/training/waiting/:id', authenticated, enrollController.cancelWaiting)
 
 // 後台頁面
 // 後台編輯貼文

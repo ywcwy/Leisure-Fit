@@ -3,7 +3,7 @@ const { Enroll, Trainingday, WaitingList } = db
 const moment = require('moment')
 
 const enrollController = {
-  enroll: async (req, res) => {
+  enrollCourse: async (req, res) => {
     // 報名的課程日期
     const trainingDay = await Trainingday.findByPk(req.params.id, { raw: true })
     trainingDay.date = moment(trainingDay.date).format('YYYY-MM-DD')
@@ -27,7 +27,7 @@ const enrollController = {
     // 確認此堂課報名是否已額滿
     // 目前該堂正取人數尚未額滿
     if (enrollCount < 1) {
-      await Enroll.create({ UserId: req.user.id, TrainingdayId: req.params.id }, { raw: true })
+      await Enroll.create({ UserId: Number(req.user.id), TrainingdayId: Number(req.params.id) }, { raw: true })
       req.flash('success_msg', `已成功${trainingDay.date}報名`)
       return res.redirect('/user/training')
     }
@@ -36,7 +36,7 @@ const enrollController = {
     if (enrollCount === 1) {
       // 確認備取名單尚未額滿
       if (waitingCount < 1) {
-        await WaitingList.create({ UserId: req.user.id, TrainingdayId: req.params.id }, { raw: true })
+        await WaitingList.create({ UserId: Number(req.user.id), TrainingdayId: Number(req.params.id) }, { raw: true })
         req.flash('success_msg', `目前為備取${trainingDay.date}課程`)
         return res.redirect('/user/training')
       }
@@ -49,6 +49,19 @@ const enrollController = {
       return res.redirect('/user/training')
     }
 
+  },
+  cancelEnroll: async (req, res) => {
+    // 取消正取
+    await Enroll.destroy({ where: { UserId: Number(req.user.id), TrainingdayId: Number(req.params.id) } })
+
+    //目前備取第一位要改為正取
+    const turnToBeEnrolled = await WaitingList.findOne({ where: { TrainingdayId: Number(req.params.id) }, order: [['createdAt', 'ASC']], limit: 1 })
+    console.log(turnToBeEnrolled)
+  },
+  cancelWaiting: async (req, res) => {
+    // 取消備取
+    const destroy = await WaitingList.destroy({ where: { UserId: Number(req.user.id), TrainingdayId: Number(req.params.id) } })
+    return res.redirect('/user/training')
   }
 
 }
