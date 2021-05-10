@@ -16,8 +16,8 @@
     {{#each enrollList}}
     <div class="my-2 d-flex">
       <p class="lead d-flex justify-content-center py-1"
-        style="font-size:15px; background-color:rgb(220, 101, 72, 0.8); width: 300px; color: white; border-radius: 30px;">
-        已成功報名{{this.date}} {{this.Category.day_CH}}）{{this.time}} 課程</p>
+        style="font-size:15px; background-color:rgb(220, 101, 72, 0.8); width: 350px; color: white; border-radius: 30px;">
+        已成功報名 {{this.date}} {{this.Category.day_CH}}）{{this.time}} 課程</p>
       <form action="/user/training/enroll/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
         <button style="color: #dc6548" type="submit" class="btn btn-sm btn-light ml-2">取消報名</button>
       </form>
@@ -27,7 +27,7 @@
     {{#each waitingList}}
     <div class="my-2 d-flex">
       <p class="lead d-flex justify-content-center py-1"
-        style="font-size:15px; background-color:rgb(27, 65, 40, 0.6); width:300px; color: white; border-radius: 30px;">
+        style="font-size:15px; background-color:rgb(27, 65, 40, 0.6); width:350px; color: white; border-radius: 30px;">
         目前備取 {{this.date}}（{{this.Category.day_CH}}）{{this.time}} 課程</p>
       <form action="/user/training/waiting/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
         <button style="color: #31583f" type="submit"
@@ -37,11 +37,13 @@
     {{/each}}
 
     {{#each waitToEnroll}}
-    <form action="/user/training/enroll/{{this.id}}" method="POST" style="display: inline;">
-      <button style="font-size:15px; width:300px; color: #31583f;" type="submit"
-        class="btn btn-sm btn-warning my-2 py-1 d-flex justify-content-center">報名
-        {{this.date}}（{{this.Category.day_CH}}）{{this.time}} 課程</button>
+    <form action="/user/training/enroll/{{this.id}}" method="POST">
+      <button style="font-size:15px; width:350px; color: #31583f; display: inline;" type="submit"
+        class="btn btn-sm btn-warning my-2 py-1 d-flex justify-content-center {{#ifSelected this.available 0}}disabled{{/ifSelected}}">報名
+        {{this.date}}（{{this.Category.day_CH}}）{{this.time}} 課程 {{#ifSelected this.available
+        0}}（目前額滿）{{/ifSelected}}</button>
     </form>
+
     {{/each}}
   </div>
   <table class="table">

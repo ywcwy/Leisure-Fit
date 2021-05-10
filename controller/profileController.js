@@ -60,6 +60,7 @@ const profileController = {
       const waitToEnroll = []
       await Promise.all(enrollTraining.map(async (e) => {
         const alreadyEnroll = await Enroll.findOne({ where: { UserId: req.user.id, TrainingdayId: e.id } })
+        const enrollCount = await Enroll.count({ where: { TrainingdayId: e.id } })   // 目前正取人數
         if (alreadyEnroll) {
           enrollList.push({
             ...e,
@@ -69,6 +70,7 @@ const profileController = {
         }
 
         const alreadyOnWaitingList = await WaitingList.findOne({ where: { UserId: req.user.id, TrainingdayId: e.id } })
+        const waitingCount = await WaitingList.count({ where: { TrainingdayId: e.id } })  // 目前備取人數
         if (alreadyOnWaitingList) {
           waitingList.push({
             ...e,
@@ -82,7 +84,8 @@ const profileController = {
           waitToEnroll.push({
             ...e,
             date: moment(e.date).format('YYYY-MM-DD'),
-            time: moment(e.time, moment.HTML5_FMT.TIME).format("HH:mm")
+            time: moment(e.time, moment.HTML5_FMT.TIME).format("HH:mm"),
+            available: (enrollCount >= e.limitNumber && waitingCount >= e.limitNumber) ? 0 : 1  // 如果正取備取都已額滿，則為0
           })
         }
       }))

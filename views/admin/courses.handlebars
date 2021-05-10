@@ -29,8 +29,8 @@
     <form action="/admin/courses/trainingdays" method="POST" class="d-flex align-items-center">
       {{/if}}
       <div class="form-inline d-flex align-items-center">
-        訓練日期：<input type="date" name="date" class="ml-2 mr-2 rounded form-control" required="required"
-          value={{trainingday.date}}>
+        訓練日期：<input type="date" name="date" style="width: 11em;" class="ml-2 mr-2 rounded form-control"
+          required="required" value={{trainingday.date}}>
         訓練時間：<input type="time" name="time" class="ml-2 mr-2 rounded form-control" required="required"
           value={{trainingday.time}}>
         <label for="categoryId">訓練分類：</label>
@@ -41,6 +41,8 @@
             {{this.name}}</option>
           {{/each}}
         </select>
+        人數限制：<input type="number" name="limitNumber" style="width: 5em;" class="ml-2 mr-2 rounded form-control"
+          required="required" value={{trainingday.limitNumber}}>
       </div>
       {{#if trainingday.id}}
       <button type="submit" class="btn btn-sm ml-2" style="color: #dc6548">編輯</button>
@@ -57,8 +59,9 @@
           <th scope="col" class="text-center">訓練日</th>
           <th scope="col" class="d-none d-lg-table-cell">課程分類</th>
           <th scope="col" class="d-none d-lg-table-cell text-center">時間</th>
-          <th scope="col" class="text-center">正取人數</th>
-          <th scope="col" class="text-center">備取人數</th>
+          <th scope="col" class="text-center">人數限制</th>
+          <th scope="col" class="text-center">正取</th>
+          <th scope="col" class="text-center">備取</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -69,6 +72,7 @@
           <td style="vertical-align: middle;" class="text-center">{{this.Category.day_CH}}</td>
           <td style="vertical-align: middle;" class="d-none d-lg-table-cell">{{this.Category.name}}</td>
           <td style="vertical-align: middle;" class="d-none d-lg-table-cell text-center">{{this.time}}</td>
+          <td style="vertical-align: middle;" class="text-center">{{this.limitNumber}}</td>
           <td style="vertical-align: middle;" class="text-center">{{this.enrollNumbers}}</td>
           <td style="vertical-align: middle;" class="text-center">{{this.waitingNumbers}}</td>
           <td style="vertical-align: middle;">

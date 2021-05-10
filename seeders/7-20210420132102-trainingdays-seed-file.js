@@ -7,6 +7,7 @@ module.exports = {
       date: '2021-3-18',
       CategoryId: 31,
       time: '20:00:00',
+      limitNumber: 20,
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -14,6 +15,7 @@ module.exports = {
       date: '2021-3-25',
       CategoryId: 31,
       time: '20:00:00',
+      limitNumber: 20,
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -21,6 +23,7 @@ module.exports = {
       date: '2021-4-8',
       CategoryId: 31,
       time: '20:00:00',
+      limitNumber: 20,
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -28,6 +31,7 @@ module.exports = {
       date: '2021-4-15',
       CategoryId: 31,
       time: '20:00:00',
+      limitNumber: 20,
       createdAt: new Date(),
       updatedAt: new Date()
     }

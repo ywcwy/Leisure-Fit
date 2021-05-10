@@ -28,24 +28,24 @@ const courseController = {
   },
   postTrainingDay: async (req, res) => {
     try {
-      const { date, categoryId, time } = req.body
-      await Trainingday.create({ date, CategoryId: Number(categoryId), time }, { raw: true })
-      req.flash('success_msg', '課程日新增成功。')
+      const { date, categoryId, time, limitNumber } = req.body
+      await Trainingday.create({ date, CategoryId: Number(categoryId), time, limitNumber }, { raw: true })
+      req.flash('success_msg', '新增成功。')
       return res.redirect('/admin/courses/trainingdays')
     } catch (error) { console.log(error) }
   },
   putTrainingDay: async (req, res) => {
     try {
-      const { date, categoryId, time } = req.body
-      await Trainingday.update({ date, CategoryId: Number(categoryId), time }, { where: { id: req.params.id } })
-      req.flash('success_msg', '課程日修改成功。')
+      const { date, categoryId, time, limitNumber } = req.body
+      await Trainingday.update({ date, CategoryId: Number(categoryId), time, limitNumber }, { where: { id: req.params.id } })
+      req.flash('success_msg', '修改成功。')
       return res.redirect('/admin/courses/trainingdays')
     } catch (error) { console.log(error) }
   },
   deleteTrainingDay: async (req, res) => {
     try {
       await Trainingday.destroy({ where: { id: req.params.id } })
-      req.flash('success_msg', '課程日刪除成功。')
+      req.flash('success_msg', '刪除成功。')
       return res.redirect('/admin/courses/trainingdays')
     } catch (error) { console.log(error) }
   },

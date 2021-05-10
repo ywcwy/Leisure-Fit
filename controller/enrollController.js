@@ -4,11 +4,12 @@ const moment = require('moment')
 
 const enrollController = {
   enrollCourse: async (req, res) => {
-    const limitNumbers = 1 // 每堂課最多20人
+
     // 報名的課程日期
     const trainingDay = await Trainingday.findByPk(req.params.id, { raw: true, nest: true, include: [Category] })
     trainingDay.date = moment(trainingDay.date).format('YYYY-MM-DD')
     trainingDay.time = moment(trainingDay.time, moment.HTML5_FMT.TIME).format("HH:mm")
+    const limitNumbers = 1 // 每堂課最多20人
     // // 確認是否已報名過
     // const alreadyEnroll = await Enroll.findOne({ where: { UserId: req.user.id, TrainingdayId: req.params.id } })
     // if (alreadyEnroll) {
@@ -27,16 +28,16 @@ const enrollController = {
 
     // 確認此堂課報名是否已額滿
     // 目前該堂正取人數尚未額滿
-    if (enrollCount < limitNumbers) {
+    if (enrollCount < trainingDay.limitNumber) {
       await Enroll.create({ UserId: Number(req.user.id), TrainingdayId: Number(req.params.id) }, { raw: true })
       req.flash('success_msg', `已成功 ${trainingDay.date} (${trainingDay.Category.day_CH}) ${trainingDay.time} 報名`)
       return res.redirect('/user/training')
     }
 
     // 目前該堂正取人數剛好額滿
-    if (enrollCount === limitNumbers) {
+    if (enrollCount === trainingDay.limitNumber) {
       // 確認備取名單尚未額滿
-      if (waitingCount < limitNumbers) {
+      if (waitingCount < trainingDay.limitNumber) {
         await WaitingList.create({ UserId: Number(req.user.id), TrainingdayId: Number(req.params.id) }, { raw: true })
         req.flash('success_msg', `已備取 ${trainingDay.date} (${trainingDay.Category.day_CH}) ${trainingDay.time} 課程`)
         return res.redirect('/user/training')
@@ -45,8 +46,8 @@ const enrollController = {
 
 
     // 報名額滿，備取已額滿
-    if (enrollCount >= limitNumbers && waitingCount >= limitNumbers) {
-      req.flash('warning_msg', `${trainingDay.date} (${trainingDay.Category.day_CH}) ${trainingDay.time} 報名已額滿`)
+    if (enrollCount >= trainingDay.limitNumber && waitingCount >= trainingDay.limitNumber) {
+      req.flash('warning_msg', `${trainingDay.date} (${trainingDay.Category.day_CH}) ${trainingDay.time} 目前正備取都已額滿，無法報名`)
       return res.redirect('/user/training')
     }
 
