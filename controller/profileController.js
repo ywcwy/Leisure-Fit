@@ -95,7 +95,7 @@ const profileController = {
           id: r.id,
           date: moment(r.Trainingday.date).format('YYYY-MM-DD'),
           category: r.Trainingday.Category.name,
-          duration: r.Trainingday.duration
+          time: r.Trainingday.time
         }
       })
       return res.render('records', { records, enrollList, waitingList, waitToEnroll })
@@ -106,7 +106,7 @@ const profileController = {
       const record = await Record.findOne({
         where: { id: req.params.id }, raw: true, nest: true, include: [{ model: Trainingday, include: [Category] }]
       })
-      const { id, date, duration } = record.Trainingday
+      const { id, date, time } = record.Trainingday
       const workouts = await Workout.findAll({
         where: { TrainingdayId: id }, raw: true, nest: true,
         include: [{ model: Training, include: [Exercise, Equipment] }]
@@ -122,7 +122,7 @@ const profileController = {
         }
       })
       return res.render('record', {
-        training, duration,
+        training, time,
         category: record.Trainingday.Category.name,
         date: moment(date).format('YYYY-MM-DD'),
       })

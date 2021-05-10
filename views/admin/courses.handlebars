@@ -31,6 +31,8 @@
       <div class="form-inline d-flex align-items-center">
         訓練日期：<input type="date" name="date" class="ml-2 mr-2 rounded form-control" required="required"
           value={{trainingday.date}}>
+        訓練時間：<input type="time" name="time" class="ml-2 mr-2 rounded form-control" required="required"
+          value={{trainingday.time}}>
         <label for="categoryId">訓練分類：</label>
         <select name="categoryId" id="categoryId" class="ml-2 mr-2 form-control" required="required">
           <option>選擇：</option>
@@ -39,8 +41,6 @@
             {{this.name}}</option>
           {{/each}}
         </select>
-        時數：<input type="text" name="duration" style="width:80px;" class="ml-2 rounded form-control" required="required"
-          value={{trainingday.duration}}>
       </div>
       {{#if trainingday.id}}
       <button type="submit" class="btn btn-sm ml-2" style="color: #dc6548">編輯</button>
@@ -55,7 +55,7 @@
         <tr>
           <th scope="col">訓練日期</th>
           <th scope="col" class="d-none d-md-table-cell">課程分類</th>
-          <th scope="col" class="d-none d-md-table-cell text-center">時數</th>
+          <th scope="col" class="d-none d-md-table-cell text-center">時間</th>
           <th scope="col" class="text-center">正取人數</th>
           <th scope="col" class="text-center">備取人數</th>
           <th scope="col"></th>
@@ -66,7 +66,7 @@
         <tr>
           <td style="vertical-align: middle;">{{this.date}}</td>
           <td style="vertical-align: middle;" class="d-none d-md-table-cell">{{this.Category.name}}</td>
-          <td style="vertical-align: middle;" class="d-none d-md-table-cell text-center">{{this.duration}}</td>
+          <td style="vertical-align: middle;" class="d-none d-md-table-cell text-center">{{this.time}}</td>
           <td style="vertical-align: middle;" class="text-center">{{this.enrollNumbers}}</td>
           <td style="vertical-align: middle;" class="text-center">{{this.waitingNumbers}}</td>
           <td style="vertical-align: middle;">

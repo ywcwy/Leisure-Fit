@@ -26,16 +26,16 @@ const courseController = {
   },
   postTrainingDay: async (req, res) => {
     try {
-      const { date, categoryId, duration } = req.body
-      await Trainingday.create({ date, CategoryId: Number(categoryId), duration }, { raw: true })
+      const { date, categoryId, time } = req.body
+      await Trainingday.create({ date, CategoryId: Number(categoryId), time }, { raw: true })
       req.flash('success_msg', '課程日新增成功。')
       return res.redirect('/admin/courses/trainingdays')
     } catch (error) { console.log(error) }
   },
   putTrainingDay: async (req, res) => {
     try {
-      const { date, categoryId, duration } = req.body
-      await Trainingday.update({ date, CategoryId: Number(categoryId), duration }, { where: { id: req.params.id } })
+      const { date, categoryId, time } = req.body
+      await Trainingday.update({ date, CategoryId: Number(categoryId), time }, { where: { id: req.params.id } })
       req.flash('success_msg', '課程日修改成功。')
       return res.redirect('/admin/courses/trainingdays')
     } catch (error) { console.log(error) }
@@ -169,7 +169,7 @@ const courseController = {
           id: req.params.id,
           date: moment(trainingday.date).format('YYYY-MM-DD'),
           categoryId: trainingday.CategoryId,
-          duration: trainingday.duration,
+          time: trainingday.time,
           exerciseId: training.ExerciseId,
           equipmentId: training.EquipmentId,
           repetitions: event.repetitions,
