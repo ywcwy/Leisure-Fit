@@ -15,24 +15,26 @@
   <div class="my-3">
     {{#each enrollList}}
     <div class="my-2 d-flex">
-      <p class="lead d-flex justify-content-center py-1"
+      <p class="lead d-flex justify-content-center text-center py-1"
         style="font-size:15px; background-color:rgb(220, 101, 72, 0.8); width: 350px; color: white; border-radius: 30px;">
-        已成功報名 {{this.date}} {{this.Category.day_CH}}）{{this.time}} 課程</p>
+        已成功報名 {{this.date}} （{{this.Category.day_CH}}）{{this.time}} 課程</p>
       <form action="/user/training/enroll/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
         <button style="color: #dc6548" type="submit" class="btn btn-sm btn-light ml-2">取消報名</button>
       </form>
+      <p class="d-flex align-items-center" style="color:  #c9461e">（取消後，將不保留名額）</p>
     </div>
     {{/each}}
 
     {{#each waitingList}}
     <div class="my-2 d-flex">
-      <p class="lead d-flex justify-content-center py-1"
+      <p class="lead d-flex justify-content-center text-center  py-1"
         style="font-size:15px; background-color:rgb(27, 65, 40, 0.6); width:350px; color: white; border-radius: 30px;">
         目前備取 {{this.date}}（{{this.Category.day_CH}}）{{this.time}} 課程</p>
       <form action="/user/training/waiting/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
         <button style="color: #31583f" type="submit"
           class="btn btn-sm btn-light ml-2 d-flex justify-content-center">取消報名</button>
       </form>
+      <p class="d-flex align-items-center" style="color:  #c9461e">（取消後，將不保留名額）</p>
     </div>
     {{/each}}
 

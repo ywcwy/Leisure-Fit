@@ -1,0 +1,62 @@
+<main class="m-5">
+  <h1>後台</h1>
+  {{>message}}
+  <nav class="nav mt-5 mb-3">
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/leisurefits">貼文</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/categories">分類</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3 active" href="/admin/courses">課程</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link" href="/admin/trainees">學員</a>
+    <br />
+
+  </nav>
+  <h4 class="d-flex justify-content-center mt-5" style="display:inline;">
+    <strong>{{date}}（{{day}}）{{time}}</strong><input type="button" name="back" class="btn btn-sm ml-3"
+      style="border-color:#31583f; color:#31583f;" value="back" onClick="javascript:history.back()"></h4>
+
+  <div class="d-flex justify-content-center">
+    <table class="table mt-3 mx-2" style="max-width: 400px">
+      <thead class="thead-light">
+        <tr>
+          <th colspan="2" class="text-center">正取</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each enrollList}}
+        <tr>
+          <td class="text-center"><a href="/admin/trainees/{{this.User.id}}/records"
+              style="color: #c9461e; text-decoration: none;">{{this.User.name}}</a>
+          </td>
+          <td>
+            <form action="/admin/courses/enroll/{{../trainingDay.id}}/enrollers/{{this.User.id}}?_method=DELETE"
+              method="POST" class="text-center">
+              <button type="submit" class="btn btn-light btn-sm">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    <table class="table mt-3 mx-2" style="max-width: 400px">
+      <thead class="thead-light">
+        <tr>
+          <th colspan="2" class="text-center">備取</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each waitingList}}
+        <tr>
+          <td class="text-center"><a href="/admin/trainees/{{this.User.id}}/records"
+              style="color: #c9461e; text-decoration: none;">{{this.User.name}}</a></td>
+          <td>
+            <form action="/admin/courses/enroll/{{../trainingDay.id}}/waitings/{{this.User.id}}?_method=DELETE"
+              method="POST" class="text-center">
+              <button type="submit" class="btn btn-light btn-sm">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+</main>

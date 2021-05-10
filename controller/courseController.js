@@ -1,5 +1,5 @@
 const db = require('../models')
-const { Category, Trainingday, Exercise, Equipment, Training, Workout, Enroll, WaitingList } = db
+const { Category, Trainingday, Exercise, Equipment, Training, Workout, Enroll, WaitingList, User } = db
 const moment = require('moment')
 
 const courseController = {
@@ -55,6 +55,51 @@ const courseController = {
     const trainingDay = await Trainingday.findByPk(req.params.id)
     await trainingDay.update({ enroll: !trainingDay.enroll })
     return res.redirect('/admin/courses/trainingdays')
+  },
+  getEnrollers: async (req, res) => {
+    const trainingDay = await Trainingday.findByPk(req.params.id, { raw: true, nest: true, include: [Category] })
+    const enrollList = await Enroll.findAll({ where: { TrainingdayId: req.params.id }, raw: true, nest: true, include: [User] })
+    const waitingList = await WaitingList.findAll({ where: { TrainingdayId: req.params.id }, raw: true, nest: true, include: [User] })
+    const date = moment(trainingDay.date).format('YYYY-MM-DD')
+    const time = moment(trainingDay.time, moment.HTML5_FMT.TIME).format("HH:mm")
+    return res.render('admin/enrollers', { enrollList, waitingList, trainingDay, date, time, day: trainingDay.Category.day_CH })
+  },
+  deleteEnrollers: async (req, res) => {
+    // 取消正取
+    const { trainingdayId, userId } = req.params
+    const cancelEnroller = await Enroll.findOne({ where: { TrainingdayId: trainingdayId, UserId: userId }, raw: true, nest: true, include: [User, { model: Trainingday, include: [Category] }] })
+    const date = moment(cancelEnroller.Trainingday.date).format('YYYY-MM-DD')
+    const time = moment(cancelEnroller.Trainingday.time, moment.HTML5_FMT.TIME).format("HH:mm")
+    await Enroll.destroy({ where: { TrainingdayId: trainingdayId, UserId: userId } })
+
+    // 如果目前有備取名單
+    // 目前備取第一位要改為正取
+    const onWaiting = await WaitingList.findOne({
+      where: { TrainingdayId: req.params.trainingdayId },
+      order: [['createdAt', 'ASC']], limit: 1, include: [Trainingday]
+    })
+    if (onWaiting) {
+      const { UserId, TrainingdayId } = onWaiting
+      await WaitingList.destroy({ where: { UserId, TrainingdayId } })
+      await Enroll.create({ UserId, TrainingdayId })
+    }
+
+    req.flash('success_msg', `已取消 ${cancelEnroller.User.name} 報名的 ${date} (${cancelEnroller.Trainingday.Category.day_CH}) ${time} 課程。`)
+    return res.redirect(`/admin/courses/enroll/${trainingdayId}/enrollers`)
+  },
+  deleteWaitings: async (req, res) => {
+    // 取消備取
+    const { trainingdayId, userId } = req.params
+    const cancelWaiting = await WaitingList.findOne({
+      where: { TrainingdayId: trainingdayId, UserId: userId }, raw: true, nest: true,
+      include: [User, { model: Trainingday, include: [Category] }]
+    })
+    const date = moment(cancelWaiting.Trainingday.date).format('YYYY-MM-DD')
+    const time = moment(cancelWaiting.Trainingday.time, moment.HTML5_FMT.TIME).format("HH:mm")
+    await WaitingList.destroy({ where: { UserId: userId, TrainingdayId: trainingdayId } })
+
+    req.flash('success_msg', `已取消 ${cancelWaiting.User.name} 報名的 ${date} (${cancelWaiting.Trainingday.Category.day_CH}) ${time} 課程。`)
+    return res.redirect(`/admin/courses/enroll/${trainingdayId}/enrollers`)
   },
 
   // 動作項目

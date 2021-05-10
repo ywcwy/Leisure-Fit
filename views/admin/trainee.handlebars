@@ -8,46 +8,31 @@
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link active" href="/admin/trainees">學員</a>
   </nav>
   <hr>
-  {{!-- {{#if category.id}}
-  <form action="/admin/categories/{{category.id}}?_method=PUT" method="POST" class="d-flex align-items-center">
-    {{else}}
-    <form action="/admin/category" method="POST" class="d-flex align-items-center">
-      {{/if}}
-      分類: <input type="text" name="name" class="ml-2 mr-4 border-light rounded" required="required"
-        value={{category.name}}>
-      課程日: <input type="text" name="day" class="mx-2 border-light rounded" required="required" value={{category.day}}>
-      {{#if category.id}}
-      <button type="submit" class="btn btn-sm ml-2" style="color: #dc6548">編輯</button>
-      <a href="/admin/categories" role="button" aria-disabled="true" class="btn btn-sm btn-light ml-2"
-        style="color: #dc6548">取消編輯</a>
-      {{else}}
-      <button type="submit" class="btn btn-sm ml-2" style="color: #dc6548">新增</button>{{/if}}
-    </form> --}}
 
-    <br />
-    <table class="table">
-      <thead class="thead-light">
-        <tr>
-          <th scope="col">學員</th>
-          <th scope="col">email</th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each trainees}}
-        <tr>
-          <td>{{this.name}}</td>
-          <td>{{this.email}}</td>
-          <td>
-            <button type="button" class="btn btn-light mr-3">
-              <a href="/admin/trainees/{{this.id}}/records" style="color: #c9461e; text-decoration: none;">Training</a>
-            </button>
-            <form action="/admin/trainees/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
-              <button type="submit" class="btn btn-light">Delete</button>
-            </form>
-          </td>
-        </tr>
-        {{/each}}
-      </tbody>
-    </table>
+  <br />
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">學員</th>
+        <th scope="col">email</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each trainees}}
+      <tr>
+        <td>{{this.name}}</td>
+        <td>{{this.email}}</td>
+        <td>
+          <button type="button" class="btn btn-light mr-3">
+            <a href="/admin/trainees/{{this.id}}/records" style="color: #c9461e; text-decoration: none;">Training</a>
+          </button>
+          <form action="/admin/trainees/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+            <button type="submit" class="btn btn-light">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
 </main>

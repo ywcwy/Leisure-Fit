@@ -95,7 +95,13 @@ router.get('/admin/courses/trainingdays/:id', authenticatedAdmin, courseControll
 router.put('/admin/courses/trainingdays/:id', authenticatedAdmin, courseController.putTrainingDay)
 router.delete('/admin/courses/trainingdays/:id', authenticatedAdmin, courseController.deleteTrainingDay)
 
-router.get('/admin/courses/trainingdays/enroll/:id', authenticatedAdmin, courseController.handleEnrollment)
+// 後台開放課程報名
+router.get('/admin/courses/enroll/:id', authenticatedAdmin, courseController.handleEnrollment)
+// 後台查看正備取名單
+router.get('/admin/courses/enroll/:id/enrollers', authenticatedAdmin, courseController.getEnrollers)
+// 後台取消正備取
+router.delete('/admin/courses/enroll/:trainingdayId/enrollers/:userId', authenticatedAdmin, courseController.deleteEnrollers)
+router.delete('/admin/courses/enroll/:trainingdayId/waitings/:userId', authenticatedAdmin, courseController.deleteWaitings)
 
 // 後台編輯訓練動作
 router.get('/admin/courses/exercises', authenticatedAdmin, courseController.getExercises)
