@@ -17,8 +17,7 @@
     <div class="my-2 d-flex">
       <p class="lead d-flex justify-content-center my-auto"
         style="font-size:15px; background-color:rgb(220, 101, 72, 0.8); width: 230px; color: white; border-radius: 30px;">
-        已成功報名
-        {{this.date}} 課程</p>
+        已成功報名{{this.date}} 課程</p>
       <form action="/user/training/enroll/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
         <button style="color: #dc6548" type="submit" class="btn btn-sm btn-light ml-2">取消報名</button>
       </form>

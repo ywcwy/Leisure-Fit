@@ -30,8 +30,8 @@ module.exports = (sequelize, DataTypes) => {
   Trainingday.init({
     date: DataTypes.DATE,
     CategoryId: DataTypes.INTEGER,
-    duration: DataTypes.STRING,
-    enroll: DataTypes.BOOLEAN
+    enroll: DataTypes.BOOLEAN,
+    time: DataTypes.TIME
   }, {
     sequelize,
     modelName: 'Trainingday',
