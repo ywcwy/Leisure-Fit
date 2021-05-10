@@ -54,7 +54,7 @@ const profileController = {
   getRecords: async (req, res) => {
     try {
       // 自己目前的報名狀況
-      const enrollTraining = await Trainingday.findAll({ where: { enroll: 1 }, order: [['date', 'ASC']], raw: true, nest: true })
+      const enrollTraining = await Trainingday.findAll({ where: { enroll: 1 }, order: [['date', 'ASC']], raw: true, nest: true, include: [Category] })
       const enrollList = []
       const waitingList = []
       const waitToEnroll = []
@@ -63,7 +63,8 @@ const profileController = {
         if (alreadyEnroll) {
           enrollList.push({
             ...e,
-            date: moment(e.date).format('YYYY-MM-DD')
+            date: moment(e.date).format('YYYY-MM-DD'),
+            time: moment(e.time, moment.HTML5_FMT.TIME).format("HH:mm")
           })
         }
 
@@ -72,6 +73,7 @@ const profileController = {
           waitingList.push({
             ...e,
             date: moment(e.date).format('YYYY-MM-DD'),
+            time: moment(e.time, moment.HTML5_FMT.TIME).format("HH:mm"),
             myEnroll: alreadyOnWaitingList ? 1 : 0
           })
         }
@@ -79,7 +81,8 @@ const profileController = {
         if (!alreadyEnroll && !alreadyOnWaitingList) {
           waitToEnroll.push({
             ...e,
-            date: moment(e.date).format('YYYY-MM-DD')
+            date: moment(e.date).format('YYYY-MM-DD'),
+            time: moment(e.time, moment.HTML5_FMT.TIME).format("HH:mm")
           })
         }
       }))
@@ -95,7 +98,7 @@ const profileController = {
           id: r.id,
           date: moment(r.Trainingday.date).format('YYYY-MM-DD'),
           category: r.Trainingday.Category.name,
-          time: r.Trainingday.time
+          time: moment(r.Trainingday.time, moment.HTML5_FMT.TIME).format("HH:mm")
         }
       })
       return res.render('records', { records, enrollList, waitingList, waitToEnroll })
@@ -122,7 +125,7 @@ const profileController = {
         }
       })
       return res.render('record', {
-        training, time,
+        training, time: moment(time, moment.HTML5_FMT.TIME).format("HH:mm"),
         category: record.Trainingday.Category.name,
         date: moment(date).format('YYYY-MM-DD'),
       })

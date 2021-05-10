@@ -13,13 +13,15 @@ const courseController = {
           ...t,
           date: moment(t.date).format('YYYY-MM-DD'),
           enrollNumbers: await Enroll.count({ where: { TrainingdayId: t.id } }),
-          waitingNumbers: await WaitingList.count({ where: { TrainingdayId: t.id } })
+          waitingNumbers: await WaitingList.count({ where: { TrainingdayId: t.id } }),
+          time: moment(t.time, moment.HTML5_FMT.TIME).format("HH:mm")
         }
       }))
       let trainingday = {}
       if (req.params.id) {
         trainingday = await Trainingday.findByPk(req.params.id, { raw: true })
         trainingday.date = moment(trainingday.date).format('YYYY-MM-DD')
+        trainingday.time = moment(trainingday.time, moment.HTML5_FMT.TIME).format("HH:mm")
       }
       return res.render('admin/courses', { trainingdays, categories, trainingday })
     } catch (error) { console.log(error) }
@@ -169,7 +171,7 @@ const courseController = {
           id: req.params.id,
           date: moment(trainingday.date).format('YYYY-MM-DD'),
           categoryId: trainingday.CategoryId,
-          time: trainingday.time,
+          time: moment(trainingday.time, moment.HTML5_FMT.TIME).format("HH:mm"),
           exerciseId: training.ExerciseId,
           equipmentId: training.EquipmentId,
           repetitions: event.repetitions,

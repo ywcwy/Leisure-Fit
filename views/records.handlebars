@@ -7,7 +7,7 @@
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link active" href="/user/training">課程</a>
   </nav>
 
-  <div class="my-3" style="width:300px;">
+  <div class="my-3" style="width:400px;">
     {{>message}}
   </div>
 
@@ -15,9 +15,9 @@
   <div class="my-3">
     {{#each enrollList}}
     <div class="my-2 d-flex">
-      <p class="lead d-flex justify-content-center my-auto"
-        style="font-size:15px; background-color:rgb(220, 101, 72, 0.8); width: 230px; color: white; border-radius: 30px;">
-        已成功報名{{this.date}} 課程</p>
+      <p class="lead d-flex justify-content-center py-1"
+        style="font-size:15px; background-color:rgb(220, 101, 72, 0.8); width: 300px; color: white; border-radius: 30px;">
+        已成功報名{{this.date}} {{this.Category.day_CH}}）{{this.time}} 課程</p>
       <form action="/user/training/enroll/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
         <button style="color: #dc6548" type="submit" class="btn btn-sm btn-light ml-2">取消報名</button>
       </form>
@@ -26,9 +26,9 @@
 
     {{#each waitingList}}
     <div class="my-2 d-flex">
-      <p class="lead d-flex justify-content-center my-auto"
-        style="font-size:15px; background-color:rgb(27, 65, 40, 0.6); width:230px; color: white; border-radius: 30px;">
-        目前備取 {{this.date}} 課程</p>
+      <p class="lead d-flex justify-content-center py-1"
+        style="font-size:15px; background-color:rgb(27, 65, 40, 0.6); width:300px; color: white; border-radius: 30px;">
+        目前備取 {{this.date}}（{{this.Category.day_CH}}）{{this.time}} 課程</p>
       <form action="/user/training/waiting/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
         <button style="color: #31583f" type="submit"
           class="btn btn-sm btn-light ml-2 d-flex justify-content-center">取消報名</button>
@@ -38,9 +38,9 @@
 
     {{#each waitToEnroll}}
     <form action="/user/training/enroll/{{this.id}}" method="POST" style="display: inline;">
-      <button style="font-size:15px; color: #31583f;" type="submit"
-        class="btn btn-sm btn-warning my-2 d-flex justify-content-center">報名
-        {{this.date}} 課程</button>
+      <button style="font-size:15px; width:300px; color: #31583f;" type="submit"
+        class="btn btn-sm btn-warning my-2 py-1 d-flex justify-content-center">報名
+        {{this.date}}（{{this.Category.day_CH}}）{{this.time}} 課程</button>
     </form>
     {{/each}}
   </div>
@@ -49,7 +49,7 @@
       <tr>
         <th scope="col">訓練日期</th>
         <th scope="col">分類</th>
-        <th scope="col">時間</th>
+        <th scope="col">上課時間</th>
         <th scope="col">#</th>
       </tr>
     </thead>
