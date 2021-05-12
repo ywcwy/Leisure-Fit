@@ -58,9 +58,8 @@ router.get('/user/profile/edit', authenticated, profileController.getProfileEdit
 router.put('/user/profile', authenticated, profileController.editProfile)
 router.get('/user/training', authenticated, profileController.getRecords)
 router.get('/user/training/records/:id', authenticated, profileController.getRecord)
-
 router.get('/user/likedLeisurefits', authenticated, profileController.getLikedLeisurefits)
-router.delete('/user/likedLeisurefits/:id', authenticated, profileController.removeLikedLeisurefits)
+
 
 // 報名課程
 router.post('/user/training/enroll/:id', authenticated, enrollController.enrollCourse)

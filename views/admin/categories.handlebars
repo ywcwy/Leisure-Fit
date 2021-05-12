@@ -16,6 +16,8 @@
       分類: <input type="text" name="name" class="ml-2 mr-4 border-light rounded" required="required"
         value={{category.name}}>
       課程日: <input type="text" name="day" class="mx-2 border-light rounded" required="required" value={{category.day}}>
+      中文: <input type="text" name="chinese" class="mx-2 border-light rounded" required="required"
+        value={{category.day_CH}}>
       {{#if category.id}}
       <button type="submit" class="btn btn-sm ml-2" style="color: #dc6548">編輯</button>
       <a href="/admin/categories" role="button" aria-disabled="true" class="btn btn-sm btn-light ml-2"
@@ -30,6 +32,7 @@
         <tr>
           <th scope="col">分類</th>
           <th scope="col">課程日</th>
+          <th scope="col">Chinese</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -38,6 +41,7 @@
         <tr>
           <td style="vertical-align: middle;">{{this.name}}</td>
           <td style="vertical-align: middle;">{{this.day}}</td>
+          <td style="vertical-align: middle;">{{this.day_CH}}</td>
           <td style="vertical-align: middle;">
             <button type="button" class="btn btn-light mr-3">
               <a href="/admin/categories/{{this.id}}" style="color: #c9461e; text-decoration: none;">Edit</a>

@@ -14,7 +14,8 @@
   <br />
   {{#each trainings}}
   <table class="table mb-4">
-    <strong>訓練日：{{this.date}} #{{this.category}}</strong>
+    <strong>訓練日：{{this.training.date}}（{{this.training.day}}）{{this.training.time}}
+      #{{this.training.category}}</strong>
     <thead class="thead-light mt-2">
       <tr>
         <th scope="col" width="30%">動作</th>

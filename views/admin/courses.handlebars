@@ -187,7 +187,8 @@
             {{#each equipments}}
             <tr>
               <td style="vertical-align: middle;">{{this.item}}</td>
-              <td style="vertical-align: middle;">{{this.description}}</td>
+              <td style="vertical-align: middle;">{{#if
+                this.description}}{{this.description}}{{else}}-{{/if}}</td>
               <td style="vertical-align: middle;">
                 <button type="button" class="btn btn-light mr-3">
                   <a style="color: #c9461e; text-decoration: none;"
