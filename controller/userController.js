@@ -31,7 +31,10 @@ const userController = {
   logInPage: (req, res) => { return res.render('login') },
   logIn: (req, res) => {
     req.flash('success_msg', '成功登入。')
-    return res.redirect('/')
+    return res.redirect('/user/profile')
+  },
+  lineLogin: (req, res) => {
+    return res.redirect('/user/profile')
   },
   logOut: (req, res) => {
     req.flash('success_msg', '成功登出。')

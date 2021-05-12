@@ -1,5 +1,4 @@
 const express = require('express')
-const cookieParser = require('cookie-parser')
 const exphbs = require('express-handlebars')
 const flash = require('connect-flash')
 const session = require('express-session')
@@ -25,7 +24,6 @@ app.use(express.json())
 // app.use(bodyParser.json())
 
 app.use(methodOverride('_method'))
-app.use(cookieParser())
 
 app.use(session({
   secret: process.env.SESSION_SECRET,
