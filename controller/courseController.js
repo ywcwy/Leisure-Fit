@@ -1,6 +1,8 @@
 const db = require('../models')
 const { Category, Trainingday, Exercise, Equipment, Training, Workout, Enroll, WaitingList, User } = db
 const { formatDate, formatTime } = require('../config/formatDate&Time')
+const { pushMessage } = require('../config/lineBot')
+const { Op } = require("sequelize")
 
 const courseController = {
 
@@ -29,48 +31,28 @@ const courseController = {
   },
   postTrainingDay: async (req, res) => {
     const { date, categoryId, time, limitNumber } = req.body
-    try {
-      await Trainingday.create({ date, CategoryId: Number(categoryId), time, limitNumber })
-    }
-    catch (error) {
-      req.flash('warning_msg', "can't create trainingday successfully!")
-      return res.redirect('back')
-    }
+    await Trainingday.create({ date, CategoryId: Number(categoryId), time, limitNumber })
     req.flash('success_msg', '新增成功。')
     return res.redirect('back')
   },
   putTrainingDay: async (req, res) => {
     const { date, categoryId, time, limitNumber } = req.body
-    try {
-      await Trainingday.update({ date, CategoryId: Number(categoryId), time, limitNumber }, { where: { id: req.params.id } })
-    }
-    catch (error) {
-      req.flash('warning_msg', "can't edit trainingday successfully!")
-      return res.redirect('back')
-    }
+    await Trainingday.update({ date, CategoryId: Number(categoryId), time, limitNumber }, { where: { id: req.params.id } })
     req.flash('success_msg', '修改成功。')
     return res.redirect('/admin/courses/trainingdays')
   },
   deleteTrainingDay: async (req, res) => {
-    try {
-      await Trainingday.destroy({ where: { id: req.params.id } })
-    }
-    catch (error) {
-      req.flash('warning_msg', "can't delete trainingday successfully!")
-      return res.redirect('back')
-    }
+    await Trainingday.destroy({ where: { id: req.params.id } })
     req.flash('success_msg', '刪除成功。')
     return res.redirect('back')
   },
 
   // 開放/截止報名日期
   handleEnrollment: async (req, res) => {
-    const trainingDay = await Trainingday.findByPk(req.params.id)
-    try { await trainingDay.update({ enroll: !trainingDay.enroll }) }
-    catch (error) {
-      req.flash('warning_msg', "can't open/close enrollment successfully!")
-      return res.redirect('back')
-    }
+    const trainingDay = await Trainingday.findByPk(req.params.id, { include: [Category] })
+    const [open, users] = await Promise.all([trainingDay.update({ enroll: !trainingDay.enroll }), User.findAll({ where: { lineUserId: { [Op.ne]: null } }, attributes: ['lineUserId'], raw: true, nest: true })])
+    console.log(users)
+    // pushMessage(users, `課程已開放 ${formatDate(trainingDay.date)}（${formatTime(trainingDay.Category.day_CH)}）${formatTime(trainingDay.time)}報名。`)
     return res.redirect('back')
   },
   getEnrollers: async (req, res) => {
@@ -84,15 +66,14 @@ const courseController = {
   deleteEnrollers: async (req, res) => {
     // 取消正取
     const { trainingdayId, userId } = req.params
-    const cancelEnroller = await Enroll.findOne({ where: { TrainingdayId: trainingdayId, UserId: userId }, include: [User, { model: Trainingday, include: [Category] }], raw: true, nest: true })
-    const { Trainingday, User } = cancelEnroller
-    try { await Enroll.destroy({ where: { TrainingdayId: trainingdayId, UserId: userId } }) }
-    catch (error) {
-      req.flash('warning_msg', "can't cancel enrollment successfully!")
-      return res.redirect('back')
+    const enroll = await Enroll.findOne({ where: { TrainingdayId: trainingdayId, UserId: userId }, include: [User, { model: Trainingday, include: [Category] }], raw: true, nest: true })
+    await Enroll.destroy({ where: { TrainingdayId: trainingdayId, UserId: userId } })
+    req.flash('success_msg', `已取消 ${enroll.User.name} 報名的 ${formatDate(enroll.Trainingday.date)} (${enroll.Trainingday.Category.day_CH}) ${formatTime(enroll.Trainingday.time)} 課程。`)
+
+    if (enroll.User.lineUserId) { // 傳到私人 line 上
+      pushMessage(user.lineUserId, `已取消 ${enroll.User.name} 報名的 ${formatDate(enroll.Trainingday.date)} (${enroll.Trainingday.Category.day_CH}) ${formatTime(enroll.Trainingday.time)} 課程。`)
     }
-    // 如果目前有備取名單
-    // 目前備取第一位要改為正取
+    // 如果目前有備取名單，備取第一位要改為正取
     const onWaiting = await WaitingList.findOne({
       where: { TrainingdayId: trainingdayId },
       order: [['createdAt', 'ASC']], limit: 1, include: [Trainingday]
@@ -100,10 +81,12 @@ const courseController = {
     if (onWaiting) {
       const { UserId, TrainingdayId } = onWaiting
       WaitingList.destroy({ where: { UserId, TrainingdayId } })
-      Enroll.create({ UserId, TrainingdayId })
+      const toEnroll = await Enroll.create({ UserId, TrainingdayId }, { include: [User] })
+      if (toEnroll.lineUserId) {
+        pushMessage(getEnroll.lineUserId, `${enroll.User.name} 報名的 ${formatDate(enroll.Trainingday.date)} (${enroll.Trainingday.Category.day_CH}) ${formatTime(enroll.Trainingday.time)} 課程已由備取轉為正取。`)
+      }
     }
 
-    req.flash('success_msg', `已取消 ${User.name} 報名的 ${formatDate(Trainingday.date)} (${Trainingday.Category.day_CH}) ${formatTime(Trainingday.time)} 課程。`)
     return res.redirect(`back`)
   },
   deleteWaitings: async (req, res) => {
@@ -112,13 +95,8 @@ const courseController = {
     const cancelWaiting = await WaitingList.findOne({
       where: { TrainingdayId: trainingdayId, UserId: userId }, include: [User, { model: Trainingday, include: [Category] }], raw: true, nest: true
     })
-    const { Trainingday, User } = cancelWaiting
-    try { await WaitingList.destroy({ where: { UserId: userId, TrainingdayId: trainingdayId } }) }
-    catch (error) {
-      req.flash('warning_msg', "can't cancel enrollment successfully!")
-      return res.redirect('back')
-    }
-    req.flash('success_msg', `已取消 ${User.name} 報名的 ${formatDate(Trainingday.date)} (${Trainingday.Category.day_CH}) ${formatTime(Trainingday.time)} 課程。`)
+    await WaitingList.destroy({ where: { UserId: userId, TrainingdayId: trainingdayId } })
+    req.flash('success_msg', `已取消 ${cancelWaiting.User.name} 報名的 ${formatDate(cancelWaiting.Trainingday.date)} (${cancelWaiting.Trainingday.Category.day_CH}) ${formatTime(cancelWaiting.Trainingday.time)} 課程。`)
     return res.redirect(`back`)
   },
 

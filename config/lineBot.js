@@ -6,6 +6,11 @@ const client = new line.Client({
 
 // push message
 const pushMessage = function (userId, text) {
+  if (userId.isArray()) {
+    const lineUserId = []
+    userId.map(u => lineUserId.push(u.lineUserId))
+    client.pushMessage(lineUserId, { type: 'text', text })
+  }
   client.pushMessage(userId, { type: 'text', text })
 }
 
