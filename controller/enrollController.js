@@ -2,6 +2,13 @@ const db = require('../models')
 const { Enroll, Trainingday, WaitingList, Category } = db
 const formatDate = require('../config/formatDate')
 const formatTime = require('../config/formatTime')
+const line = require('@line/bot-sdk')
+const client = new line.Client({
+  channelAccessToken: process.env.LINE_BOT_CHANNEL_TOKEN,
+  channelSecret: process.env.LINE_BOT_CHANNEL_SECRET
+})
+
+
 
 const enrollController = {
   enrollCourse: async (req, res) => {
@@ -23,8 +30,11 @@ const enrollController = {
       WaitingList.count({ where: { TrainingdayId } })  // 備取人數
     ])
 
-    if (enrollCount < limitNumber) {      // 目前該堂正取人數尚未額滿
+    if (enrollCount < limitNumber) {    // 目前該堂正取人數尚未額滿
       await Enroll.create({ UserId, TrainingdayId })
+
+      pushMessage('Uf3f836e59c2b6470e38064aabc88767d', `已成功 ${formatDate(date)} (${trainingday.Category.day_CH}) ${formatTime(time)} 報名。`)
+
       req.flash('success_msg', `已成功 ${formatDate(date)} (${trainingday.Category.day_CH}) ${formatTime(time)} 報名。`)
     } else if (enrollCount === limitNumber) {
       if (waitingCount < limitNumber) {   // 目前該堂正取人數剛好額滿、備取名單尚未額滿
@@ -58,6 +68,10 @@ const enrollController = {
     req.flash('success_msg', `已取消報名 ${formatDate(cancel.date)} (${cancel.Category.day_CH}) ${formatTime(cancel.time)} 課程。`)
     return res.redirect('back')
   }
+}
+
+function pushMessage(userId, text) {
+  client.pushMessage(userId, { type: 'text', text })
 }
 
 module.exports = enrollController

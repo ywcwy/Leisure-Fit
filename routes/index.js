@@ -13,7 +13,6 @@ const courseController = require('../controller/courseController')
 const traineeController = require('../controller/traineeController')
 const enrollController = require('../controller/enrollController')
 
-
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 

@@ -35,7 +35,31 @@ passport.use(new LineStrategy({
 }, async (accessToken, refreshToken, params, profile, done) => {
   try {
     console.log(jwt.decode(params.id_token))
+    // {
+    //   iss: 'https://access.line.me'
+    //   sub: 'Uf3f836e59c2b6470e38064aabc88767d'
+    //   aud: '1655825907'
+    //   exp: 1620876401
+    //   iat: 1620872801
+    //   amr: ['linesso']
+    //   name: '張育雯'
+    //   picture: 'https://profile.line-scdn.net/0hT8k7JUmDCxdWTiGLf950QGoLBXohYA1fLnxCIndJB3Aod04UbC9DIXoaXSIreE5DOi9BdyNJAnJ4'
+    //   email: 'provence5058@gmail.com'
+    // }
     console.log(profile)
+    // {
+    //   provider: 'line'
+    //   id: 'Uf3f836e59c2b6470e38064aabc88767d'
+    //   displayName: '張育雯'
+    //   pictureUrl: 'https://profile.line-scdn.net/0hT8k7JUmDCxdWTiGLf950QGoLBXohYA1fLnxCIndJB3Aod04UbC9DIXoaXSIreE5DOi9BdyNJAnJ4'
+    //   _raw: '{"userId":"Uf3f836e59c2b6470e38064aabc88767d","displayName":"張育雯","pictureUrl":"https://profile.line-scdn.net/0hT8k7JUmDCxdWTiGLf950QGoLBXohYA1fLnxCIndJB3Aod04UbC9DIXoaXSIreE5DOi9BdyNJAnJ4"}'
+    //   _json: {
+    //     userId: 'Uf3f836e59c2b6470e38064aabc88767d'
+    //     displayName: '張育雯'
+    //     pictureUrl: 'https://profile.line-scdn.net/0hT8k7JUmDCxdWTiGLf950QGoLBXohYA1fLnxCIndJB3Aod04UbC9DIXoaXSIreE5DOi9BdyNJAnJ4'
+    //   }
+    // }
+
     const { name, email } = jwt.decode(params.id_token)
     profile.email = email
     const user = await User.findOne({ where: { email } })

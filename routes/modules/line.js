@@ -14,6 +14,12 @@ const client = new line.Client({
 
 
 router.get('/', (req, res) => res.end(`I'm listening. Please access with POST.`))
+// router.post('/callback', (req, res) => {
+//   pushMessage('Uf3f836e59c2b6470e38064aabc88767d')
+
+//   return res.status(200).end()
+// })
+
 router.post('/callback', (req, res) => {
   // 驗證 signature
   const headerXLine = req.get('X-Line-Signature')
@@ -29,9 +35,6 @@ router.post('/callback', (req, res) => {
   // 如果驗證後確認是由 LINE server 發來的訊息
   const event = req.body.events[0]
   handleEvent(event)
-
-  pushMessage(userId)
-
   return res.status(200).end()
 })
 
