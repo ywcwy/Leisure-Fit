@@ -52,7 +52,7 @@ const courseController = {
     const trainingDay = await Trainingday.findByPk(req.params.id, { include: [Category] })
     const [open, users] = await Promise.all([trainingDay.update({ enroll: !trainingDay.enroll }), User.findAll({ where: { lineUserId: { [Op.ne]: null } }, attributes: ['lineUserId'], raw: true, nest: true })])
     console.log(users)
-    // pushMessage(users, `課程已開放 ${formatDate(trainingDay.date)}（${formatTime(trainingDay.Category.day_CH)}）${formatTime(trainingDay.time)}報名。`)
+    pushMessage(users, `課程已開放 ${formatDate(trainingDay.date)}（${formatTime(trainingDay.Category.day_CH)}）${formatTime(trainingDay.time)}報名。`)
     return res.redirect('back')
   },
   getEnrollers: async (req, res) => {
