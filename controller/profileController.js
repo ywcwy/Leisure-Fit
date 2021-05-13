@@ -1,8 +1,7 @@
 const db = require('../models')
 const { Leisurefit, Category, User, Like, Record, Trainingday, Training, Equipment, Exercise, Workout, Enroll, WaitingList } = db
 const bcrypt = require('bcryptjs')
-const formatDate = require('../config/formatDate')
-const formatTime = require('../config/formatTime')
+const { formatDate, formatTime } = require('../config/formatDate&Time')
 
 
 const profileController = {

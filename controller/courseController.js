@@ -1,7 +1,6 @@
 const db = require('../models')
 const { Category, Trainingday, Exercise, Equipment, Training, Workout, Enroll, WaitingList, User } = db
-const formatDate = require('../config/formatDate')
-const formatTime = require('../config/formatTime')
+const { formatDate, formatTime } = require('../config/formatDate&Time')
 
 const courseController = {
 

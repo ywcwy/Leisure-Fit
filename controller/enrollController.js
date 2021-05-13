@@ -1,12 +1,7 @@
 const db = require('../models')
 const { Enroll, Trainingday, WaitingList, Category, User } = db
-const formatDate = require('../config/formatDate')
-const formatTime = require('../config/formatTime')
-const line = require('@line/bot-sdk')
-const client = new line.Client({
-  channelAccessToken: process.env.LINE_BOT_CHANNEL_TOKEN,
-  channelSecret: process.env.LINE_BOT_CHANNEL_SECRET
-})
+const { formatDate, formatTime } = require('../config/formatDate&Time')
+const pushMessage = require('../config/lineBotPushMessage')
 
 
 const enrollController = {
@@ -32,9 +27,9 @@ const enrollController = {
     if (enrollCount < limitNumber) {    // 目前該堂正取人數尚未額滿
       await Enroll.create({ UserId, TrainingdayId })
       if (user.lineUserId) { // 傳到私人 line 上
-        pushMessage(user.lineUserId, `已成功報名 ${formatDate(date)} (${trainingday.Category.day_CH}) ${formatTime(time)}。 `)
+        pushMessage(user.lineUserId, `已成功報名 ${formatDate(date)} (${trainingday.Category.day_CH}) ${formatTime(time)} 課程。 `)
       }
-      req.flash('success_msg', `已成功報名 ${formatDate(date)} (${trainingday.Category.day_CH}) ${formatTime(time)} 。`)
+      req.flash('success_msg', `已成功報名 ${formatDate(date)} (${trainingday.Category.day_CH}) ${formatTime(time)} 課程。`)
     } else if (enrollCount === limitNumber) {
       if (waitingCount < limitNumber) {   // 目前該堂正取人數剛好額滿、備取名單尚未額滿
         await WaitingList.create({ UserId, TrainingdayId })
@@ -84,9 +79,6 @@ const enrollController = {
   }
 }
 
-function pushMessage(userId, text) {
-  client.pushMessage(userId, { type: 'text', text })
-}
 
 
 module.exports = enrollController

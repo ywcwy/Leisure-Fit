@@ -1,7 +1,6 @@
 const db = require('../models')
 const { Category, User, Trainingday, Training, Equipment, Exercise, Workout } = db
-const formatDate = require('../config/formatDate')
-const formatTime = require('../config/formatTime')
+const { formatDate, formatTime } = require('../config/formatDate&Time')
 
 const traineeController = {
   getTrainees: async (req, res) => {

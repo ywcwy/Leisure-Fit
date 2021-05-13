@@ -1,6 +1,6 @@
 const db = require('../models')
 const { Leisurefit, Category, Like } = db
-const moment = require('moment')
+const { formatDate, formatTime } = require('../config/formatDate&Time')
 const { ImgurClient } = require('imgur')
 const client = new ImgurClient({ clientId: process.env.IMGUR_CLIENT_ID })
 client.on('uploadProgress', (progress) => console.log(progress))
@@ -13,7 +13,7 @@ const adminController = {
         const { count } = await Like.findAndCountAll({ where: { LeisurefitId: l.id } })
         return {
           ...l,
-          createdAt: moment(l.createdAt).format('YYYY-MM-DD'),
+          createdAt: formatDate(l.createdAt),
           likes: count
         }
       }))
@@ -43,7 +43,7 @@ const adminController = {
   getLeisurefit: async (req, res) => {
     try {
       const leisurefit = await Leisurefit.findByPk(req.params.id, { raw: true, nest: true, include: [Category] })
-      leisurefit.createdAt = moment(leisurefit.createdAt).format('YYYY-MM-DD')
+      leisurefit.createdAt = formatDate(leisurefit.createdAt)
       leisurefit.description = leisurefit.description.replace(/\r?\n/g, '<br />')
       return res.render('admin/leisurefit', { leisurefit })
     } catch (error) { console.log(error) }
