@@ -1,7 +1,7 @@
 const db = require('../models')
 const { Enroll, Trainingday, WaitingList, Category, User } = db
 const { formatDate, formatTime } = require('../config/formatDate&Time')
-const pushMessage = require('../config/lineBotPushMessage')
+const { pushMessage } = require('../config/lineBot')
 
 
 const enrollController = {

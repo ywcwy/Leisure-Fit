@@ -1,6 +1,6 @@
 const db = require('../models')
 const { Leisurefit, Category, Like } = db
-const { formatDate, formatTime } = require('../config/formatDate&Time')
+const { formatDate } = require('../config/formatDate&Time')
 const { ImgurClient } = require('imgur')
 const client = new ImgurClient({ clientId: process.env.IMGUR_CLIENT_ID })
 client.on('uploadProgress', (progress) => console.log(progress))
