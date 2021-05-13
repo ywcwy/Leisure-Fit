@@ -38,8 +38,8 @@
   </a>
 </div> --}}
 
-<main>
-  <nav class="d-flex justify-content-center mt-5">
+<main class="row  mx-auto d-flex justify-content-center">
+  <nav class="nav d-flex justify-content-center my-5">
     {{#ifCond user.isAdmin isAuthenticated}}
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/leisurefits">後台</a>
     {{/ifCond}}
