@@ -35,12 +35,12 @@ passport.use(new LineStrategy({
 }, async (accessToken, refreshToken, params, profile, done) => {
   try {
     console.log(jwt.decode(params.id_token))
-    // {
-    //   iss: 'https://access.line.me'
-    //   sub: 'Uf3f836e59c2b6470e38064aabc88767d'
-    //   aud: '1655825907'
-    //   exp: 1620876401
-    //   iat: 1620872801
+    // { 
+    //   iss: 'https://access.line.me'  // URL where the ID token is generated.
+    //   sub: 'Uf3f836e59c2b6470e38064aabc88767d' // User ID
+    //   aud: '1655825907'  //Channel ID
+    //   exp: 1620876401 // The expiry date of the ID token in UNIX time.
+    //   iat: 1620872801   //Time when the ID token was generated in UNIX time.
     //   amr: ['linesso']
     //   name: '張育雯'
     //   picture: 'https://profile.line-scdn.net/0hT8k7JUmDCxdWTiGLf950QGoLBXohYA1fLnxCIndJB3Aod04UbC9DIXoaXSIreE5DOi9BdyNJAnJ4'
@@ -60,14 +60,14 @@ passport.use(new LineStrategy({
     //   }
     // }
 
-    const { name, email } = jwt.decode(params.id_token)
+    const { name, email, sub } = jwt.decode(params.id_token)
     profile.email = email
     const user = await User.findOne({ where: { email } })
     if (user) { return done(null, user) }
     const randomPassword = Math.random().toString(36).slice(-8)
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hashSync(randomPassword, salt)
-    await User.create({ name, email, password: hash })
+    await User.create({ name, email, password: hash, lineUserId: sub })
     return done(null, user)
   } catch (error) { done(err, false) }
 }))
