@@ -32,14 +32,14 @@ const enrollController = {
     if (enrollCount < limitNumber) {    // 目前該堂正取人數尚未額滿
       await Enroll.create({ UserId, TrainingdayId })
       if (user.lineUserId) { // 傳到私人 line 上
-        pushMessage(lineUserId, `已成功報名 ${formatDate(date)} (${trainingday.Category.day_CH}) ${formatTime(time)}。 `)
+        pushMessage(user.lineUserId, `已成功報名 ${formatDate(date)} (${trainingday.Category.day_CH}) ${formatTime(time)}。 `)
       }
       req.flash('success_msg', `已成功報名 ${formatDate(date)} (${trainingday.Category.day_CH}) ${formatTime(time)} 。`)
     } else if (enrollCount === limitNumber) {
       if (waitingCount < limitNumber) {   // 目前該堂正取人數剛好額滿、備取名單尚未額滿
         await WaitingList.create({ UserId, TrainingdayId })
         if (user.lineUserId) { // 傳到私人 line 上
-          pushMessage(lineUserId, `已備取 ${formatDate(date)} (${trainingday.Category.day_CH}) ${formatTime(time)} 課程。`)
+          pushMessage(user.lineUserId, `已備取 ${formatDate(date)} (${trainingday.Category.day_CH}) ${formatTime(time)} 課程。`)
         }
         req.flash('success_msg', `已備取 ${formatDate(date)} (${trainingday.Category.day_CH}) ${formatTime(time)} 課程。`)
       }
@@ -57,7 +57,7 @@ const enrollController = {
       User.findByPk(UserId)
     ])
     if (user.lineUserId) { // 傳到私人 line 上
-      pushMessage(lineUserId, `已取消報名 ${formatDate(day.date)} (${day.Category.day_CH}) ${formatTime(day.time)} 課程。`)
+      pushMessage(user.lineUserId, `已取消報名 ${formatDate(day.date)} (${day.Category.day_CH}) ${formatTime(day.time)} 課程。`)
     }
     req.flash('success_msg', `已取消報名 ${formatDate(day.date)} (${day.Category.day_CH}) ${formatTime(day.time)} 課程。`)
 
@@ -68,7 +68,7 @@ const enrollController = {
         WaitingList.destroy({ where: { UserId: onWaiting.UserId, TrainingdayId: onWaiting.TrainingdayId } }),
         Enroll.create({ UserId: onWaiting.UserId, TrainingdayId: onWaiting.TrainingdayId }), User.findByPk(onWaiting.UserId)])
       if (getEnroll.lineUserId) { // 傳到私人 line 上
-        pushMessage(lineUserId, `您報名的 ${formatDate(day.date)} (${day.Category.day_CH}) ${formatTime(day.time)} 課程，您已由備取轉為正取。`)
+        pushMessage(getEnroll.lineUserId, `您報名的 ${formatDate(day.date)} (${day.Category.day_CH}) ${formatTime(day.time)} 課程，您已由備取轉為正取。`)
       }
     }
     return res.redirect('back')
@@ -77,7 +77,7 @@ const enrollController = {
     const [destroyWaiting, day, user] = await Promise.all([WaitingList.destroy({ where: { UserId: req.user.id, TrainingdayId: req.params.id } }),
     Trainingday.findByPk(req.params.id, { include: [Category], raw: true, nest: true }), User.findByPk(UserId)])
     if (user.lineUserId) { // 傳到私人 line 上
-      pushMessage(lineUserId, `已取消報名 ${formatDate(day.date)} (${day.Category.day_CH}) ${formatTime(day.time)} 課程。`)
+      pushMessage(user.lineUserId, `已取消報名 ${formatDate(day.date)} (${day.Category.day_CH}) ${formatTime(day.time)} 課程。`)
     }
     req.flash('success_msg', `已取消報名 ${formatDate(day.date)} (${day.Category.day_CH}) ${formatTime(day.time)} 課程。`)
     return res.redirect('back')
