@@ -1,5 +1,5 @@
 const db = require('../models')
-const { Enroll, Trainingday, WaitingList, Category } = db
+const { Enroll, Trainingday, WaitingList, Category, User } = db
 const formatDate = require('../config/formatDate')
 const formatTime = require('../config/formatTime')
 const line = require('@line/bot-sdk')
