@@ -30,6 +30,8 @@ router.post('/callback', (req, res) => {
   const event = req.body.events[0]
   handleEvent(event)
 
+  pushMessage(userId)
+
   return res.status(200).end()
 })
 
@@ -92,6 +94,8 @@ function handleMessage(message, replyToken) {
   }
 }
 
-
+function pushMessage(userId) {
+  client.pushMessage(userId, { type: 'text', text: 'hello, world' })
+}
 
 module.exports = router

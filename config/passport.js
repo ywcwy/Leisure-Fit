@@ -34,6 +34,8 @@ passport.use(new LineStrategy({
   botPrompt: 'normal'
 }, async (accessToken, refreshToken, params, profile, done) => {
   try {
+    console.log(jwt.decode(params.id_token))
+    console.log(profile)
     const { name, email } = jwt.decode(params.id_token)
     profile.email = email
     const user = await User.findOne({ where: { email } })
@@ -41,7 +43,6 @@ passport.use(new LineStrategy({
     const randomPassword = Math.random().toString(36).slice(-8)
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hashSync(randomPassword, salt)
-    console.log(accessToken)
     await User.create({ name, email, password: hash })
     return done(null, user)
   } catch (error) { done(err, false) }
