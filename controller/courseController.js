@@ -50,9 +50,13 @@ const courseController = {
   // 開放/截止報名日期
   handleEnrollment: async (req, res) => {
     const trainingDay = await Trainingday.findByPk(req.params.id, { include: [Category] })
-    const [open, users] = await Promise.all([trainingDay.update({ enroll: !trainingDay.enroll }), User.findAll({ where: { lineUserId: { [Op.ne]: null } }, attributes: ['lineUserId'], raw: true, nest: true })])
-    console.log(users)
-    pushMessage(users, `課程已開放 ${formatDate(trainingDay.date)}（${formatTime(trainingDay.Category.day_CH)}）${formatTime(trainingDay.time)}報名。`)
+    const [day, users] = await Promise.all([trainingDay.update({ enroll: !trainingDay.enroll }), User.findAll({ where: { lineUserId: { [Op.ne]: null } }, attributes: ['lineUserId'], raw: true, nest: true })])
+    if (day.enroll === false) {
+      pushMessage(users, `已截止報名 ${formatDate(trainingDay.date)}（${trainingDay.Category.day_CH}）${formatTime(trainingDay.time)} 課程。`)
+    } else {
+      pushMessage(users, `已開放報名 ${formatDate(trainingDay.date)}（${trainingDay.Category.day_CH}）${formatTime(trainingDay.time)} 課程。`)
+    }
+
     return res.redirect('back')
   },
   getEnrollers: async (req, res) => {

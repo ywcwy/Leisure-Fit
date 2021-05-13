@@ -9,9 +9,10 @@ const pushMessage = function (userId, text) {
   if (Array.isArray(userId)) {
     const lineUserId = []
     userId.map(u => lineUserId.push(u.lineUserId))
-    client.pushMessage(lineUserId, { type: 'text', text })
+    client.pushMessage(lineUserId.toString(','), { type: 'text', text })
+  } else {
+    client.pushMessage(userId, { type: 'text', text })
   }
-  client.pushMessage(userId, { type: 'text', text })
 }
 
 // reply message
