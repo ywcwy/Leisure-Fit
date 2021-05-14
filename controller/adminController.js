@@ -51,7 +51,6 @@ const adminController = {
     return res.render('admin/leisurefit', { leisurefit })
   },
   putLeisurefit: async (req, res) => {
-
     const leisurefit = await Leisurefit.findByPk(req.params.id, { include: [Category] })
     let { categoryId, name, description } = req.body
     let img = leisurefit.image

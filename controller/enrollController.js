@@ -23,14 +23,24 @@ const enrollController = {
 
     const { limitNumber, date, time } = trainingday
     if (enrollCount < limitNumber) {    // 目前該堂正取人數尚未額滿
-      await Enroll.create({ UserId, TrainingdayId })
+      try {
+        await Enroll.create({ UserId, TrainingdayId })
+      } catch (error) {
+        req.flash('warning_msg', '報名失敗，請聯絡管理員。')
+        return res.redirect('back')
+      }
       if (user.lineUserId) {
         pushMessage(user.lineUserId, `${user.name} 已成功報名 ${formatDate(date)} (${trainingday.Category.day_CH}) ${formatTime(time)} 課程。 `)  // 傳到私人 line 上
       }
       req.flash('success_msg', `${user.name} 已成功報名 ${formatDate(date)} (${trainingday.Category.day_CH}) ${formatTime(time)} 課程。`)
     } else if (enrollCount === limitNumber) {
       if (waitingCount < limitNumber) {   // 目前該堂正取人數剛好額滿、備取名單尚未額滿
-        await WaitingList.create({ UserId, TrainingdayId })
+        try {
+          await WaitingList.create({ UserId, TrainingdayId })
+        } catch (error) {
+          req.flash('warning_msg', '正取名額已滿，報名備取失敗，請聯絡管理員。')
+          return res.redirect('back')
+        }
         if (user.lineUserId) {
           pushMessage(user.lineUserId, ` ${user.name} 已備取 ${formatDate(date)} (${trainingday.Category.day_CH}) ${formatTime(time)} 課程。`)
         }
@@ -44,8 +54,13 @@ const enrollController = {
   cancelEnroll: async (req, res) => {  // 取消正取
     const UserId = Number(req.user.id)
     const TrainingdayId = Number(req.params.id)
-    const [enroll, day, user] = await Promise.all([
-      Enroll.destroy({ where: { UserId, TrainingdayId } }),
+    try {
+      await Enroll.destroy({ where: { UserId, TrainingdayId } })
+    } catch (error) {
+      req.flash('warning_msg', '報名取消失敗，請通知管理員。')
+      return res.redirect('back')
+    }
+    const [day, user] = await Promise.all([
       Trainingday.findByPk(TrainingdayId, { include: [Category], raw: true, nest: true }),
       User.findByPk(UserId)
     ])
@@ -67,8 +82,14 @@ const enrollController = {
     return res.redirect('back')
   },
   cancelWaiting: async (req, res) => {   // 取消備取
-    const [destroyWaiting, day, user] = await Promise.all([WaitingList.destroy({ where: { UserId: req.user.id, TrainingdayId: req.params.id } }),
-    Trainingday.findByPk(req.params.id, { include: [Category], raw: true, nest: true }), User.findByPk(UserId)])
+    try {
+      await WaitingList.destroy({ where: { UserId: req.user.id, TrainingdayId: req.params.id } })
+    } catch (error) {
+      req.flash('warning_msg', '取消備取失敗，請通知管理員。')
+      return res.redirect('back')
+    }
+    const [day, user] = await Promise.all([
+      Trainingday.findByPk(req.params.id, { include: [Category], raw: true, nest: true }), User.findByPk(UserId)])
     if (user.lineUserId) {
       pushMessage(user.lineUserId, `已取消 ${user.name} 報名 ${formatDate(day.date)} (${day.Category.day_CH}) ${formatTime(day.time)} 課程。`)
     }

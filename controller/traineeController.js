@@ -38,7 +38,12 @@ const traineeController = {
     return res.render('admin/traineeRecord', { trainings, name: trainee[0].name })
   },
   deleteTrainee: async (req, res) => {
-    await User.destroy({ where: { id: req.params.id } })
+    try {
+      await User.destroy({ where: { id: req.params.id } })
+    } catch (error) {
+      req.flash('warning_msg', '學員刪除失敗')
+      return res.redirect('back')
+    }
     req.flash('success_msg', '成功刪除學員')
     return res.redirect('back')
   }

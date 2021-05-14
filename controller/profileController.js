@@ -14,37 +14,40 @@ const profileController = {
     return res.render('profileEdit', { name: me.name, email: me.email })
   },
   editProfile: async (req, res) => {
-    try {
-      const { name, email, password, passwordConfirm } = req.body
-      if (!name || !email) {
-        req.flash('warning_msg', 'name 及 email 欄位為必填。')
+    const { name, email, password, passwordConfirm } = req.body
+    if (!name || !email) {
+      req.flash('warning_msg', 'name 及 email 欄位為必填。')
+      return res.render('profileEdit', { name, email, password, passwordConfirm })
+    }
+
+    const user = await User.findOne({ where: { email: email } })
+    if (user) {
+      if (user.id !== req.user.id) {
+        const error = [{ message: '此email已註冊過。' }]
+        return res.render('profileEdit', { error, name, email })
+      }
+    }
+
+    if (password || passwordConfirm) {
+      if (!password || !passwordConfirm) {
+        req.flash('warning_msg', '如需更換密碼，password 及 passwordConfirm 欄位皆為必填。')
         return res.render('profileEdit', { name, email, password, passwordConfirm })
       }
-
-      const user = await User.findOne({ where: { email: email } })
-      if (user) {
-        if (user.id !== req.user.id) {
-          const error = [{ message: '此email已註冊過。' }]
-          return res.render('profileEdit', { error, name, email })
-        }
+      if (password !== passwordConfirm) {
+        const error = [{ message: '密碼與確認密碼不相符。' }]
+        return res.render('profileEdit', { error, name, email })
       }
+    }
 
-      if (password || passwordConfirm) {
-        if (!password || !passwordConfirm) {
-          req.flash('warning_msg', '如需更換密碼，password 及 passwordConfirm 欄位皆為必填。')
-          return res.render('profileEdit', { name, email, password, passwordConfirm })
-        }
-        if (password !== passwordConfirm) {
-          const error = [{ message: '密碼與確認密碼不相符。' }]
-          return res.render('profileEdit', { error, name, email })
-        }
-      }
-
-      const myProfile = await User.findOne({ where: { id: req.user.id } })
+    const myProfile = await User.findOne({ where: { id: req.user.id } })
+    try {
       User.update({ name, email, password: password ? bcrypt.hashSync(password, bcrypt.genSaltSync(10)) : myProfile.password }, { where: { id: req.user.id } })
-      req.flash('success_msg', '帳號更新成功。')
-      return res.redirect('/user/profile')
-    } catch (error) { console.log(error) }
+    } catch (error) {
+      req.flash('warning_msg', '帳號更新失敗')
+      return res.redirect('back')
+    }
+    req.flash('success_msg', '帳號更新成功。')
+    return res.redirect('/user/profile')
   },
   getRecords: async (req, res) => {
     // 自己目前的報名狀況
