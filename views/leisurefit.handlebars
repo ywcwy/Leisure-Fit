@@ -6,14 +6,14 @@
     <br>
     <div class="well">
       <ul class="list-unstyled">
-        <li class="d-none d-sm-block"><strong>Training Day: {{leisurefit.Category.day}}</strong></li>
-        <li class="d-block d-sm-none text-center"><strong>Training Day: {{leisurefit.Category.day}}</strong></li>
+        <li><strong>Training Day: {{leisurefit.Category.day}}</strong></li>
         <li class="mt-"><a href="?categoryId={{leisurefit.Category.id}}" style="color: #c9461e;">
             #{{leisurefit.Category.name}}
           </a></li><br>
         <li>{{leisurefit.description}}</li><br>
-        <li class="d-flex justify-content-center"><img class="d-none d-sm-block" width="500" src="{{leisurefit.image}}">
-          <img class="d-block d-sm-none w-100" src="{{leisurefit.image}}">
+        <li class="d-flex justify-content-center">
+          <img class="d-none d-sm-block w-75" style="object-fit:cover" src="{{leisurefit.image}}">
+          <img class="d-block d-sm-none w-75" style="object-fit:cover" src="{{leisurefit.image}}">
         </li>
       </ul>
     </div>
