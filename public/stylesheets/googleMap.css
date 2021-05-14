@@ -1,7 +1,14 @@
-   main{
+   /* main{
       width:80%;
-   }
-   #map {
+   } */
+
+      #map {
+      height: 250px;
+      width: 250px;
+    }
+   @media (min-width:400px) {
+        #map {
       height: 500px;
       width: 500px;
-    }
+    } 
+   }
