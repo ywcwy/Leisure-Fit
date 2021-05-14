@@ -11,14 +11,14 @@
 <main class="row  mx-auto d-flex justify-content-center">
   <nav class="nav d-flex justify-content-center my-5">
     {{#ifCond user.isAdmin isAuthenticated}}
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/admin/leisurefits">後台</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-2" href="/admin/leisurefits">後台</a>
     {{/ifCond}}
     {{#ifOne user.isAdmin isAuthenticated}}
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/user/profile">My Profile</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-2" href="/user/profile">My Profile</a>
     {{/ifOne}}
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/leisurefits">課程</a>
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/calendar">課程表</a>
-    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-3" href="/location">上課地點</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-2" href="/leisurefits">課程</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-2" href="/calendar">課程表</a>
+    <a role="button" class="btn btn-outline-secondary btn-sm nav-link mr-2" href="/location">上課地點</a>
     <a role="button" class="btn btn-outline-secondary btn-sm nav-link active" href="/contactUs">聯絡我們</a>
   </nav>
   <div class="col-md-12 d-flex flex-column align-items-center">
