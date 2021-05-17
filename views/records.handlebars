@@ -13,6 +13,7 @@
 
 
   <div class="my-3">
+    {{#with enrolls}}
     {{#each enrollList}}
     <div class="my-2 d-flex">
       <p class="lead d-flex justify-content-center text-center py-1"
@@ -45,8 +46,8 @@
         {{this.date}}（{{this.Category.day_CH}}）{{this.time}} 課程 {{#ifSelected this.available
         0}}（目前額滿）{{/ifSelected}}</button>
     </form>
-
     {{/each}}
+    {{/with}}
   </div>
   <table class="table">
     <thead class="thead-light">

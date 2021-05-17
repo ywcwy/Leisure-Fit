@@ -12,7 +12,24 @@ const traineeController = {
       where: { id: req.params.id }, include: [{ model: Trainingday, as: 'CoursesList' }], raw: true, nest: true,
     })
     const coursesdates = trainee.map(d => { return d.CoursesList.id })
-    let trainings = await Promise.all(coursesdates.map(async (c) => {
+    const trainings = await helper.getTrainings(coursesdates)
+    return res.render('admin/traineeRecord', { trainings, name: trainee[0].name })
+  },
+  deleteTrainee: async (req, res) => {
+    try {
+      await User.destroy({ where: { id: req.params.id } })
+    } catch (error) {
+      req.flash('warning_msg', '學員刪除失敗')
+      return res.redirect('back')
+    }
+    req.flash('success_msg', '成功刪除學員')
+    return res.redirect('back')
+  }
+}
+
+const helper = {
+  getTrainings: async (courses) => {
+    return await Promise.all(courses.map(async (c) => {
       const records = await Workout.findAll({
         where: { TrainingdayId: c }, raw: true, nest: true,
         include: [{ model: Trainingday, include: [Category] }, { model: Training, include: [Exercise, Equipment] }]
@@ -35,17 +52,6 @@ const traineeController = {
       })
       return { training, workout }
     }))
-    return res.render('admin/traineeRecord', { trainings, name: trainee[0].name })
-  },
-  deleteTrainee: async (req, res) => {
-    try {
-      await User.destroy({ where: { id: req.params.id } })
-    } catch (error) {
-      req.flash('warning_msg', '學員刪除失敗')
-      return res.redirect('back')
-    }
-    req.flash('success_msg', '成功刪除學員')
-    return res.redirect('back')
   }
 }
 

@@ -30,7 +30,7 @@ const adminController = {
       try {
         img = await client.upload(req.file.path)
       } catch (error) {
-        req.flash('warning_msg', '照片上傳失敗')
+        req.flash('warning_msg', '照片上傳失敗，請選擇其他照片')
         return res.redirect('back')
       }
     }

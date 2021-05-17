@@ -4,24 +4,10 @@ const { formatDate, formatTime } = require('../config/formatDate&Time')
 
 const trainingdayController = {
   getTrainingDays: async (req, res) => {
-    let [categories, trainingdays] = await Promise.all([
-      Category.findAll({ raw: true }), Trainingday.findAll({ raw: true, nest: true, include: [Category] })])
-    trainingdays = await Promise.all(trainingdays.map(async (t) => {
-      const [enrollNumbers, waitingNumbers] = await Promise.all([
-        Enroll.count({ where: { TrainingdayId: t.id } }), WaitingList.count({ where: { TrainingdayId: t.id } })])
-      return {
-        ...t,
-        date: formatDate(t.date),
-        enrollNumbers,
-        waitingNumbers,
-        time: formatTime(t.time)
-      }
-    }))
+    const { categories, trainingdays } = await helper.getAllTrainingdays()
     let trainingday = {}
     if (req.params.id) {
-      trainingday = await Trainingday.findByPk(req.params.id, { raw: true })
-      trainingday.date = formatDate(trainingday.date)
-      trainingday.time = formatTime(trainingday.time)
+      trainingday = await helper.getTrainingDayInfo(req.params.id)
     }
     return res.render('admin/courses', { trainingdays, categories, trainingday })
   },
@@ -56,6 +42,31 @@ const trainingdayController = {
     }
     req.flash('success_msg', '刪除成功。')
     return res.redirect('back')
+  }
+}
+
+const helper = {
+  getAllTrainingdays: async () => {
+    let [categories, trainingdays] = await Promise.all([
+      Category.findAll({ raw: true }), Trainingday.findAll({ raw: true, nest: true, include: [Category] })])
+    trainingdays = await Promise.all(trainingdays.map(async (t) => {
+      const [enrollNumbers, waitingNumbers] = await Promise.all([
+        Enroll.count({ where: { TrainingdayId: t.id } }), WaitingList.count({ where: { TrainingdayId: t.id } })])
+      return {
+        ...t,
+        date: formatDate(t.date),
+        enrollNumbers,
+        waitingNumbers,
+        time: formatTime(t.time)
+      }
+    }))
+    return { categories, trainingdays }
+  },
+  getTrainingDayInfo: async (trainingdayId) => {
+    const trainingday = await Trainingday.findByPk(trainingdayId, { raw: true })
+    trainingday.date = formatDate(trainingday.date)
+    trainingday.time = formatTime(trainingday.time)
+    return trainingday
   }
 }
 

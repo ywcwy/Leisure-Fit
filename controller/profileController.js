@@ -51,55 +51,10 @@ const profileController = {
   },
   getRecords: async (req, res) => {
     // 自己目前的報名狀況
-    const enrollTraining = await Trainingday.findAll({ where: { enroll: 1 }, order: [['date', 'ASC']], include: [Category], raw: true, nest: true })
-    const enrollList = []
-    const waitingList = []
-    const waitToEnroll = []
-    await Promise.all(enrollTraining.map(async (e) => {
-      const UserId = req.user.id
-      const TrainingdayId = e.id
-      const [alreadyEnroll, enrollCount, alreadyOnWaitingList, waitingCount] = await Promise.all([
-        Enroll.findOne({ where: { UserId, TrainingdayId } }),
-        Enroll.count({ where: { TrainingdayId } }),
-        WaitingList.findOne({ where: { UserId, TrainingdayId } }),
-        WaitingList.count({ where: { TrainingdayId } })
-      ])
-      if (alreadyEnroll) {
-        enrollList.push({
-          ...e,
-          date: formatDate(e.date),
-          time: formatTime(e.time)
-        })
-      } else if (alreadyOnWaitingList) {
-        waitingList.push({
-          ...e,
-          date: formatDate(e.date),
-          time: formatTime(e.time),
-          myEnroll: alreadyOnWaitingList ? 1 : 0
-        })
-      } else if (!alreadyEnroll && !alreadyOnWaitingList) {
-        waitToEnroll.push({
-          ...e,
-          date: formatDate(e.date),
-          time: formatTime(e.time),
-          available: (enrollCount >= e.limitNumber && waitingCount >= e.limitNumber) ? 0 : 1  // 如果正取備取都已額滿，則為0
-        })
-      }
-    }))
+    const enrolls = await helper.getMyEnrolls(req.user.id)
     // 自己已上過的課程
-    let records = await Record.findAll({
-      where: { UserId: req.user.id }, attributes: ['id'], include: [User, { model: Trainingday, include: [Category] }], raw: true, nest: true
-    })
-    records = records.map(r => {
-      return {
-        ...r,
-        id: r.id,
-        date: formatDate(r.Trainingday.date),
-        category: r.Trainingday.Category.name,
-        time: formatTime(r.Trainingday.time)
-      }
-    })
-    return res.render('records', { records, enrollList, waitingList, waitToEnroll })
+    const records = await helper.getMyPastCourses(req.user.id)
+    return res.render('records', { records, enrolls })
   },
   getRecord: async (req, res) => {
     const record = await Record.findOne({
@@ -134,6 +89,61 @@ const profileController = {
       }
     })
     return res.render('likedLeisurefits', { likes })
+  }
+}
+
+const helper = {
+  getMyPastCourses: async (user) => {
+    const courses = await Record.findAll({
+      where: { UserId: user }, attributes: ['id'], include: [User, { model: Trainingday, include: [Category] }], raw: true, nest: true
+    })
+    return courses.map(r => {
+      return {
+        ...r,
+        id: r.id,
+        date: formatDate(r.Trainingday.date),
+        category: r.Trainingday.Category.name,
+        time: formatTime(r.Trainingday.time)
+      }
+    })
+  },
+  getMyEnrolls: async (user) => {
+    const enrollTraining = await Trainingday.findAll({ where: { enroll: 1 }, order: [['date', 'ASC']], include: [Category], raw: true, nest: true })
+    const enrollList = []
+    const waitingList = []
+    const waitToEnroll = []
+    await Promise.all(enrollTraining.map(async (e) => {
+      const UserId = user
+      const TrainingdayId = e.id
+      const [alreadyEnroll, enrollCount, alreadyOnWaitingList, waitingCount] = await Promise.all([
+        Enroll.findOne({ where: { UserId, TrainingdayId } }),
+        Enroll.count({ where: { TrainingdayId } }),
+        WaitingList.findOne({ where: { UserId, TrainingdayId } }),
+        WaitingList.count({ where: { TrainingdayId } })
+      ])
+      if (alreadyEnroll) {
+        enrollList.push({
+          ...e,
+          date: formatDate(e.date),
+          time: formatTime(e.time)
+        })
+      } else if (alreadyOnWaitingList) {
+        waitingList.push({
+          ...e,
+          date: formatDate(e.date),
+          time: formatTime(e.time),
+          myEnroll: alreadyOnWaitingList ? 1 : 0
+        })
+      } else if (!alreadyEnroll && !alreadyOnWaitingList) {
+        waitToEnroll.push({
+          ...e,
+          date: formatDate(e.date),
+          time: formatTime(e.time),
+          available: (enrollCount >= e.limitNumber && waitingCount >= e.limitNumber) ? 0 : 1  // 如果正取備取都已額滿，則為0
+        })
+      }
+    }))
+    return { enrollList, waitingList, waitToEnroll }
   }
 }
 
