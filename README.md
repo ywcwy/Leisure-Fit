@@ -8,7 +8,7 @@ let Leisure-Fit be your training log!
 * enroll/cancel training course 
 * collect any training-relative article you like 
 * get the training location/schedule
-* use Line Bot to get the the website and do all the features mentioned above
+* use Line Bot to get the website and do all the features mentioned above
 * use Line Bot to get the training location/schedule by keyword 
 
 ## Environment
