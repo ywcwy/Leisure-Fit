@@ -76,7 +76,7 @@ async function handleMessage(message, replyToken) {
     case '空氣品質':
     case '空品':
     case 'AQI':
-      const aqi = crawlAQI()
+      const aqi = await crawlAQI()
       console.log(aqi)
       return client.replyMessage(replyToken, {
         type: 'text',
@@ -94,11 +94,6 @@ function crawlAQI() {
       }
       throw new Error('Network response was not ok.')
     }).then((data) => {
-      console.log('***************')
-      console.log(data)
-      console.log(data.records[0].PublishTime)
-      console.log(data.records[0].AQI)
-      console.log(data.records[0].Status)
       return `${data.records[0].PublishTime}的空氣品質監測：指標為${data.records[0].AQI}，狀態為${data.records[0].Status}。`
     }).catch((error) => {
       console.log('There has been a problem with your fetch operation: ', error.message)
