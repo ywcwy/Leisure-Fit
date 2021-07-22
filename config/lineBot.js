@@ -87,13 +87,11 @@ async function crawlAQI() {
   const url = 'https://data.epa.gov.tw/api/v1/aqx_p_432?limit=1&api_key=0a32774f-3dec-49ac-9919-1deacaf3b6f7&filters=County,EQ,臺北市|SiteName,EQ,古亭'
   try {
     const response = await fetch(encodeURI(url))
-    console.log('@@@@@@@@@@@@')
     try {
       const data = await response.json()
-      console.log('###################')
-      return `${data.records[0].PublishTime}的空氣品質監測：指標為${data.records[0].AQI}，狀態為${data.records[0].Status}。`
+      return `${data.records[0].PublishTime} 的空氣品質監測結果：AQI指標為"${data.records[0].AQI}"，狀態為"${data.records[0].Status}"。`
     }
-    catch {
+    catch (error) {
       console.log('There has been a problem with your fetch operation: ', error.message)
     }
   }
