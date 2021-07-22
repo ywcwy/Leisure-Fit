@@ -71,7 +71,20 @@ function handleMessage(message, replyToken) {
         latitude: 25.018878,
         longitude: 121.534602
       }).catch(err => console.log(err))
+
+    case '空氣品質':
+    case '空品':
+    case 'AQI':
+      return client.replyMessage(replyToken, {
+        type: 'message',
+        text: crawlAQI()
+      }).catch(err => console.log(err))
   }
+}
+
+async function crawlAQI() {
+  const data = await fetch('https://data.epa.gov.tw/api/v1/aqx_p_432?limit=1&api_key=0a32774f-3dec-49ac-9919-1deacaf3b6f7&filters=County,EQ,臺北市|SiteName,EQ,古亭')
+  return `${data.records[0].PublishTime}的空氣品質監測：指標為${data.records[0].AQI}，狀態為${data.records[0].Status}。`
 }
 
 module.exports = { pushMessage, handleEvent }
