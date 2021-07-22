@@ -94,10 +94,12 @@ function crawlAQI() {
       }
       throw new Error('Network response was not ok.')
     }).then((data) => {
-      return `${data.records[0].PublishTime}的空氣品質監測：指標為${data.records[0].AQI}，狀態為${data.records[0].Status}。`
+      const result = `${data.records[0].PublishTime}的空氣品質監測：指標為${data.records[0].AQI}，狀態為${data.records[0].Status}。`
+      console.log(result)
+      return result
     }).catch((error) => {
       console.log('There has been a problem with your fetch operation: ', error.message)
     })
 }
 
-module.exports = { pushMessage, handleEvent }
+module.exports = { pushMessage, handleEvent, crawlAQI }

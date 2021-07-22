@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const crypto = require('crypto')
-const { handleEvent } = require('../../config/lineBot')
+const { handleEvent, crawlAQI } = require('../../config/lineBot')
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
