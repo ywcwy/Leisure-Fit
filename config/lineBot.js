@@ -39,7 +39,7 @@ function handleFollow(replyToken) {
   })
 }
 
-function handleMessage(message, replyToken) {
+async function handleMessage(message, replyToken) {
   switch (message.text) {
     case '課程':
     case '課表':
@@ -78,7 +78,7 @@ function handleMessage(message, replyToken) {
     case 'AQI':
       return client.replyMessage(replyToken, {
         type: 'text',
-        text: crawlAQI()
+        text: await crawlAQI()
       }).catch(err => console.log(err))
   }
 }
