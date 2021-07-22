@@ -90,7 +90,7 @@ function crawlAQI() {
   fetch(encodeURI(url))
     .then((response) => {
       if (response.ok) {
-        console.log(data.json())
+        console.log(response.json())
         return response.json()
       }
       throw new Error('Network response was not ok.')
