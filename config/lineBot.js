@@ -3,6 +3,7 @@ const client = new line.Client({
   channelAccessToken: process.env.LINE_BOT_CHANNEL_TOKEN,
   channelSecret: process.env.LINE_BOT_CHANNEL_SECRET
 })
+const fetch = require('node-fetch')
 
 // push message
 const pushMessage = function (userId, text) {
