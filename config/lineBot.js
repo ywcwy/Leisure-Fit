@@ -75,16 +75,28 @@ function handleMessage(message, replyToken) {
     case '空氣品質':
     case '空品':
     case 'AQI':
+      console.log('AQI')
+      console.log('@@@@@@@@@@@@@@')
       return client.replyMessage(replyToken, {
-        type: 'message',
+        type: 'text',
         text: crawlAQI()
       }).catch(err => console.log(err))
   }
 }
 
-async function crawlAQI() {
-  const data = await fetch('https://data.epa.gov.tw/api/v1/aqx_p_432?limit=1&api_key=0a32774f-3dec-49ac-9919-1deacaf3b6f7&filters=County,EQ,臺北市|SiteName,EQ,古亭')
-  return `${data.records[0].PublishTime}的空氣品質監測：指標為${data.records[0].AQI}，狀態為${data.records[0].Status}。`
+function crawlAQI() {
+  fetch('https://data.epa.gov.tw/api/v1/aqx_p_432?limit=1&api_key=0a32774f-3dec-49ac-9919-1deacaf3b6f7&filters=County,EQ,臺北市|SiteName,EQ,古亭')
+    .then(function (response) {
+      if (response.ok) {
+        console.log(data.json())
+        return response.json()
+      }
+      throw new Error('Network response was not ok.')
+    }).then(function (data) {
+      return `${data.records[0].PublishTime}的空氣品質監測：指標為${data.records[0].AQI}，狀態為${data.records[0].Status}。`
+    }).catch(function (error) {
+      console.log('There has been a problem with your fetch operation: ', error.message)
+    });
 }
 
 module.exports = { pushMessage, handleEvent }
