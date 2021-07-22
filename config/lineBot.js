@@ -86,7 +86,7 @@ function handleMessage(message, replyToken) {
 }
 
 function crawlAQI() {
-  fetch('https://data.epa.gov.tw/api/v1/aqx_p_432?limit=1&api_key=0a32774f-3dec-49ac-9919-1deacaf3b6f7&filters=County,EQ,臺北市|SiteName,EQ,古亭')
+  fetch('https://data.epa.gov.tw/api/v1/aqx_p_432?limit=1&api_key=0a32774f-3dec-49ac-9919-1deacaf3b6f7&filters=County,EQ,encodeURI(臺北市)|SiteName,EQ,encodeURI(古亭)')
     .then(function (response) {
       if (response.ok) {
         console.log(data.json())
