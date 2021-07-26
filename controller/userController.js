@@ -30,9 +30,6 @@ const userController = {
   },
   logInPage: (req, res) => { return res.render('login') },
   logIn: (req, res) => {
-    return res.redirect('/')
-  },
-  lineLogin: (req, res) => {
     return res.redirect('/user/profile')
   },
   logOut: (req, res) => {
