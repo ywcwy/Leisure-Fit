@@ -96,7 +96,6 @@ async function crawlAQI() {
     }
   }
   catch { throw new Error('Network response was not ok.') }
-
 }
 
 module.exports = { pushMessage, handleEvent }
